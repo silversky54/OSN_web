@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+ 
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MGPGGZ6L6K"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-MGPGGZ6L6K');
+  </script>
+
+  <!-- Hotjar Tracking Code for https://observatorionieves.cl/ -->
+  <script>
+    (function (h, o, t, j, a, r) {
+      h.hj = h.hj || function () { (h.hj.q = h.hj.q || []).push(arguments) };
+      h._hjSettings = { hjid: 2725434, hjsv: 6 };
+      a = o.getElementsByTagName('head')[0];
+      r = o.createElement('script'); r.async = 1;
+      r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+      a.appendChild(r);
+    })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
+  </script>
+
+  <script>
+    (function () {
+      var h, a, f;
+      a = document.getElementsByTagName('link');
+      for (h = 0; h < a.length; h++) {
+        f = a[h];
+        if (f.rel.toLowerCase().match(/stylesheet/) && f.href) {
+          var g = f.href.replace(/(&|\?)rnd=\d+/, '');
+          f.href = g + (g.match(/\?/) ? '&' : '?');
+          f.href += 'rnd=' + (new Date().valueOf());
+        }
+      } // for
+    })()
+  </script>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Observatorio Satelital de Nieves - Descripción Visualizadores </title>
+  <meta content="Observatorio Satelital de Nieves - Chile" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="../assets/img/favicon.png" rel="icon">
+  <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="../assets/vendor/venobox/venobox.css" rel="stylesheet">
+  <link href="../assets/vendor/owl.carousel/../assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="../assets/css/style.css" rel="stylesheet">
+
+  <!-- CSS Observatorio Nieves -->
+  <link href="../assets/css/obs.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top header-transparent">
+    <div class="container d-flex align-items-center">
+
+      <div class="logo mr-auto">
+        <a href="../index.html">
+          <img src="../assets/img/logos_obsnieves/logo-horizontal-color-positivo.png" alt="" class="img-fluid"
+            style="min-height: 100px">
+        </a>
+      </div>
+
+      <nav class="nav-menu d-none d-lg-block">
+        <ul>
+
+          <li class="">
+            <a href="../index.html" class="txt-naranjo-2"><i class="icofont-home"></i> Inicio</a>
+          </li>
+          <li >
+            <a href="nacional.html" class="txt-naranjo-2">Nacional</a>
+            
+          </li>
+          <li>
+            <a href="#" class="txt-azul-1">Cuencas</a>
+          
+          </li>
+
+          <li >
+            <a href="metodologia.html" class="txt-naranjo-2">Metodología</a>
+            
+          </li>
+
+          <li >
+            <a href="equipo.html" class="txt-naranjo-2">Equipo</a>
+            
+          </li>
+
+        </ul>
+      </nav><!-- .nav-menu -->
+
+    </div>
+  </header><!-- End Header -->
+
+  <section id="hero-obs" class="" ></section>
+
+  <section id="page-title">
+    <h2>Análisis por cuenca</h2>
+  </section>
+  
+  <main id="main" class="p-3">
+  
+    <div class="container">
+      <div class="row">
+      
+      </div>
+    </div>
+
+  </main><!-- End #main -->
+<!-- INICIO SECCIÓN TÍTULO PRINCIPAL -->
+<section >
+  <p> </p>
+  <div class="container" style="margin: 50; padding: 50;">
+    <div class="custom_heading-container" style="margin: -140px; padding: -50px;">
+      </div>
+    <p style="text-align: justify" >
+      A partir de la información disponible del producto de nieves del sensor MODIS MOD10A1 (Terra) y MYD10A1 (Aqua), se analizó la variabilidad espacio-temporal de la 
+      cobertura de nieve sobre las 101 cuencas del Banco Nacional de Aguas (BNA). 
+    </p>
+<!-- DESARROLLO TÍTULO PRINCIPAL -->
+  <!-- Asigna un id a la sección que deseas ocultar -->
+
+<div id="listSection">
+  
+</div>
+
+<p> <b>Seleccione una cuenca:</b>
+  <select id="BNA_cod" onchange="hideListSection()">
+            <option value="010">010-Altiplánica</option>
+            <option value="023">023-Fronterizas salares Atacama-Socompa</option>
+            <option value="024">024-Endorreica entre fronterizas y Salar Atacama</option>
+            <option value="030">030-Endorreica entre frontera y vertiente del Pacifico</option>
+            <option value="038">038-Río Huasco</option>
+            <option value="043">043-Río Elqui</option>
+            <option value="045">045-Río Limari</option>
+            <option value="047">047-Río Choapa</option>
+            <option value="051">051-Río Petorca</option>
+            <option value="052">052-Río Ligua</option>
+            <option value="054">054-Río Aconcagua</option>
+            <option value="057">057-Río Maipo</option>
+            <option value="060">060-Río Rapel</option>
+            <option value="071">071-Río Mataquito</option>
+            <option value="073">073-Río Maule</option>
+            <option value="081">081-Río Itata</option>
+            <option value="083">083-Río Bio-Bio</option>
+            <option value="091">091-Río Imperial</option>
+            <option value="094">094-Río Tolten</option>
+            <option value="101">101-Río Valdivia</option>
+            <option value="103">103-Río Bueno</option>
+            <option value="104">104-Cuencas e islas entre ríos Buenos y río Puelo</option>
+            <option value="105">105-Río Puelo</option>
+            <option value="106">106-Costeras entre Río Puelo y Río Yelcho</option>
+            <option value="107">107-Río Yelcho</option>
+            <option value="108">108-Costeras entre Río Yelcho y límite regional</option>
+            <option value="110">110-Río Palena y costeras límite decima region</option>
+            <option value="111">111-Costeras e islas entre Río Palena y Río Aysen</option>
+            <option value="112">112-Archipielago de las Guaitecas y de los Chonos</option>
+            <option value="113">113-Río Aysen</option>
+            <option value="114">114-Costeras e islas entre Río Aysen y Canal General Martínez</option>
+            <option value="115">115-Río Baker</option>
+            <option value="116">116-Costeras e islas entre Río Baker y Río Pascua</option>
+            <option value="117">117-Río Pascua</option>
+            <option value="118">118-Costeras entre Río Pascua y límite regional</option>
+            <option value="119">119-Cuenca del Pacífico</option>
+            <option value="120">120-Costaras entre límite regional y Seno Andrew</option>
+            <option value="121">121-Islas entre límite regional y canal Ancho</option>
+            <option value="122">122-Costeras entre Seno Andrew y Río Hollemberg</option>
+            <option value="123">123-Islas entre Canales Concepción y Estrecho de Magallanes</option>
+            <option value="124">124-Costeras e islas Río Hollemberg</option>
+            <option value="125">125-Costeras entre Laguna Blanca y Estrecho de Magallanes</option>
+            <option value="126">126-Vertiente del Atlántico</option>
+            <option value="127">127-Islas del Sur Estrecho de Magallanes</option>
+            <option value="128">128-Tierra del Fuego</option>
+            <option value="129">129-Islas del sur Canal Beagle y Territorio Antartico</option>
+          </select>
+        </p>
+        <p id="info"></p>
+        <script type="text/javascript">
+          function hideListSection() {
+            // Cuando el usuario haga una selección, cambia el estilo de display a 'none' para ocultar la sección
+            document.getElementById('listSection').style.display = 'none';
+          }
+      
+          window.onload = function() {
+  // Obtener el parámetro de consulta 'cuenca'
+  let params = new URLSearchParams(window.location.search);
+  let cuenca = params.get('cuenca');
+
+  // Seleccionar la cuenca correspondiente en el selector de cuencas
+  let select = document.getElementById('BNA_cod');
+  for(let i = 0; i < select.options.length; i++) {
+    if(select.options[i].value == cuenca) {
+      select.selectedIndex = i;
+
+      // Disparar un evento de clic en el selector
+      select.dispatchEvent(new Event('change'));
+      
+      break;
+    }
+  }
+};
+
+
+        </script>
+      </div>
+    </div>
+  </section>
+
+<!-- FIN SECCIÓN TÍTULO PRINCIPAL -->
+
+
+<!-- INICIO SECCIÓN GRAFICOS  -->
+<script type="module"> 
+
+  import {c_map_location } from '../assets/js/c_map_location.js';         // p01
+  import {c_SCA_map } from '../assets/js/c_SCA_map.js';                   // p02
+  import {c_SCA_trend_map } from '../assets/js/c_SCA_trend_map.js';       // p03
+  import { c_SCA_y } from '../assets/js/c_SCA_y.js';                      // p04
+  import { c_SCA_y_t_area } from '../assets/js/c_SCA_y_t_area.js';        // p05
+  import { c_SCA_y_elev } from '../assets/js/c_SCA_y_elev.js';            // p06
+  import { c_SCA_elev } from '../assets/js/c_SCA_elev.js';                // p07
+  import { c_elev } from '../assets/js/c_elev.js';                        // p08
+  import {c_SCA_y_t_elev } from '../assets/js/c_SCA_y_t_elev.js';         // p09
+  import { c_snowline_y } from '../assets/js/c_snowline_y.js';            // p11
+  import { c_SCA_m } from '../assets/js/c_SCA_m.js';                      // p12
+  import { c_SCA_m_elev } from '../assets/js/c_SCA_m_elev.js';            // p13
+  import {c_SCA_y_m} from '../assets/js/c_SCA_y_m.js';                    // p14
+  import {c_SCA_m_trend} from '../assets/js/c_SCA_m_trend.js';            // p15
+  import { c_SCA_ym } from '../assets/js/c_SCA_ym.js';                    // p17
+  import {c_SCA_ym_elev } from '../assets/js/c_SCA_ym_elev.js';           // p18
+  import { c_snowline_ym } from '../assets/js/c_snowline_ym.js';          // p19
+  import { leyenda_PN } from '../assets/js/leyenda_PN.js';                // leyenda
+  //Se obtiene el valor ingresado en el input
+  const input = document.querySelector("#BNA_cod"); 
+
+  // Cada vez que el valor del input cambie, se actualizará el gráfico con los datos correspondientes
+  let watershed = '';
+
+  input.addEventListener('change', function (event) {
+      watershed = event.target.value;
+
+      // clean de DIv elements
+      document.getElementById("p01").innerHTML = "";
+      document.getElementById("p02").innerHTML = "";
+      document.getElementById("p03").innerHTML = "";
+      document.getElementById("p04").innerHTML = "";
+      document.getElementById("p05").innerHTML = "";
+      document.getElementById("p06").innerHTML = "";
+      document.getElementById("p07").innerHTML = "";
+      document.getElementById("p08").innerHTML = "";
+      document.getElementById("p09").innerHTML = "";
+      document.getElementById("p11").innerHTML = "";
+      document.getElementById("p12").innerHTML = "";
+      document.getElementById("p13").innerHTML = "";
+      document.getElementById("p14").innerHTML = "";
+      document.getElementById("p15").innerHTML = "";
+      document.getElementById("p17").innerHTML = "";
+      document.getElementById("p18").innerHTML = "";
+      document.getElementById("p19").innerHTML = "";
+      document.getElementById("leyenda_PN").innerHTML = "";
+ 
+      // run de JS
+      c_map_location(watershed);    // p01
+      c_SCA_trend_map(watershed);   // p02 
+      c_SCA_map(watershed);         // p03
+      c_SCA_y(watershed);           // p04
+      c_SCA_y_t_area(watershed);    // p05
+      c_SCA_y_elev(watershed);      // p06
+      c_SCA_elev(watershed);        // p07
+      c_SCA_y_t_elev(watershed)     // p08	      
+      c_elev(watershed);            // p09
+      c_snowline_y(watershed);      // p11
+      c_SCA_m(watershed);           // p12
+      c_SCA_m_elev(watershed);      // p13
+      c_SCA_y_m(watershed);         // p14
+      c_SCA_m_trend(watershed);     // p15
+      c_SCA_ym(watershed);          // p17
+      c_SCA_ym_elev(watershed)      // p18
+      c_snowline_ym(watershed);     // p19
+      leyenda_PN(watershed);        // leyenda_2
+
+      
+  })
+
+
+ </script>
+
+
+
+<section>
+
+  <table class="default" style="margin-left: auto;margin-right: auto;" >
+
+    <tr>
+      <td rowspan="15" &nbsp VALIGN = Top Align = Left >
+        <div id="p01">
+      </td>
+      <td colspan="10" &nbsp VALIGN = Top Align = middle>
+        <div id="p02">
+      </td>
+      <td colspan="10" &nbsp VALIGN = Top Align = middle>
+        <div id="p03">
+      </td>
+    </tr>
+    
+    <tr>
+      <td colspan="10" &nbsp;><div id="p04"></div></td>
+      <td colspan="10" &nbsp;><div id="p05"></div></td>
+    </tr>
+   
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+
+    <tr>
+      <td colspan="14" &nbsp;><div id="p06"></div></td>
+      <td><div id="p07"></div></td>
+      <td><div id="p08"></div></td>
+      <td colspan="2" &nbsp;></td>
+      <td colspan="2" &nbsp;><div id="p10"></div></td>
+    </tr>
+
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+
+    <tr>
+
+      <td colspan="10" &nbsp;><div id="p11"></div></td>
+      <td colspan="10" &nbsp;><div id="p09"></div></td>
+    </tr>
+
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+
+    <tr>
+      <td colspan="10" &nbsp;><div id="p12"></div></td>
+      <td colspan="10" &nbsp;><div id="p13"></div></td>
+    </tr>
+
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+
+    <tr>
+      <td colspan="14" &nbsp;><div id="p14"></div></td>
+      <td colspan="leyenda_PN" &nbsp;><div id="leyenda_PN"></div></td>
+          <td><div id="p15"></div></td>
+      <td colspan="2" &nbsp;><div id="p16"></div></td>
+      <td></td>
+      <td colspan="2" &nbsp;></td>
+    </tr>
+
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+
+    <tr>
+      <td colspan="20" &nbsp;><div id="p17"></div></td>
+    </tr>
+
+    <tr>
+      <td colspan="20" &nbsp;><div id="p18"></div></td>
+    </tr>
+
+    <tr>
+      <td colspan="20" &nbsp;><div id="p19"></div></td>
+    </tr>
+
+  </table>
+
+  <p></p>
+  
+  </section>
+
+<!-- INICIO SECCIÓN GRAFICOS  -->
+
+
+  <section id="page-bottom"></section>
+
+ <!-- ======= Footer ======= -->
+<footer id="footer" class="bg-azul-1">
+  <div class="footer-top ">
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-4 col-md-6">
+                  <div class="footer-info" data-aos="fade-up" data-aos-delay="50">
+                      <h3>
+                          <img src="../assets/img/logos_obsnieves/logo-horizontal-color-positivo.png" alt="" class="img-fluid" style="min-height: 100px">
+                      </h3>
+                      <p class="txt-azul-1">
+                        <a href="https://www.google.com/maps/place/Subida+Leopoldo+Carvallo+270,+Playa+Ancha,+Valpara%C3%ADso,+Chile" target="_blank">Subida Leopoldo Carvallo 270, Valparaíso, Chile </a><br>
+                        <br> 
+                          <a href="tel:+56322205265">+56322205265</a><br>
+                          <a href="mailto:observatorionieves@upla.cl"><i class="icofont-email icofont-2x"></i> observatorionieves@upla.cl</a><br>
+                          
+                      </p>
+                  </div>
+              </div>
+
+              <div class="col-lg-2 col-md-6 footer-links" data-aos="fade-up" data-aos-delay="150">
+                  <h4 class="text-uppercase txt-azul-2">Navegación</h4>
+                  <ul>
+                      <li><i class="bx bx-chevron-right txt-azul-2"></i> <a href="../index.html">Inicio</a></li>
+                      <li><i class="bx bx-chevron-right txt-azul-2"></i> <a href="../pages/nacional.html">Nacional</a></li>
+                      <li><i class="bx bx-chevron-right txt-azul-2"></i> <a href="../pages/cuencas.html">Cuencas</a></li>
+                      <li><i class="bx bx-chevron-right txt-azul-2"></i> <a href="../pages/metodologia.html">Metodología</a></li>
+                      <li><i class="bx bx-chevron-right txt-azul-2"></i> <a href="#">Equipo</a></li>
+                  </ul>
+              </div>
+
+              <div class="col-lg-2 col-md-6 footer-links" data-aos="fade-up" data-aos-delay="250">
+                  <h4 class="text-uppercase txt-azul-2">Otros Enlaces</h4>
+                  <ul>
+                      <li><i class="bx bx-chevron-right txt-azul-2"></i> <a href="https://www.upla.cl/" target="_blank">UPLA</a></li>
+                      <li><i class="bx bx-chevron-right txt-azul-2"></i> <a href="https://teleamb.cl/" target="_blank">TeleAmb</a></li>
+                  </ul>
+              </div>
+
+              <div class="col-lg-4 col-md-6 footer-newsletter" data-aos="fade-up" data-aos-delay="350">
+                  <h4 class="text-uppercase txt-azul-2">Boletín de avances</h4>
+                  <p>Si desea estar al tanto del proyecto, complete el formulario:</p>
+                  <a href="https://docs.google.com/forms/d/e/1FAIpQLSezWLT4Y46nXQY3DKWx0L5qfn6K45ZAL1NbsAfVUSNWUmrGDA/viewform?usp=sf_link" class="btn btn-obs-info text-uppercase" target="_blank">Subscribirse</a>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <div class="container">
+      <div class="copyright">
+          &copy; Copyright <strong><span>Observatorio Satelital de Nieves</span></strong>. Todos los Derechos Reservados
+      </div>
+      <div class="credits">
+          Diseñada por <a href="https://teleamb.cl/">TeleAmb</a>
+      </div>
+  </div>
+</footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+
+
+
+
+
+  <!-- Javascript Image Zoom On Click -->
+  <script src="../assets/js/zooming.min.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="../assets/js/main.js"></script>
+
+  <!-- CSS OBservatorio Nieves -->
+  <script src="../assets/js/obs.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,244 @@
+/* Colores */
+:root{
+    --color-azul-1: #033E60;
+    --color-azul-2: #2CB8C7;
+    --color-azul-3: #ADDBE3;
+    --color-verde-1: #2E9967;
+    --color-verde-2: #5CB77D;
+    --color-amarillo-1: #EEEB90;
+    --color-amarillo-2: #EEDF55;
+    --color-amarillo-3: #E5B341;
+    --color-naranjo-1: #DD9217;
+    --color-naranjo-2: #CF653D;
+}
+
+@font-face {
+	font-family: "dinPro";
+	src: url("../font/Din-Pro-OTF/DINPro-Regular.otf");
+	font-weight: normal;
+  	font-style: normal;
+}
+
+@font-face {
+	font-family: "dinPro";
+	src: url("../font/Din-Pro-OTF/DINPro-Bold.otf");
+	font-weight: bold;
+	font-style: normal;
+}
+
+html *{
+	font-family: "dinPro" !important;
+}
+
+.blob {
+	box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
+	transform: scale(1);
+	animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+	0% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+	}
+
+	70% {
+		transform: scale(1);
+		box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+	}
+
+	100% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+	}
+}
+
+.zoom {
+	transition: transform .2s; /* Animation */
+	z-index: 0;
+}
+
+.zoom:hover {
+	transform: scale(1.6); /* (160% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+	background-color: white;
+	z-index: 1;
+	border-radius: 10px;
+}
+
+.btn-obs-info{
+	color: #fff;
+	background-color: var(--color-naranjo-2);
+	border-color: var(--color-naranjo-2);
+}
+
+/* Colores de fondo personalizados */
+.bg-azul-1{
+	background-color: var(--color-azul-1) !important;
+}
+
+.bg-azul-2{
+	background-color: var(--color-azul-2) !important;
+}
+
+.bg-azul-3{
+	background-color: var(--color-azul-3) !important;
+}
+
+.bg-verde-1{
+	background-color: var(--color-verde-1) !important;
+}
+
+.bg-verde-2{
+	background-color: var(--color-verde-2) !important;
+}
+
+.bg-amarillo-1{
+	background-color: var(--color-amarillo-1) !important;
+}
+
+.bg-amarillo-2{
+	background-color: var(--color-amarillo-2) !important;
+}
+
+.bg-amarillo-3{
+	background-color: var(--color-amarillo-3) !important;
+}
+
+.bg-naranjo-1{
+	background-color: var(--color-naranjo-1) !important;
+}
+.bg-naranjo-2{
+	background-color: var(--color-naranjo-2) !important;
+}
+
+/* Colores de texto personalizados */
+.txt-azul-1{
+	color: var(--color-azul-1) !important;
+}
+
+.txt-azul-2{
+	color: var(--color-azul-2) !important;
+}
+
+.txt-azul-3{
+	color: var(--color-azul-3) !important;
+}
+
+.txt-verde-1{
+	color: var(--color-verde-1) !important;
+}
+
+.txt-verde-2{
+	color: var(--color-verde-2) !important;
+}
+
+.txt-amarillo-1{
+	color: var(--color-amarillo-1) !important;
+}
+
+.txt-amarillo-2{
+	color: var(--color-amarillo-2) !important;
+}
+
+.txt-amarillo-3{
+	color: var(--color-amarillo-3) !important;
+}
+
+.txt-naranjo-1{
+	color: var(--color-naranjo-1) !important;
+}
+.txt-naranjo-2{
+	color: var(--color-naranjo-2) !important;
+}
+
+#header.header-scrolled {
+	background: rgba(173, 219, 227, 0.8);
+	padding: 0;
+}
+
+#header.header-scrolled-alt{
+	background: rgba(3, 62, 92, 0.8) !important;
+}
+
+.numberCircle {
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    padding: 5px;
+
+    background: var(--color-azul-1);
+    border: 2px solid var(--color-azul-1);
+    color: var(--color-amarillo-2);
+    text-align: center;
+
+    font: 1em Arial, sans-serif;
+}
+
+#hero{
+	height: 40vh !important;
+	background-position: 0% 200% !important;
+}
+
+#hero-obs {
+	width: 100%;
+	height: 10vh;
+	background: #fff;
+	background-size: cover;
+	position: relative;
+	margin-bottom: -90px;
+}
+
+#page-title{
+	width: 100%;
+	background: url("../img/assets_maqueta/montanas_titulo.png");
+	background-size: cover;
+	background-position: 0% -100%;
+}
+
+#page-title h2{
+	color: var(--color-azul-1);
+	margin-top: 5%;
+	margin-left: 5%;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+#page-bottom{
+	width: 100%;
+	background: url("../img/assets_maqueta/montanas_vector.png");
+	background-size: cover;
+	margin-bottom: 3%;
+	/* background-position: 0% -100%; */
+}
+
+.team-obs{
+	padding: 20px;
+	background-color:rgba(173,219,227,0.3);
+	/* border-radius: 10px; */
+}
+
+.team-image-obs{
+	border-radius: 50%;
+	border-color: var(--color-azul-2);
+	border-style: solid;
+}
+
+section .short{
+	padding: 30px 0px;
+}
+
+.circle-green-obs{
+	width: 25px;
+	height: 25px;
+	border-radius: 50%;
+	background-color: var(--color-verde-1);
+}
+
+.mobile-nav-active .mobile-nav a{
+	color: #CF653D !important;
+}
+
+path.selected {
+	stroke: red; /* o cualquier otro estilo que desees para resaltar el path */
+	stroke-width: 2px;
+  }
