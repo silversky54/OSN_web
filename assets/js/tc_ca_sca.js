@@ -24,7 +24,7 @@ export async function tc_ca_sca() {
         .style("padding", "5px")
         .style("position", "absolute");
 
-    const data = await d3.csv("../assets/csv/total/tc_ca_sca.csv");
+    const data = await d3.csv("../assets/csv/total/tc_ca_SCA.csv");
 
     const y = d3.scaleBand()
         .rangeRound([0, height], .3)
