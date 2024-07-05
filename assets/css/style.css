@@ -1419,3 +1419,51 @@ path.selected {
   stroke: red; /* o cualquier otro estilo que desees para resaltar el path */
   stroke-width: 2px;
 }
+
+
+
+/* Define a class for the slider container */
+.slidecontainer {
+  display: flex;
+  align-items: center;
+  width: 20%; /* Adjust the width as needed */
+  margin: 12px; /* Adjust the margin as needed */
+  position: absolute; /* Positioning it absolutely */
+  top: 50px; /* Adjust the top position */
+  left: 50px; /* Adjust the left position */
+  background-color: #f0f0f0; /* Optional background color for visibility */
+  border: 1px solid #ccc; /* Optional border */
+  border-radius: 5px; /* Optional rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional shadow */
+}
+
+/* Style the slider */
+.slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 90px; /* Full width within the container */
+  height: 10px; 
+  margin-left: 10px;
+  margin-right: 10px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #000000;
+  cursor: pointer;
+}
+

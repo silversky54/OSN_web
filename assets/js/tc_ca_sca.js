@@ -1,7 +1,7 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
 export async function tc_ca_sca() {
-    const margin = { top: 10, right: 10, bottom: 40, left: 30};
+    const margin = { top: 10, right: 10, bottom: 40, left: 30 };
     const width = 180 - margin.left - margin.right;
     const height = 600 - margin.top - margin.bottom;
 
@@ -35,7 +35,7 @@ export async function tc_ca_sca() {
         .rangeRound([0, width]);
 
     const color = d3.scaleOrdinal()
-                .range(["#c7001e", "#f6a580", "#cccccc", "#92c6db", "#086fad"]);
+        .range(["#c7001e", "#f6a580", "#cccccc", "#92c6db", "#086fad"]);
 
     color.domain(["Strongly disagree", "Disagree", "Neither agree nor disagree", "Agree", "Strongly agree"]);
 
@@ -49,7 +49,7 @@ export async function tc_ca_sca() {
         d["Neither agree nor disagree"] = +d[3];
         d["Agree"] = +d[4];
         d["Strongly agree"] = +d[5];
-        let x0 = -1*(d["Neither agree nor disagree"]/2+d["Disagree"]+d["Strongly disagree"]);
+        let x0 = -1 * (d["Neither agree nor disagree"] / 2 + d["Disagree"] + d["Strongly disagree"]);
         let idx = 0;
         d.boxes = color.domain().map(function(name) {
             return { name: name, x0: x0, x1: x0 += +d[name], N: +d.N, n: +d[idx += 1], data: d };
@@ -88,7 +88,7 @@ export async function tc_ca_sca() {
         .enter().append("g").attr("class", "subbar");
 
     bars.append("rect")
-        .attr("height", y.bandwidth()* 1)
+        .attr("height", y.bandwidth() * 1)
         .attr("x", function(d) { return x(d.x0); })
         .attr("width", function(d) { return x(d.x1) - x(d.x0); })
         .style("fill", function(d) { return color(d.name); })
@@ -102,13 +102,13 @@ export async function tc_ca_sca() {
         .on("mousemove", function(event, d) {
             let cobertura = -(d.data["1"] ? parseFloat(d.data["1"]) : 0) + (d.data["5"] ? parseFloat(d.data["5"]) : 0);
             tooltip
-                .html("Cuenca: " + d.data.Question + "<br>" + 
-                      "Cambio de cobertura: " + cobertura.toFixed(2) + " %"
-                      )
+                .html("Cuenca: " + d.data.Question + "<br>" +
+                    "Cambio de cobertura: " + cobertura.toFixed(2) + " %"
+                )
                 .style("left", (event.pageX + 30) + "px")
                 .style("top", (event.pageY + 30) + "px");
         })
-        
+
         .on("mouseout", function(d) {
             tooltip
                 .style("opacity", 0);
@@ -123,7 +123,7 @@ export async function tc_ca_sca() {
         .attr("width", width)
         .attr("fill-opacity", "0.5")
         .style("fill", "#F5F5F5")
-        .attr("class", function(d,index) { return index % 2 == 0 ? "even" : "uneven"; });
+        .attr("class", function(d, index) { return index % 2 == 0 ? "even" : "uneven"; });
 
     svg.append("g")
         .attr("class", "y axis")
@@ -133,10 +133,10 @@ export async function tc_ca_sca() {
         .attr("y2", height);
 
     svg.append("text")
-    .attr("x", 0)
-    .attr("y", 585)
-    .attr("text-anchor", "center")
-    .style("font-size", "14px")
-    .attr("font-family","Arial")
-    .text("Cobertura de nieve (%)");
+        .attr("x", 0)
+        .attr("y", 585)
+        .attr("text-anchor", "center")
+        .style("font-size", "14px")
+        .attr("font-family", "Arial")
+        .text("Cobertura de nieve (%)");
 }

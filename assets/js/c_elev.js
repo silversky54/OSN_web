@@ -102,7 +102,7 @@ svg.selectAll("myRect")
      .attr("font-size", "20px")
      .attr("x", -70)
      .attr("y", -25)
-     .text("7. Área por elevación");
+     .text("9. Área por elevación");
   
 // Etiqueta SUb titulo
     svg.append("text")

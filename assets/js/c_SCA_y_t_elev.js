@@ -121,7 +121,7 @@ export async function c_SCA_y_t_elev(watershed) {
         .attr("text-anchor", "center")
         .attr("font-family", "Arial")
         .style("font-size", "20px")
-        .text("9. Tendencia por elevación");
+        .text("7. Tendencia por elevación");
 
             // Etiqueta SUb titulo
             svg.append("text")

@@ -51,10 +51,6 @@ export async function c_SCA_y_m(watershed) {
         .domain([0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100])
         .range(["#FFFFE6", "#FFFFB4", "#FFEBBE", "#FFD37F", "#FFAA00", "#E69800", "#70A800", "#00A884", "#0084A8", "#004C99"]);
 
-    const colorScaleCCA = d3.scaleThreshold()
-        .domain([50])
-        .range(["black", ...colorScaleThreshold.range()]);
-
     // create a tooltip
     const tooltip = d3.select("#p14")
         .append("div")
@@ -110,6 +106,40 @@ export async function c_SCA_y_m(watershed) {
             .on("mouseover", mouseover)
             .on("mousemove", mousemove)
             .on("mouseleave", mouseleave);
+
+    // Add the slider container
+    const sliderContainer = d3.select("#p14")
+        .append("div")
+        .attr("class", "slider-container");
+
+        const valueini = 30
+    sliderContainer.append("input")
+        .attr("type", "range")
+        .attr("min", 0)
+        .attr("max", 100)
+        .attr("value", valueini)
+        .attr("class", "slider")
+        .attr("id", "ccaSlider2"); // 
+    sliderContainer.append("span")
+        .attr("id", "sliderValue2") //
+        .text("Nubes : 0%");
+
+    function updateGraph() {
+        const sliderValue = +d3.select("#ccaSlider2").property("value"); // 
+        d3.select("#sliderValue2").text(`Nubes : ${sliderValue}%`);
+    
+        svg.selectAll("rect")
+            .style("fill", function (d) {
+                const SCA = Number(d.SCA);
+                const CCA = Number(d.CCA);
+                return (CCA > sliderValue) ? "black" : colorScaleThreshold(SCA);
+            });
+    }
+
+    updateGraph();
+
+    d3.select("#ccaSlider2").on("input", updateGraph); // Referencing the unique ID
+
     // Etiqueta title
     svg.append("text")
         .attr("text-anchor", "center")
@@ -119,7 +149,7 @@ export async function c_SCA_y_m(watershed) {
         .attr("y", -25)
         .text("12. Cobertura de nieve promedio por año y mes");
 
-    // Etiqueta SUb titulo
+    // Etiqueta Sub titulo
     svg.append("text")
         .attr("text-anchor", "center")
         .attr("font-family", "Arial")

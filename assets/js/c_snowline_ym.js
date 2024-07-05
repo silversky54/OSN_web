@@ -121,7 +121,7 @@ const maxValues = Array.from(groupedData, ([year, values]) => ({
 
 // Filtrar los valores máximos para los años 2000 a 2023
 const maxValues2000To2023 = maxValues.filter(d => d.year >= 2000 && d.year <= 2023 && d.value !== 0 && !isNaN(d.value));
- console.log(maxValues2000To2023)
+ //console.log(maxValues2000To2023)
 
 var sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0; //
 
@@ -171,7 +171,7 @@ svg.append("line")
 
    
   var sumXmin = 0, sumYmin = 0, sumXYmin = 0, sumX2min = 0;
-console.log (minValues2000To2023)
+ //console.log (minValues2000To2023)
   for (var i = 0; i < minValues2000To2023.length; i++) {
   
     sumXmin += minValues2000To2023[i].year;

@@ -168,24 +168,5 @@ export async function tc_SP_SCA(index) {
         .attr("font-family","Arial")
         .text("Cobertura de nieve (%)");
 
-    const legendData = ["Permanente", "Estacional", "Intermitente"];
-    const legendColors = ["blue", "orange", "yellow"];
-    const legendTexts = ["Permanente", "Estacional", "Intermitente"];
-
-    for (let i = 0; i < legendData.length; i++) {
-        svg.append("rect")
-            .attr("x", 9)
-            .attr("y", 80 + 22 * i)
-            .attr('height', 8)
-            .attr('width', 8)
-            .style("fill", legendColors[i]);
-
-        svg.append("text")
-            .attr("x", 21)
-            .attr("y", 85 + 22 * i)
-            .text(legendTexts[i])
-            .style("font-size", "11px")
-            .attr("font-family", "Arial")
-            .attr("alignment-baseline", "middle");
-    }
+   
 }
