@@ -112,11 +112,11 @@ var valueini = 30
     .attr("class", "slider")
     sliderContainer.append("span")
     .attr("id", "sliderLabel3")
-    .text("Nubes : 0%");
+    .text("Nubosidad > : ");
 
    function updateGraph() {
     const sliderValue = +d3.select("#ccaSlider3").property("value");
-    d3.select("#sliderLabel3").text(`Nubes: ${sliderValue}%`);  
+    d3.select("#sliderLabel3").text(`Nubosidad > : ${sliderValue}%`);  
     
     svg.selectAll("rect")
     .style("fill", function (d) {

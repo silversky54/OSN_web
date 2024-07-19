@@ -122,6 +122,11 @@ var mouseover = function(d) {
       .style("opacity", 0.8)
   }
 
+
+
+
+
+
 // Add the squares
 svg.selectAll()
 .data(data, function (d) { return d.Year + ':' + d.Elevation; })
@@ -138,6 +143,45 @@ svg.selectAll()
     .on("mouseover", mouseover)
     .on("mousemove", mousemove)
     .on("mouseleave", mouseleave);
+// Add the slider container
+const sliderContainer = d3.select("#p18")
+    .append("div")
+    .attr("class", "slider-container");
+
+const valueini = 30
+
+sliderContainer.append("input")
+    .attr("type", "range")
+    .attr("min", 0)
+    .attr("max", 100)
+    .attr("value", valueini)
+    .attr("class", "slider")
+    .attr("id", "ccaSlider4");
+
+sliderContainer.append("span")
+    .attr("id", "sliderValue4")
+    .text(`Nubosidad : 0%`); // Inicializa con valueini
+
+function updateGraph() {
+    const sliderValue = +d3.select("#ccaSlider4").property("value");
+    d3.select("#sliderValue4").text(`Nubosidad > : ${sliderValue}%`);
+    
+    svg.selectAll("rect")
+    .style("fill", function(d) {
+        const SCA = Number(d.SCA);
+        const CCA = Number(d.CCA);
+        if (isNaN(SCA) || isNaN(CCA)) {
+            console.error("Datos inválidos:", d);
+            return "red"; // Indica un error con un color visible
+        }
+        return (CCA > sliderValue) ? "black" : colorScaleThreshold(SCA);
+    });
+}
+// Asegúrate de actualizar el gráfico después de inicializar el slider
+updateGraph();
+
+d3.select("#ccaSlider4").on("input", updateGraph);
+
 
    // Add title to graph
    // Etiqueta title
@@ -264,13 +308,6 @@ svg.append("text")
   .style("fill", "#FFFFE6")
 
 
-  svg.append("rect")
-  .attr("x", legX)
-  .attr("y", legY+135+45)
-  .attr('height', 15)
-  .attr('width', 15)
-  .style("fill", "black")
-
   legendGroup.append("text")
   .attr("x", legX+20)
   .attr("y", legY+7)
@@ -351,21 +388,6 @@ svg.append("text")
   .attr("font-family", "Arial")
   .attr("alignment-baseline", "middle")
 
-  legendGroup.append("text")
-  .attr("x", legX)
-  .attr("y", legY+7+15+15+15+15+15+15+15+15+15+30)
-  .text("Nube (%)")
-  .style("font-size", "12px")
-  .attr("font-family", "Arial")
-  .attr("alignment-baseline", "middle")
-
-  legendGroup.append("text")
-  .attr("x", legX+20)
-  .attr("y", legY+7+15+15+15+15+15+15+15+15+15+30+15)
-  .text(">50")
-  .style("font-size", "10px")
-  .attr("font-family", "Arial")
-  .attr("alignment-baseline", "middle")
 
 
 

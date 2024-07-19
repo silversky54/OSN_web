@@ -30,7 +30,7 @@ export async function c_SCA_m_elev(watershed) {
 
     sliderContainer.append("span")
         .attr("id", "sliderValue")
-        .text("Nubes : 0%");
+        .text("Nubosidad : 0%");
 
     // Text to create .csv file
     const text_ini = "../assets/csv/month/SCA_m_elev_BNA_";
@@ -197,7 +197,7 @@ export async function c_SCA_m_elev(watershed) {
     // control deslizante (slider)
     function updateGraph() {
       const sliderValue = +d3.select("#ccaSlider").property("value");
-      d3.select("#sliderValue").text(`Nubes : ${sliderValue}%`);
+      d3.select("#sliderValue").text(`Nubosidad > : ${sliderValue}%`);
   
       svg.selectAll(".graph-rect")
           .style("fill", function (d) {

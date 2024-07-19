@@ -122,11 +122,11 @@ export async function c_SCA_y_m(watershed) {
         .attr("id", "ccaSlider2"); // 
     sliderContainer.append("span")
         .attr("id", "sliderValue2") //
-        .text("Nubes : 0%");
+        .text("Nubosidad : 0%");
 
     function updateGraph() {
         const sliderValue = +d3.select("#ccaSlider2").property("value"); // 
-        d3.select("#sliderValue2").text(`Nubes : ${sliderValue}%`);
+        d3.select("#sliderValue2").text(`Nubosidad > : ${sliderValue}%`);
     
         svg.selectAll("rect")
             .style("fill", function (d) {

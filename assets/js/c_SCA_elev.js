@@ -15,7 +15,7 @@ async function loadData(watershed_selected) {
 export async function c_SCA_elev(watershed) {
 
   // set the dimensions and margins of the graph
-  const margin = {top: 80, right: 100, bottom: 60, left: 0};
+  const margin = {top: 68, right: 100, bottom: 80, left: 0};
   const width = 120 - margin.left - margin.right ;
   const height = 400 - margin.top - margin.bottom;
 
@@ -234,12 +234,7 @@ export async function c_SCA_elev(watershed) {
   .attr('width', 15)
   .style("fill", "#FFFFE6")
 
-  legendGroup.append("rect")
-  .attr("x", legX)
-  .attr("y", legY+135+45)
-  .attr('height', 15)
-  .attr('width', 15)
-  .style("fill", "black")
+
 
 
 
@@ -323,23 +318,6 @@ export async function c_SCA_elev(watershed) {
   .style("font-size", "10px")
   .attr("font-family", "Arial")
   .attr("alignment-baseline", "middle")
-
-  legendGroup.append("text")
-  .attr("x", legX)
-  .attr("y", legY+7+15+15+15+15+15+15+15+15+15+30)
-  .text("Nube (%)")
-  .style("font-size", "12px")
-  .attr("font-family", "Arial")
-  .attr("alignment-baseline", "middle")
-
-  legendGroup.append("text")
-  .attr("x", legX+20)
-  .attr("y", legY+7+15+15+15+15+15+15+15+15+15+30+15)
-  .text(">50")
-  .style("font-size", "10px")
-  .attr("font-family", "Arial")
-  .attr("alignment-baseline", "middle")
-
 
 
 
