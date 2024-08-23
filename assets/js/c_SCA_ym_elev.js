@@ -26,7 +26,7 @@ export async function c_SCA_ym_elev(watershed) {
     const data = await d3.csv(watershed_selected);
 
     // Labels
-    const myGroups = Array.from(new Set(data.map(d => d.Year))); // mantiene solo el primer mes de cada año
+    const myGroups = Array.from(new Set(data.map(d => d.Date))); // mantiene solo el primer mes de cada año
     const myVars = Array.from(new Set(data.map(d => d.Elevation)));
 
     // Build X scales and axis:
@@ -101,7 +101,7 @@ var mouseover = function(d) {
   }
   var mousemove = function (event, d) {
     var SCA = Number(d.SCA); // Convertir cadena a número
-    var dateComponents = d.Year.split("-"); // Dividir la fecha
+    var dateComponents = d.Date.split("-"); // Dividir la fecha
     var yearMonth = dateComponents[0] + "-" + dateComponents[1]; // Reconstruir la fecha
     var CCA = Number(d.CCA); // era una cadena y habla que pasarla a numero
     tooltip
@@ -129,10 +129,10 @@ var mouseover = function(d) {
 
 // Add the squares
 svg.selectAll()
-.data(data, function (d) { return d.Year + ':' + d.Elevation; })
+.data(data, function (d) { return d.Date + ':' + d.Elevation; })
 .enter()
 .append("rect")
-.attr("x", function (d) { return x(d.Year); })
+.attr("x", function (d) { return x(d.Date); })
 .attr("y", function (d) { return y(d.Elevation); })
     .attr("width", x.bandwidth())
     .attr("height", y.bandwidth())

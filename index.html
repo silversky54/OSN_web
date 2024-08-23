@@ -57,7 +57,17 @@
 
   <!-- CSS Observatorio Nieves -->
   <link href="assets/css/obs.css" rel="stylesheet">
+  <!-- Leaflet -->
+ <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+ <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+ <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+ <script src="https://unpkg.com/georaster"></script>
+ <script src="https://unpkg.com/georaster-layer-for-leaflet/dist/georaster-layer-for-leaflet.min.js"></script>
 
+    <!-- Leaflet Side-by-Side -->
+    <script src='/assets/js/lib/leaflet-side-by-side.min.js'></script>
+      <!-- Leaflet Side-by-Side -->
+    <script src='/assets/js/lib/leaflet-side-by-side.js'></script>
 </head>
 
 <body>
@@ -81,10 +91,7 @@
             <li >
                 <a href="pages/nacional.html" class="txt-naranjo-2">Nacional</a>
             </li>
-            <li >
-              <a href="pages/cuencas.html" class="txt-naranjo-2">Cuencas</a>
 
-            </li>
 
             <li >
               <a href="pages/metodologia.html" class="txt-naranjo-2">Metodología</a>
@@ -137,14 +144,16 @@
                 Sin embargo, la baja cantidad de estaciones de monitoreo en tierra limita la capacidad de capturar esta variabilidad, especialmente en áreas montañosas donde la variabilidad ambiental es alta y los costos de monitoreo son elevados. Por eso, el observatorio recopila información histórica y actual de forma continua, integrando diversas fuentes de información espacial.
               </p>
               <p>
-                El equipo de trabajo está compuesto por investigadores de la Facultad de Ciencias Naturales y Exactas y la Facultad de Ingeniería de la Universidad de Playa Ancha (UPLA), a través del Laboratorio de Teledetección Ambiental (TeleAmb). Este proyecto ha sido desarrollado en el marco del concurso IDeA FONDEF ID20i10058.
+                Nuestro equipo de trabajo está compuesto por investigadores de la Facultad de Ciencias Naturales y Exactas y la Facultad de Ingeniería de la Universidad de Playa Ancha (UPLA), a través del Laboratorio de Teledetección Ambiental (TeleAmb). Este proyecto ha sido desarrollado en el marco del concurso IDeA FONDEF ID20i10058.
               </p>
               <p>
                 El Observatorio Satelital de Nieves tiene como objetivo monitorear las cuencas de Chile, en respuesta a los efectos del cambio climático que están acelerando el derretimiento de nieves y el retroceso de glaciares. Esto facilita la cuantificación de posibles impactos y la preparación de planes de gestión de riesgos, seguridad hídrica y adaptación al cambio climático.
               </p>
+
         </div>
       </div>
     </section>
+  
   </main><!-- End #main -->
 
   <section id="page-bottom"></section>
@@ -167,8 +176,7 @@
                   <a href="mailto:observatorionieves@upla.cl"><i class="icofont-email icofont-2x"></i> observatorionieves@upla.cl</a><br>
                  
               </p>
-       
-             
+      
             </div>
           </div>
 
@@ -177,7 +185,7 @@
             <ul>
               <li><i class="bx bx-chevron-right txt-azul-2"></i> <a href="#">Inicio</a></li>
               <li><i class="bx bx-chevron-right txt-azul-2"></i> <a href="./pages/nacional.html">Nacional</a></li>
-              <li><i class="bx bx-chevron-right txt-azul-2"></i> <a href="./pages/cuencas.html">Cuencas</a></li>
+
               <li><i class="bx bx-chevron-right txt-azul-2"></i> <a href="./pages/metodologia.html">Metodología</a></li>
               <li><i class="bx bx-chevron-right txt-azul-2"></i> <a href="./pages/equipo.html">Equipo</a></li>
 
