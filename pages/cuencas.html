@@ -5,7 +5,8 @@
   <style>
     #map { height: 250px; 
            width: 250px;}
- 
+          
+
   .default {
     margin-left: auto;
     margin-right: auto;
@@ -71,6 +72,11 @@
 
   <!-- CSS Observatorio Nieves -->
   <link href="../assets/css/obs.css" rel="stylesheet">
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script src="https://unpkg.com/georaster"></script>
+<script src="https://unpkg.com/georaster-layer-for-leaflet/dist/georaster-layer-for-leaflet.min.js"></script>
 
 </head>
 
@@ -96,10 +102,6 @@
           <li >
             <a href="nacional.html" class="txt-naranjo-2">Nacional</a>
             
-          </li>
-          <li>
-            <a href="#" class="txt-azul-1">Cuencas</a>
-          
           </li>
 
           <li >
@@ -234,12 +236,24 @@
 
 <!-- FIN SECCIÓN TÍTULO PRINCIPAL -->
 
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <!-- Georaster -->
+    <script src="https://unpkg.com/georaster"></script>
+    <!-- Georaster layer for Leaflet -->
+    <script src="https://unpkg.com/georaster-layer-for-leaflet/dist/georaster-layer-for-leaflet.min.js"></script>
+    <script src="https://unpkg.com/geoblaze"></script>
+    <!-- Leaflet Side-by-Side -->
+    <script src='/assets/js/lib/leaflet-side-by-side.min.js'></script>
+  
+
+
 
 <!-- INICIO SECCIÓN GRAFICOS  -->
 <script type="module">
   import {c_map_location } from '../assets/js/c_map_location.js';         // p01
-  import {c_SCA_map } from '../assets/js/c_SCA_map.js';                   // p02
-  import {c_SCA_trend_map } from '../assets/js/c_SCA_trend_map.js';       // p03
+  import {c_map_location_leaf } from '../assets/js/c_leaflet_map.js';     //p02
+  // import {c_SCA_map } from '../assets/js/c_SCA_map.js';                   // p02
+ // import {c_SCA_trend_map } from '../assets/js/c_SCA_trend_map.js';       // p03
   import { c_SCA_y } from '../assets/js/c_SCA_y.js';                      // p04
   import { c_SCA_y_t_area } from '../assets/js/c_SCA_y_t_area.js';        // p05
   import { c_SCA_y_elev } from '../assets/js/c_SCA_y_elev.js';            // p06
@@ -278,8 +292,9 @@
 
     // run de JS
     c_map_location(watershed);    // p01
-    c_SCA_trend_map(watershed);   // p02 
-    c_SCA_map(watershed);         // p03
+    c_map_location_leaf(watershed); //p02
+   // c_SCA_trend_map(watershed);   // p02 
+   // c_SCA_map(watershed);         // p03
     c_SCA_y(watershed);           // p04
     c_SCA_y_t_area(watershed);    // p05
     c_SCA_y_elev(watershed);      // p06
@@ -304,12 +319,10 @@
       <td rowspan="15" VALIGN="Top" Align="Left">
         <div id="p01"></div>
       </td>
-      <td colspan="10" VALIGN="Top" Align="middle">
-        <div id="p02"></div>
-      </td>
-      <td colspan="10" VALIGN="Top" Align="middle">
-        <div id="p03"></div>
-      </td>
+      <td colspan="20" VALIGN="Top" Align="middle">
+        <div id="p02" style="height: 800px; width: 1000px; border: 2px solid black;"></div>
+    </td>
+    
     </tr>
     <tr>
       <td colspan="10"VALIGN="Top" Align="middle">
@@ -412,7 +425,6 @@
                   <ul>
                       <li><i class="bx bx-chevron-right txt-azul-2"></i> <a href="./index.html">Inicio</a></li>
                       <li><i class="bx bx-chevron-right txt-azul-2"></i> <a href="./pages/nacional.html">Nacional</a></li>
-                      <li><i class="bx bx-chevron-right txt-azul-2"></i> <a href="./pages/cuencas.html">Cuencas</a></li>
                       <li><i class="bx bx-chevron-right txt-azul-2"></i> <a href="./pages/metodologia.html">Metodología</a></li>
                       <li><i class="bx bx-chevron-right txt-azul-2"></i> <a href="./pages/equipo.html"">Equipo</a></li>
                   </ul>
