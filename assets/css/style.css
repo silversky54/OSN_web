@@ -1438,30 +1438,32 @@ path.selected {
 }
 
 /* Style the slider */
-.leaflet-sbs-range {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+.slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 90px; /* Full width within the container */
+  height: 10px; 
+  margin-left: 10px;
+  margin-right: 10px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
 }
 
-.leaflet-sbs-divider {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  margin-left: -2px;
-  width: 4px;
-  background-color: #fff;
-  pointer-events: none;
-  z-index: 999;
+.slider:hover {
+  opacity: 1;
 }
 
-.layers-control .layer-control {
-  display: block;
-  padding: 0.2em;
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #000000;
+  cursor: pointer;
 }
-.layers-control input[type="radio"]:checked + label {
-  font-weight: bold;
-  color: blue;
-}
+

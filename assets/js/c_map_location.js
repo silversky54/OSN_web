@@ -8,7 +8,7 @@ export async function c_map_location(watershed) {
   // Crear un nuevo SVG y agregarlo al cuerpo del documento
   const svg = d3.select("#p01").append("svg")
     .attr("width", "100%")
-    .attr("height", "100%")
+    .attr("height", "auto")
     .attr("viewBox", `0 0 ${width} ${height}`)
     .attr("preserveAspectRatio", "xMinYMin meet")
     .attr("id", "d3-plot")
