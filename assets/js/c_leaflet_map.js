@@ -6,12 +6,12 @@ import { addLegendsToMap, removeExistingLegends } from './tools/legendManagement
 import { addCenteredTitle } from './tools/watershedTitle.js';
 
 // Variables globales para almacenar el estado del mapa y las capas
-let currentMap = null; // Variable para almacenar el mapa actual
-let leftLayer = null; // Variable para almacenar la capa izquierda
-let rightLayer = null; // Variable para almacenar la capa derecha
-let sideBySideControl = null; // Variable para almacenar el control sideBySide
-let stLegend = null; // Variable para almacenar la leyenda ST
-let spLegend = null; // Variable para almacenar la leyenda SP
+let currentMap = null; 
+let leftLayer = null; 
+let rightLayer = null; 
+let sideBySideControl = null; 
+let stLegend = null; 
+let spLegend = null; 
 export async function c_map_location_leaf(watershed) {
     const mapContainer = document.getElementById('p02');
 
@@ -64,6 +64,63 @@ export async function c_map_location_leaf(watershed) {
 
     const watershed_selected_sp = text_ini_sp.concat(watershed).concat(text_end_sp);
     const watershed_selected_st = text_ini_st.concat(watershed).concat(text_end_st);
+
+    async function loadGeoJson(currentMap, watershed) {
+        try {
+            const response = await fetch('/assets/vec/Cuencas_BNA_Oficial.geojson');
+            const data = await response.json();
+            
+            // Filtrar las características que coinciden con el COD_CUEN del watershed seleccionado
+            const filteredFeatures = data.features.filter(feature => feature.properties.COD_CUEN === watershed);
+    
+            // Crear un nuevo FeatureCollection con solo las características filtradas
+            const filteredGeoJson = {
+                type: "FeatureCollection",
+                features: filteredFeatures
+            };
+    
+            // Agregar el GeoJSON filtrado al mapa con el estilo deseado
+            const geoJsonLayer = L.geoJSON(filteredGeoJson, {
+                style: function (feature) {
+                    return {
+                        color: '#A9A9A9',  // Color del borde negro
+                        weight: 2,         // Grosor del borde
+                        opacity: 1,
+                        fillColor: '#ffffff',  // Color de relleno blanco
+                        fillOpacity: 0.3
+                    };
+                },
+                onEachFeature: function (feature, layer) {
+                    layer.on('mouseover', function (e) {
+                        const properties = feature.properties;
+                        const name = properties.NOM_CUEN;
+                        const area = properties.Area_km2 ? parseFloat(properties.Area_km2).toFixed(2) : 'No Disponible';
+                        const tooltipContent = `
+                            <strong>Cuenca Código BNA: </strong> ${properties.COD_CUEN}<br>
+                            <strong>Cuenca Nombre: </strong> ${name}<br>
+                            <strong>Área: </strong> ${area} km²
+                        `;
+                        layer.bindTooltip(tooltipContent).openTooltip(e.latlng);
+                    });
+    
+                    layer.on('mouseout', function() {
+                        layer.closeTooltip();
+                    });
+                }
+            }).addTo(currentMap);
+    
+            // Ajustar el mapa para mostrar solo el área del polígono filtrado
+            currentMap.fitBounds(geoJsonLayer.getBounds());
+    
+        } catch (error) {
+            console.error('Error al cargar el GeoJSON:', error);
+        }
+    }
+    
+    // Llamar a la función loadGeoJson pasando el mapa y el watershed seleccionado
+    loadGeoJson(currentMap, watershed);
+    
+
 
     // Cargar y agregar la capa ST a la izquierda
     loadGeoRasterLayer(watershed_selected_st, currentMap, valueToSTColor)
