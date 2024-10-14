@@ -6,7 +6,7 @@ export function valueToSTColor(value) {
          0,  100,  200,  300,  400,  500,  600,  700,  800,  900, 1000
     ];
     const range = [
-        "#FF0000", "#FF0303", "#FF1E1F", "#FE393A", "#FE5456", "#FD6F72", "#FD8B8D", 
+        "#FF0000", "#fb3629", "#FF1E1F", "#FE393A", "#FE5456", "#FD6F72", "#FD8B8D", 
         "#FCA6A9", "#FCC1C5", "#FBDCE0", "#FBF7FC", "#FBF7FC", "#DFDEFC", "#C4C4FD", 
         "#A8ABFD", "#8D92FD", "#7178FE", "#565FFE", "#3A46FE", "#1F2CFF", 
         "#0313FF", "#0000FF"

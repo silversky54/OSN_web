@@ -28,7 +28,7 @@ export async function tm_SP_y_t_area() {
 
 
   var series = d3.stack()
-      .keys(['1n','2n','3n','4n','5n','6n','7n','8n','9n','10n','m10n','0','1','2','3','4','5','6','7','8','9','10'])
+      .keys(['n00','n01','n02','n03','n04','n05','n06','n07','n08','n09','n10','p00','p01','p02','p03','p04','p05','p06','p07','p08','p09','p010'])
       .offset(d3.stackOffsetDiverging)
       (data);
   
@@ -40,7 +40,7 @@ export async function tm_SP_y_t_area() {
 
   
   var x = d3.scaleBand()
-      .domain(data.map(function(d) { return d.Macrozona; }))
+      .domain(data.map(function(d) { return d.COD_CUEN; }))
       .rangeRound([margin.left, width - margin.right])
       .padding(0.1);
   
@@ -59,7 +59,7 @@ export async function tm_SP_y_t_area() {
     .data(function(d) { return d; })
     .enter().append("rect")
       .attr("width", x.bandwidth)
-      .attr("x", function(d) { return x(d.data.Macrozona); })
+      .attr("x", function(d) { return x(d.data.COD_CUEN); })
       .attr("y", function(d) { return y(d[1]); })
       .attr("height", function(d) { return y(d[0]) - y(d[1]); })
   
@@ -78,7 +78,7 @@ export async function tm_SP_y_t_area() {
           .attr("text-anchor", "center")
           .style("font-size", "18px")
           .attr("font-family","Arial")
-          .text("Superficie tendencia de nieve por macrozonas");
+          .text("Superficie tendencia de nieve por Macrozona");
   
 // Etiqueta del eje X
     svg.append("text")
@@ -87,7 +87,7 @@ export async function tm_SP_y_t_area() {
     .attr("font-size", "13")
     .attr("x", 250)
     .attr("y", 380)
-    .text("Macrozonas");
+    .text("COD_CUENs");
 
     
 // Etiqueta del eje Y
@@ -140,7 +140,7 @@ var button = svg.append("foreignObject")
         
         var blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
         var url = URL.createObjectURL(blob);
-        var fileName = "Superficie_Tendencia_De_Nieve_Por_Mmacrozonas.csv";
+        var fileName = "Superficie_Tendencia_De_Nieve_Por_MCOD_CUENs.csv";
         
         var link = document.createElement("a");
         link.setAttribute("href", url);

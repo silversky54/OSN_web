@@ -8,8 +8,7 @@ export async function loadGeoRasterLayer(url, map, colorFn) {
 
     const rasterLayer = new GeoRasterLayer({
         georaster,
-        opacity: 0.7,
-        resolution: 720,
+         resolution: 720,
         pixelValuesToColorFn: values => {
             const value = values[0];
             // Hacer transparente los valores 0 (que representan áreas fuera de la geometría)
