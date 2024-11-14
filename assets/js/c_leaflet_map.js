@@ -57,7 +57,7 @@ export async function c_map_location_leaf(watershed) {
     }).addTo(currentMap);
         
 // TIFF files
-    const text_ini_sp = "/assets/vec/sp/Andes_MCDS4S5_SP_";
+    const text_ini_sp = "/assets/vec/sp/Andes_MCD10A1_SP_";
     const text_end_sp = ".tif";
     const text_ini_st = "/assets/vec/st/Andes_MCD10A1_ST_";
     const text_end_st = ".tif";
