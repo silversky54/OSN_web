@@ -56,10 +56,10 @@ export async function c_map_location_leaf(watershed) {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions" target="_blank">CARTO</a>'
     }).addTo(currentMap);
         
-
+// TIFF files
     const text_ini_sp = "/assets/vec/sp/Andes_MCDS4S5_SP_";
     const text_end_sp = ".tif";
-    const text_ini_st = "/assets/vec/st/Andes_MCDS4S5_ST_";
+    const text_ini_st = "/assets/vec/st/Andes_MCD10A1_ST_";
     const text_end_st = ".tif";
 
     const watershed_selected_sp = text_ini_sp.concat(watershed).concat(text_end_sp);

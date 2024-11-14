@@ -1465,3 +1465,46 @@ path.selected {
   font-weight: bold;
   color: blue;
 }
+
+
+
+.team-member {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  text-align: center;
+  box-shadow: 0 0 30px rgba(127, 137, 161, 0.25);
+}
+
+.team-member .member-img {
+  position: relative;
+  overflow: hidden;
+}
+
+.team-member .member-img img {
+  transition: all 0.3s ease-in-out;
+}
+
+.team-member .member-info {
+  padding: 20px;
+}
+
+.team-member h4 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 5px;
+  color: #012970;
+}
+
+.team-member span {
+  display: block;
+  font-size: 14px;
+  color: #aaaaaa;
+  margin-bottom: 10px;
+}
+
+.team-member p {
+  font-size: 14px;
+  line-height: 24px;
+  color: #5e5e5e;
+}

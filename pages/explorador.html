@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <style>
+    #map { height: 250px; 
+           width: 250px;}
+
+  </style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PC2JPM4B1L"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-PC2JPM4B1L');
+</script>
+
+  <!-- Hotjar Tracking Code for https://observatorionieves.cl/ -->
+
+
+  <script>
+    (function () {
+      var h, a, f;
+      a = document.getElementsByTagName('link');
+      for (h = 0; h < a.length; h++) {
+        f = a[h];
+        if (f.rel.toLowerCase().match(/stylesheet/) && f.href) {
+          var g = f.href.replace(/(&|\?)rnd=\d+/, '');
+          f.href = g + (g.match(/\?/) ? '&' : '?');
+          f.href += 'rnd=' + (new Date().valueOf());
+        }
+      } // for
+    })()
+  </script>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Observatorio Satelital de Nieves - Descripción Visualizadores </title>
+  <meta content="Observatorio Satelital de Nieves - Chile" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+
+  <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="../assets/vendor/venobox/venobox.css" rel="stylesheet">
+  <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="../assets/css/style.css" rel="stylesheet">
+
+  <!-- CSS Observatorio Nieves -->
+  <link href="../assets/css/obs.css" rel="stylesheet">
+
+  <!-- Script graficos para el observatorio de Nieves -->
+  <script type="module"> 
+    import {map_nacional} from '../assets/js/map_nacional.js'
+    import { tc_SP_SCA } from '../assets/js/tc_SP_SCA.js'; 
+    import { tc_SP_area } from '../assets/js/tc_SP_area.js';
+    import { tc_ca_sca } from '../assets/js/tc_ca_sca.js';
+    import { tc_ca_area } from '../assets/js/tc_ca_area.js';
+    import { tc_ca_snowline } from '../assets/js/tc_ca_snowline.js';
+    import { tm_sp_area } from '../assets/js/tm_sp_area.js';
+    import { tm_SP_y_t_area } from '../assets/js/tm_SP_y_t_area.js';
+    import { tc_max_SP } from '../assets/js/tc_max_SP.js';
+    
+
+    map_nacional(); //p1
+    tc_SP_SCA();  //p2
+    tc_SP_area(); //p3
+    tc_ca_sca();  //p4
+    tc_ca_area(); //p5
+    tc_ca_snowline(); //p6
+    tc_max_SP(); //p7
+    tm_sp_area(); //p8
+    tm_SP_y_t_area();  //p9
+
+</script>
+
+
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top header-transparent">
+    <div class="container d-flex align-items-center">
+
+      <div class="logo mr-auto">
+        <a href="../index.html">
+          <img src="../assets/img/logos_obsnieves/logo-horizontal-color-positivo.png" alt="" class="img-fluid"
+            style="min-height: 100px">
+        </a>
+      </div>
+
+      <nav class="nav-menu d-none d-lg-block">
+        <ul>
+
+          <li class="">
+            <a href="../index.html" class="txt-naranjo-2"><i class="icofont-home"></i> Inicio</a>
+          </li>
+          <li >
+            <a href="#" class="txt-azul-1">Explorador</a>
+            
+          </li>
+
+
+          <li >
+            <a href="metodologia.html" class="txt-naranjo-2">Metodología</a>
+            
+          </li>
+
+          <li >
+            <a href="equipo.html" class="txt-naranjo-2">Equipo</a>
+            
+          </li>
+
+        </ul>
+      </nav><!-- .nav-menu -->
+
+    </div>
+  </header><!-- End Header -->
+
+  <section id="hero-obs" class=""></section>
+
+  <section id="page-title">
+    <h2>Análisis nacional</h2>
+  </section>
+  
+  <main id="main" class="p-3">
+  
+    <div class="container">
+      <div class="row">
+      
+      </div>
+    </div>
+  
+    <section class="p-3">
+      <div class="container" style="margin: 50; padding: 50;">
+        <div class="row " style="margin: -100px; padding: -50px;">
+          <h5 class="text-uppercase text-justify txt-naranjo-2">Análisis de variabilidad espacio-temporal de la cobertura de nieve a nivel regional</h5>
+          <div class="col-12 text-justify">
+            <p>
+            </p>
+            <p style="text-align: justify;">
+              Los siguientes gráficos resumen el estado de la cobertura de nieve usando MODIS como base para su análisis desde el año 2000, se analizaron las 101 cuencas definidas en el Banco Nacional de Agua, de las cuales 46 presentaron presencia relevante de nieve (sobre un 5% de cobertura promedio de nieve). Con el mapa de la izquierda se puede acceder a un análisis por cuenca. Cada gráfico ofrece la posibilidad de exportar los datos para su análisis.
+            </p>
+            
+          </div>
+        </div>
+      </div>
+    </section>
+  
+  </main><!-- End #main -->
+   <!-- FIN SECCIÓN TÍTULO PRINCIPAL -->
+
+ <!-- INICIO SECCIÓN MAPAS  -->
+ <section>
+  <table class="default" style="margin-left: auto;margin-right: auto; width: 800px;">
+    <tr>
+      <td rowspan="3" style="vertical-align: center;">
+          
+            <div id="p01"></div>
+          
+      </td>
+      <th colspan="2" style="text-align: center;">
+          <div class="custom_heading-test">
+              Persistencia de nieve 2000-2023
+          </div>
+      </th>
+      <th colspan="3" style="text-align: center;">
+          <div class="custom_heading-test">
+              Cambios acumulados 2000-2023
+          </div>
+      </th>
+      <th style="text-align: center;">
+          <div class="custom_heading-test">
+              Anomalías Cobertura Maxima 2023
+          </div>
+      </th>
+  </tr>
+  
+    <tr>
+      <td><div id="p02"></td>
+      <td><div id="p03"></td>
+      <td><div id="p04"></td>
+      <td><div id="p05"></td>
+      <td><div id="p06"></td>
+      <td><div id="p07"></td>
+   
+    </tr>
+    <tr>
+      <td colspan="3"><div id="p08"></td>
+      <td colspan="3"><div id="p09"></td>
+    </tr>
+
+
+</table>
+</section>
+
+
+
+
+  <section id="page-bottom"></section>
+
+  <!-- ======= Footer ======= -->
+<footer id="footer" class="bg-azul-1">
+  <div class="footer-top ">
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-4 col-md-6">
+                  <div class="footer-info" data-aos="fade-up" data-aos-delay="50">
+                      <h3>
+                          <img src="../assets/img/logos_obsnieves/logo-horizontal-color-positivo.png" alt="" class="img-fluid" style="min-height: 100px">
+                      </h3>
+                      <p class="txt-azul-1">
+                        <a href="https://www.google.com/maps/place/Subida+Leopoldo+Carvallo+270,+Playa+Ancha,+Valpara%C3%ADso,+Chile" target="_blank">Subida Leopoldo Carvallo 270, Valparaíso, Chile </a><br>
+                        <br> 
+                          <a href="tel:+56322205265">+56322205265</a><br>
+                          <a href="mailto:observatorionieves@upla.cl"><i class="icofont-email icofont-2x"></i> observatorionieves@upla.cl</a><br>
+                          
+                      </p>
+                  </div>
+              </div>
+
+              <div class="col-lg-2 col-md-6 footer-links" data-aos="fade-up" data-aos-delay="150">
+                  <h4 class="text-uppercase txt-azul-2">Navegación</h4>
+                  <ul>
+                      <li><i class="bx bx-chevron-right txt-azul-2"></i> <a href="../index.html">Inicio</a></li>
+                      <li><i class="bx bx-chevron-right txt-azul-2"></i> <a href="/pages/explorador.html">Explorador</a></li>
+
+                      <li><i class="bx bx-chevron-right txt-azul-2"></i> <a href="../pages/metodologia.html">Metodología</a></li>
+                      <li><i class="bx bx-chevron-right txt-azul-2"></i> <a href="../pages/equipo.html">Equipo</a></li>
+                  </ul>
+              </div>
+
+              <div class="col-lg-2 col-md-6 footer-links" data-aos="fade-up" data-aos-delay="250">
+                  <h4 class="text-uppercase txt-azul-2">Otros Enlaces</h4>
+                  <ul>
+                      <li><i class="bx bx-chevron-right txt-azul-2"></i> <a href="https://www.upla.cl/" target="_blank">UPLA</a></li>
+                      <li><i class="bx bx-chevron-right txt-azul-2"></i> <a href="https://teleamb.cl/" target="_blank">TeleAmb</a></li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <div class="container">
+      <div class="copyright">
+          &copy; Copyright <strong><span>Observatorio Satelital de Nieves</span></strong>. Todos los Derechos Reservados
+      </div>
+      <div class="credits">
+          Diseñada por <a href="https://teleamb.cl/">TeleAmb</a>
+      </div>
+  </div>
+</footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+
+
+
+  <!-- Vendor JS Files -->
+  <script src="../assets/vendor/jquery/jquery.min.js"></script>
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+  <script src="../assets/vendor/php-email-form/validate.js"></script>
+  <script src="../assets/vendor/waypoints/jquery.waypoints.min.js"></script>
+  <script src="../assets/vendor/counterup/counterup.min.js"></script>
+  <script src="../assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="../assets/vendor/venobox/venobox.min.js"></script>
+  <script src="../assets/vendor/owl.carousel/owl.carousel.min.js"></script>
+  <script src="../assets/vendor/aos/aos.js"></script>
+
+  <!-- Javascript Image Zoom On Click -->
+  <script src="../assets/js/zooming.min.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="../assets/js/main.js"></script>
+
+  <!-- CSS OBservatorio Nieves -->
+  <script src="../assets/js/obs.js"></script>
+
+</body>
+
+</html>
