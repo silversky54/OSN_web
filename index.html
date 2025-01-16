@@ -58,6 +58,15 @@
   <!-- Leaflet -->
  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+ <!-- Swiper CSS -->
+<link
+rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"
+/>
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
 
 
 <body>
@@ -143,6 +152,55 @@
 
   <section id="page-bottom"></section>
 
+
+
+    <!-- ======= Clients Section ======= -->
+    <section id="clients" class="clients">
+      <div class="container" >
+           <div class="" style="text-align: center;">
+              <h2>Instituciones</h2>
+            
+            </div>
+
+        <div class="clients-slider swiper">
+          <div class="swiper-wrapper align-items-center">
+            <div class="swiper-slide"> <a title="UPLA" href="http://www.upla.cl"><img src="assets/img/clients/Upla_Inst.png" class="img-fluid" alt="UPLA" ></a></div>
+            <div class="swiper-slide"> <a title="ANID" href="http://www.anid.cl"><img src="assets/img/clients/Anid_Inst.png"class="img-fluid" alt="ANID"></div> 
+            <div class="swiper-slide"> <a title="TELEAMB" href="http://www.teleamb.cl"><img src="assets/img/clients/TeleAmb_Inst.png" class="img-fluid" alt="TELEAMB"></div>
+            <div class="swiper-slide"> <a title="HUB" href="https://hubambientalupla.cl"><img src="assets/img/clients/HUB-Inst.png" class="img-fluid" alt="HUB" ></a></div>
+            <div class="swiper-slide"> <a title="CSU" href="https://www.colostate.edu"><img src="assets/img/clients/Colorado_State_University_Inst.png" class="img-fluid" alt="CSU"></div>
+            <div class="swiper-slide"> <a title= "DGA" href = "https://dga.mop.gob.cl/Paginas/default.aspx"><img src ="assets/img/clients/DGA.png" class= "img-fluid" alt = "DGA"></div>
+            </div>
+        </div>
+
+      </div>
+</section><!-- End Clients Section -->
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var swiper = new Swiper(".clients-slider", {
+      slidesPerView: 4,           // cantidad logos
+      spaceBetween: 30,           // espacio entre logos
+      loop: true,                 // que se repita siempre
+      autoplay: {
+        delay: 2500,              // Tiempo (ms) entre transiciones
+        disableOnInteraction: false,
+      },
+      // Opciones de velocidad y navegación
+      speed: 500, // Velocidad de la transición
+      // Si quieres flechas de navegación, puedes agregar:
+      
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+
+      },
+
+    });
+  });
+</script>
+
+
   <!-- ======= Footer ======= -->
   <footer id="footer" class="bg-azul-1">
     <div class="footer-top ">
@@ -208,6 +266,9 @@
       </div>
     </div>
   </footer><!-- End Footer -->
+
+
+
 
   <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
 

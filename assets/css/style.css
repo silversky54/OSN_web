@@ -1508,3 +1508,30 @@ path.selected {
   line-height: 24px;
   color: #5e5e5e;
 }
+
+/*--------------------------------------------------------------
+# Clients Section
+--------------------------------------------------------------*/
+.clients {
+  padding: 0 0 60px 0;
+}
+.clients-slider .swiper-slide {
+  /* Centra el contenido dentro del slide */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.clients-slider .swiper-slide img {
+  width: 150px;            /* Ajusta a tu gusto */
+  height: 150px;            /* Ajusta a tu gusto */
+  object-fit: contain;     /* Mantiene proporciones */
+  opacity: 0.5;
+  transition: 0.3s;
+  filter: grayscale(100%);
+}
+.clients-slider .swiper-slide img:hover {
+  filter: none;
+  opacity: 1;
+}
+
+
