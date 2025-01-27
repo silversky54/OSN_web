@@ -36,12 +36,12 @@ var tooltip = d3.select("#p19")
 //Read the data 
 const csvData = await d3.csv(watershed_selected);
 const data = csvData.map(d => ({
-  Year: d3.timeParse("%Y-%m-%d")(d.Year),
+  Date: d3.timeParse("%Y-%m-%d")(d.Date),
   Snowline_elev: +d.Snowline_elev
 }));
     // Add X axis --> it is a date format
     const x = d3.scaleBand()
-    .domain(data.map(d => d.Year)) // Use the dates in your data for the domain
+    .domain(data.map(d => d.Date)) // Use the dates in your data for the domain
     .range([0, width])
     .padding(0.05);
 svg.append("g")
@@ -106,12 +106,12 @@ svg.append("path")
   .attr("stroke-width", 1.5)
   .attr("d", d3.line()
     .defined(d => d.Snowline_elev) // Solo dibujar la línea si Snowline_elev está definido
-    .x(d => x(d.Year))
+    .x(d => x(d.Date))
     .y(d => y(d.Snowline_elev))
   );
 
   // Agrupar los datos por año y calcular el valor máximo para cada año
-const groupedData = d3.group(data, d => d.Year.getFullYear());
+const groupedData = d3.group(data, d => d.Date.getFullYear());
 
 
 const maxValues = Array.from(groupedData, ([year, values]) => ({
@@ -119,34 +119,40 @@ const maxValues = Array.from(groupedData, ([year, values]) => ({
   value: d3.max(values.filter(d => d.Snowline_elev !== 0 && !isNaN(d.Snowline_elev)), d => d.Snowline_elev)
 }));
 
-// Filtrar los valores máximos para los años 2000 a 2023
-const maxValues2000To2023 = maxValues.filter(d => d.year >= 2000 && d.year <= 2023 && d.value !== 0 && !isNaN(d.value));
- //console.log(maxValues2000To2023)
+// Filtrar los valores máximos para los años 2000 a 2024
+// CORREGIR (usar d.year para el filtrado por año):
+const maxValues2000To2024 = maxValues.filter(d => d.year >= 2000 && d.year <= 2024 && d.value !== 0 && !isNaN(d.value));
+
+ //console.log(maxValues2000To2024)
 
 var sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0; //
 
-for (var i = 0; i < maxValues2000To2023.length; i++) {
+for (var i = 0; i < maxValues2000To2024.length; i++) {
 
-  sumX += maxValues2000To2023[i].year;
+  sumX += maxValues2000To2024[i].year;
 
-  sumY += maxValues2000To2023[i].value;
+  sumY += maxValues2000To2024[i].value;
 
-  sumXY += maxValues2000To2023[i].year * maxValues2000To2023[i].value;
+  sumXY += maxValues2000To2024[i].year * maxValues2000To2024[i].value;
 
-  sumX2 += maxValues2000To2023[i].year * maxValues2000To2023[i].year;
+  sumX2 += maxValues2000To2024[i].year * maxValues2000To2024[i].year;
 
 }
 
-var slope_max = (maxValues2000To2023.length * sumXY - sumX * sumY) / (maxValues2000To2023.length * sumX2 - sumX * sumX);
-var intercept_max = (sumY - slope_max * sumX) / maxValues2000To2023.length;
+var slope_max = (maxValues2000To2024.length * sumXY - sumX * sumY) / (maxValues2000To2024.length * sumX2 - sumX * sumX);
+var intercept_max = (sumY - slope_max * sumX) / maxValues2000To2024.length;
 
 var Y_ini_max = 2000*(slope_max) + ( intercept_max);
-var Y_fin_max = 2023*(slope_max) + ( intercept_max);
+var Y_fin_max = 2024*(slope_max) + ( intercept_max);
 
 
 
-const Y_sti_ini_max = (([1.05*d3.max(data, d => +d.Snowline_elev)] -Y_ini_max) / (1.05*d3.max(data, d => +d.Snowline_elev))) *height;
-const Y_sti_fin_max = (([1.05*d3.max(data, d => +d.Snowline_elev)] -Y_fin_max) / (1.05*d3.max(data, d => +d.Snowline_elev))) *height;
+const Y_sti_ini_max = ((1.05 * d3.max(data, d => +d.Snowline_elev) - Y_ini_max)
+                    / (1.05 * d3.max(data, d => +d.Snowline_elev))) * height;
+
+const Y_sti_fin_max = ((1.05 * d3.max(data, d => +d.Snowline_elev) - Y_fin_max)
+                    / (1.05 * d3.max(data, d => +d.Snowline_elev))) * height;
+
 
 // Añadir la línea de tendencia para el promedio de los valores máximos
 svg.append("line")
@@ -166,30 +172,34 @@ svg.append("line")
     value: d3.min(values.filter(d => d.Snowline_elev !== 0 && !isNaN(d.Snowline_elev)), d => d.Snowline_elev)
   }));
   
-  // Filtrar los valores mínimos para los años 2000 a 2023
- const minValues2000To2023 = minValues.filter(d => d.year >= 2000 && d.year <= 2023 && d.value !== 0 && !isNaN(d.value));
+  // Filtrar los valores mínimos para los años 2000 a 2024
+// AHORA (falla):
+// CORREGIR:
+const minValues2000To2024 = minValues.filter(d => d.year >= 2000 && d.year <= 2024 && d.value !== 0 && !isNaN(d.value));
+
+
 
    
   var sumXmin = 0, sumYmin = 0, sumXYmin = 0, sumX2min = 0;
- //console.log (minValues2000To2023)
-  for (var i = 0; i < minValues2000To2023.length; i++) {
+ //console.log (minValues2000To2024)
+  for (var i = 0; i < minValues2000To2024.length; i++) {
   
-    sumXmin += minValues2000To2023[i].year;
+    sumXmin += minValues2000To2024[i].year;
   
-    sumYmin += minValues2000To2023[i].value;
+    sumYmin += minValues2000To2024[i].value;
   
-    sumXYmin += minValues2000To2023[i].year * minValues2000To2023[i].value;
+    sumXYmin += minValues2000To2024[i].year * minValues2000To2024[i].value;
   
-    sumX2min += minValues2000To2023[i].year * minValues2000To2023[i].year;
+    sumX2min += minValues2000To2024[i].year * minValues2000To2024[i].year;
   
   }
   
   //  _min de valores minimos.
-  var slope_min = (minValues2000To2023.length * sumXYmin - sumXmin * sumYmin) / (minValues2000To2023.length * sumX2min - sumXmin * sumXmin);
-  var intercept_min = (sumYmin - slope_min * sumXmin) / minValues2000To2023.length;
+  var slope_min = (minValues2000To2024.length * sumXYmin - sumXmin * sumYmin) / (minValues2000To2024.length * sumX2min - sumXmin * sumXmin);
+  var intercept_min = (sumYmin - slope_min * sumXmin) / minValues2000To2024.length;
   
   var Y_ini_min = 2000*(slope_min) + ( intercept_min);
-  var Y_fin_min = 2023*(slope_min) + ( intercept_min);
+  var Y_fin_min = 2024*(slope_min) + ( intercept_min);
   
   //console.log(Y_ini_min) //Valor = 19.7 
   //console.log(Y_fin_min) //Valor = 19.9
@@ -339,14 +349,14 @@ svg.selectAll("myCircles")
     .append("circle")
     .attr("fill", "steelblue")
     .attr("stroke", "none")
-    .attr("cx", function(d) { return x(d.Year); })
+    .attr("cx", function(d) { return x(d.Date); })
     .attr("cy", function(d) { return y(d.Snowline_elev); })
     .attr("r", 4)
     .style("opacity", 0) // Hacer los puntos invisibles al principio
     .on("mouseover", function(event, d) {
         tooltip
             .style("opacity", 1)
-            .html("Mes: " + (d.Year.getMonth() + 1) + "<br>" + "Año: " + d.Year.getFullYear() + "<br>" + "Elevación de la línea de nieve: " + Math.floor(d.Snowline_elev) + " (m)")
+            .html("Mes: " + (d.Date.getMonth() + 1) + "<br>" + "Año: " + d.Date.getFullYear() + "<br>" + "Elevación de la línea de nieve: " + Math.floor(d.Snowline_elev) + " (m)")
             .style("left", (event.pageX + 30) + "px")
             .style("top", (event.pageY + 30) + "px");
         d3.select(this)
@@ -367,5 +377,11 @@ svg.selectAll("myCircles")
             .style("fill", "steelblue")
             .style("opacity", 0); // Hacer el punto invisible de nuevo cuando el mouse sale de él
     });
-        
+ 
+
+    
+
 }
+
+
+
