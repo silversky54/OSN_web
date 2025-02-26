@@ -60,6 +60,35 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 90px;
 }
 
+
+    /* Estilos para móviles (menos de 768px) */
+    @media (max-width: 767px) {
+      .container {
+          margin: 20px !important;
+          padding: 20px !important;
+      }
+      
+      .txt-naranjo-2 {
+          font-size: 1.2rem !important;
+      }
+      
+      .row {
+          margin: 0 !important;
+          padding: 0 !important;
+      }
+      
+      p {
+          font-size: 0.9rem;
+          line-height: 1.5;
+      }
+  }
+
+  /* Estilos base mejorados */
+  .txt-naranjo-2 {
+      color: #FF5722;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+  }
 /*--------------------------------------------------------------
 # Header
 --------------------------------------------------------------*/
