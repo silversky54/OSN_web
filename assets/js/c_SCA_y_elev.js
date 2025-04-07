@@ -1,12 +1,14 @@
 import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
 
 export async function c_SCA_y_elev(watershed) {
-    const margin = { top: 80, right: 0, bottom: 70, left: 100 };
-    const width = 500 - margin.left - margin.right;
+    const margin = { top: 68, right: 10, bottom: 70, left: 50 };
+    const width = 550 - margin.left - margin.right;
     const height = 400 - margin.top - margin.bottom;
 
-    const svg = d3.select("#p06")
-      .append("svg")
+    // Si el ancho de la ventana es <= 768px, usará el contenedor móvil, de lo contrario el de escritorio.
+    const containerId = window.innerWidth <= 767 ? "#p06-mob" : "#p06-desk";
+  // Crear un nuevo SVG y agregarlo al cuerpo del documento
+  const svg = d3.select(containerId).append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
       .append("g")
@@ -15,10 +17,20 @@ export async function c_SCA_y_elev(watershed) {
     const text_ini = "../assets/csv/year/SCA_y_elev_BNA_";
     const text_end = ".csv";
     const watershed_selected = text_ini.concat(watershed).concat(text_end);
-    const data = await d3.csv(watershed_selected);
+// Modifica la carga del CSV para redondear la elevación
+const data = await d3.csv(watershed_selected, d => ({
+    ...d,
+    Elevation: Math.round(d.Elevation), // redondear a numeros enteros la elevación
+    SCA: +d.SCA,
+    CCA: +d.CCA,
+    Year: +d.Year
+  }));
 
     const myGroups = Array.from(new Set(data.map(d => d.Year)));
-    const myVars = Array.from(new Set(data.map(d => d.Elevation)));
+// Modifica la creación del array myVars
+const myVars = Array.from(new Set(data.map(d => d.Elevation)))
+  .sort((a, b) => a - b)
+  .map(n => Math.round(n)); // Redondear por si hubiera decimales residuales
 
     const x = d3.scaleBand()
         .range([0, width])
@@ -36,8 +48,10 @@ export async function c_SCA_y_elev(watershed) {
       .range([height, 0])
       .domain(myVars)
       .padding(0.05);
-   const yAxis = d3.axisLeft(y)
-      .tickValues(y.domain().filter(function(d,i){ return !(i%5)}));
+ // Modifica la creación del eje Y
+const yAxis = d3.axisLeft(y)
+.tickValues(y.domain().filter((d, i) => !(i % 5)))
+.tickFormat(d3.format("d")); // Formato para enteros
     const gX = svg.append("g").call(yAxis);
 
     const colorScaleThreshold = d3
@@ -45,7 +59,7 @@ export async function c_SCA_y_elev(watershed) {
         .domain([0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100])
         .range(["#FFFFE6", "#FFFFB4", "#FFEBBE", "#FFD37F", "#FFAA00", "#E69800", "#70A800", "#00A884", "#0084A8", "#004C99"]);
 
-    const tooltip = d3.select("#p06")
+    const tooltip = d3.select(containerId)
         .append("div")
         .style("opacity", 0)
         .attr("class", "tooltip")
@@ -84,6 +98,7 @@ export async function c_SCA_y_elev(watershed) {
         .data(data, function (d) { return d.Year + ':' + d.Elevation; })
         .enter()
         .append("rect")
+        .attr("class", "graph-rect") 
         .attr("x", function (d) { return x(d.Year); })
         .attr("y", function (d) { return y(d.Elevation); })
         .attr("width", x.bandwidth())
@@ -96,75 +111,62 @@ export async function c_SCA_y_elev(watershed) {
         .on("mousemove", mousemove)
         .on("mouseleave", mouseleave);
 
-// slider container
-const sliderContainer = d3.select("#p06")
-    .append("div")
-    .attr("class", "slider-container");
-//
-var valueini = 30
 
-    sliderContainer.append("input")
-    .attr("type", "range")  
-    .attr("id", "ccaSlider3")
-    .attr("min", 0)
-    .attr("max", 100)
-    .attr("value", valueini)
-    .attr("class", "slider")
-    sliderContainer.append("span")
-    .attr("id", "sliderLabel3")
-    .text("Nubosidad > : ");
+// Coordenadas donde quieres el slider (ajústalas)
+const sliderX = 130; // Ejemplo: centro horizontal
+const sliderY = 300; // Ejemplo: debajo del gráfico
 
-   function updateGraph() {
+// Contenedor del slider
+const sliderGroup = svg.append("foreignObject")
+    .attr("x", sliderX)
+    .attr("y", sliderY)
+    .attr("width", 320)
+    .attr("height", 50);
+
+sliderGroup.append("xhtml:div")
+    .style("display", "flex")
+    .style("align-items", "center")
+    .style("gap", "10px")
+    .html(`
+        <input type="range" id="ccaSlider3" min="0" max="100" value="30" style="width: 150px">
+        <span id="sliderLabel3" style="font-family: Arial; font-size: 14px;">Nubosidad > : 30%</span>
+        <div style="width: 15px; height: 15px; background: black; border: 1px solid #999"></div>
+    `);
+
+// Función de actualización
+function updateGraph() {
     const sliderValue = +d3.select("#ccaSlider3").property("value");
     d3.select("#sliderLabel3").text(`Nubosidad > : ${sliderValue}%`);  
     
-    svg.selectAll("rect")
-    .style("fill", function (d) {
-        const SCA = Number(d.SCA);
-        const CCA = Number(d.CCA);
-        return (CCA > sliderValue) ? "black" : colorScaleThreshold(SCA);
-        });
-   } 
-    updateGraph();
+    svg.selectAll(".graph-rect") // Usar clase específica
+        .style("fill", d => (d.CCA > sliderValue) ? "black" : colorScaleThreshold(d.SCA));
+}
 
-  d3.select("#ccaSlider3").on("input", updateGraph);
+// Ejecutar al inicio
+updateGraph(); // <--- ¡Clave para inicializar!
 
+// Evento del slider
+d3.select("#ccaSlider3").on("input", updateGraph);
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// SECCION DE TITULO Y SUB SITUTLO
 
 
     var x_title = 0;
 
     svg.append("text")
-        .attr("x", x_title - 30)
-        .attr("y", -20)
+        .attr("x", 0 )
+        .attr("y", -30)
         .attr("text-anchor", "center")
         .attr("font-family", "Arial")
-        .style("font-size", "20px")
-        .text("6. Cobertura de nieve promedio por elevación");
+        .style("font-size", "18px")
+        .text("5. Cobertura de nieve promedio por elevación (2000-2024)");
 
     svg.append("text")
-        .attr("x", x_title + 20)
-        .attr("y", -5)
+        .attr("x", 20 )
+        .attr("y", -10)
         .attr("text-anchor", "center")
         .style("font-size", "16px")
         .attr("font-family", "Arial")
@@ -189,6 +191,8 @@ var valueini = 30
         .attr("y", height + 40)
         .text("Años");
 
+
+        // Crear un botón de exportación dentro del SVG
     var button = svg.append("foreignObject")
         .attr("width", 30) 
         .attr("height", 40) 
@@ -213,5 +217,4 @@ var valueini = 30
             document.body.removeChild(link);
         });
 
-    d3.select("#ccaSlider2").on("input", updateGraph);
 }

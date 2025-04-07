@@ -1,19 +1,39 @@
 import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
 
 // Función para dibujar el gráfico 
-export async function c_SCA_ym_elev(watershed) {
-    // set the dimensions and margins of the graph
-    const margin = {top: 50, right: 80, bottom: 50, left: 80};
-    const width = 1000 - margin.left - margin.right;
+export async function c_SCA_ym_elev(watershed, suffix = 'desk') {
+    const margin = { top: 50, right: 80, bottom: 70, left: 80 };
+    const isMobile = suffix === 'mob';
+    const width = isMobile ? window.innerWidth - 30 : 1000 - margin.left - margin.right;
     const height = 400 - margin.top - margin.bottom;
+    const containerId = `p18-${suffix}`;
+    const container = document.getElementById(containerId);
 
-    // append the svg object to the body of the page
-    const svg = d3.select("#p18")
+    // Limpiar contenedor
+    container.innerHTML = '';
+
+    // Crear SVG
+    const svg = d3.select(`#${containerId}`)
         .append("svg")
-        .attr("width", width + margin.left + margin.right)
+        .attr("width", isMobile ? "100%" : width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
+        .attr("viewBox", isMobile ? `0 0 ${width + margin.left + margin.right} ${height + margin.top + margin.bottom}` : "")
         .append("g")
-        .attr("transform", `translate(${margin.left},${margin.top})`);
+        .attr("transform", `translate(${margin.left}, ${margin.top})`);
+
+        
+        const tooltip = d3.select("#" + containerId)
+        .append("div")
+        .style("opacity", 0)
+        .attr("class", "tooltip")
+        .style("position", "absolute")  // Asegura que el tooltip flote sobre el gráfico
+        .style("background-color", "white")
+        .style("border", "solid")
+        .style("border-width", "2px")
+        .style("border-radius", "5px")
+        .style("padding", "5px")
+        .style("pointer-events", "none"); // Evita que interfiera con el mouseover
+    
 
     // Text to create .csv file
     const text_ini = "../assets/csv/yearMonth/SCA_ym_elev_BNA_";
@@ -23,7 +43,13 @@ export async function c_SCA_ym_elev(watershed) {
     const watershed_selected = text_ini.concat(watershed).concat(text_end);
 
     // Read the data
-    const data = await d3.csv(watershed_selected);
+const data = await d3.csv(watershed_selected, d => ({
+    ...d,
+    Elevation: Math.round(d.Elevation), // redondear a numeros enteros la elevación
+    SCA: +d.SCA,
+    CCA: +d.CCA,
+
+  }));
 
     // Labels
     const myGroups = Array.from(new Set(data.map(d => d.Date))); // mantiene solo el primer mes de cada año
@@ -80,16 +106,7 @@ svg.append("g")
         .domain([0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100])
         .range(["#FFFFE6", "#FFFFB4", "#FFEBBE", "#FFD37F", "#FFAA00", "#E69800", "#70A800", "#00A884", "#0084A8", "#004C99"])
 
-    // create a tooltip
-    const tooltip = d3.select("#p18")
-        .append("div")
-        .style("opacity", 0)
-        .attr("class", "tooltip")
-        .style("background-color", "white")
-        .style("border", "solid")
-        .style("border-width", "2px")
-        .style("border-radius", "5px")
-        .style("padding", "5px");
+
 
 // Tres funciones que cambian la información sobre herramientas cuando el usuario pasa el cursor/mueve/sale de una celda
 var mouseover = function(d) {
@@ -129,57 +146,58 @@ var mouseover = function(d) {
 
 // Add the squares
 svg.selectAll()
-.data(data, function (d) { return d.Date + ':' + d.Elevation; })
-.enter()
-.append("rect")
-.attr("x", function (d) { return x(d.Date); })
-.attr("y", function (d) { return y(d.Elevation); })
-    .attr("width", x.bandwidth())
-    .attr("height", y.bandwidth())
-    .style("fill", function (d) { return colorScaleThreshold(d.SCA); })
-    .style("stroke-width", 4)
-    .style("stroke", "none")
-    .style("opacity", 0.8)
-    .on("mouseover", mouseover)
-    .on("mousemove", mousemove)
-    .on("mouseleave", mouseleave);
-// Add the slider container
-const sliderContainer = d3.select("#p18")
-    .append("div")
-    .attr("class", "slider-container");
+  .data(data, function (d) { return d.Date + ':' + d.Elevation; })
+  .enter()
+  .append("rect")
+  .attr("class", "graph-rect") // Agrega esta línea para asignar la clase
+  .attr("x", function (d) { return x(d.Date); })
+  .attr("y", function (d) { return y(d.Elevation); })
+  .attr("width", x.bandwidth())
+  .attr("height", y.bandwidth())
+  .style("fill", function (d) { return colorScaleThreshold(d.SCA); })
+  .style("stroke-width", 4)
+  .style("stroke", "none")
+  .style("opacity", 0.8)
+  .on("mouseover", mouseover)
+  .on("mousemove", mousemove)
+  .on("mouseleave", mouseleave);
 
-const valueini = 30
 
-sliderContainer.append("input")
-    .attr("type", "range")
-    .attr("min", 0)
-    .attr("max", 100)
-    .attr("value", valueini)
-    .attr("class", "slider")
-    .attr("id", "ccaSlider4");
 
-sliderContainer.append("span")
-    .attr("id", "sliderValue4")
-    .text(`Nubosidad : 0%`); // Inicializa con valueini
+// Coordenadas donde quieres el slider (ajústalas)
+const sliderX = 280; // Ejemplo: centro horizontal
+const sliderY = 320; // Ejemplo: debajo del gráfico
 
+// Contenedor del slider
+const sliderGroup = svg.append("foreignObject")
+    .attr("x", sliderX)
+    .attr("y", sliderY)
+    .attr("width", 320)
+    .attr("height", 50);
+
+sliderGroup.append("xhtml:div")
+    .style("display", "flex")
+    .style("align-items", "center")
+    .style("gap", "10px")
+    .html(`
+        <input type="range" id="ccaSlider4" min="0" max="100" value="30" style="width: 150px">
+        <span id="sliderLabel4" style="font-family: Arial; font-size: 14px;">Nubosidad > : 30%</span>
+        <div style="width: 15px; height: 15px; background: black; border: 1px solid #999"></div>
+    `);
+
+// Función de actualización
 function updateGraph() {
     const sliderValue = +d3.select("#ccaSlider4").property("value");
-    d3.select("#sliderValue4").text(`Nubosidad > : ${sliderValue}%`);
+    d3.select("#sliderLabel4").text(`Nubosidad > : ${sliderValue}%`);  
     
-    svg.selectAll("rect")
-    .style("fill", function(d) {
-        const SCA = Number(d.SCA);
-        const CCA = Number(d.CCA);
-        if (isNaN(SCA) || isNaN(CCA)) {
-            console.error("Datos inválidos:", d);
-            return "red"; // Indica un error con un color visible
-        }
-        return (CCA > sliderValue) ? "black" : colorScaleThreshold(SCA);
-    });
+    svg.selectAll(".graph-rect") // Usar clase específica
+        .style("fill", d => (d.CCA > sliderValue) ? "black" : colorScaleThreshold(d.SCA));
 }
-// Asegúrate de actualizar el gráfico después de inicializar el slider
-updateGraph();
 
+// Ejecutar al inicio
+updateGraph(); // <--- ¡Clave para inicializar!
+
+// Evento del slider
 d3.select("#ccaSlider4").on("input", updateGraph);
 
 
@@ -190,8 +208,8 @@ d3.select("#ccaSlider4").on("input", updateGraph);
    .attr("font-family", "Arial")
    .attr("font-size", "20px")
    .attr("x", 200)
-   .attr("y", -25)
-   .text("15. Cobertura de nieve promedio por año, mes y elevación");
+   .attr("y", -35)
+   .text("14. Cobertura de nieve promedio por año, mes y elevación");
 
    // Etiqueta SUb titulo
 svg.append("text")
@@ -199,8 +217,8 @@ svg.append("text")
    .attr("font-family", "Arial")
    .attr("font-size", "16px")
    .style("fill", "grey")
-   .attr("x", width / 2  - 40)
-   .attr("y", -10)
+   .attr("x", 232)
+   .attr("y", -15)
    .text("Cuenca: "+ watershed);
 
 // Etiqueta del eje X
@@ -225,9 +243,11 @@ svg.append("text")
 
 
   // Legend
-  const legendGroup = svg.append("g");
-  let legX = 850
-  let legY = 30
+  const legendGroup = svg.append("g")
+  const legX = isMobile ? width - 0 : 850; 
+  const legY = isMobile ? 20 : 80;
+
+
 
   legendGroup.append("text")
   .attr("x", legX)

@@ -106,27 +106,26 @@
     </div>
   </header><!-- End Header -->
 
-  <section id="hero-obs" class=""></section>
+  <main id="main" class="p-3"></main>
 
-  <section id="page-title">
-    <h2>Metodología</h2>
-  </section>
-  
-  <main id="main" class="p-3">
-  
+  <section id="page-title" class="container-fluid p-3">
     <div class="container">
-      <div class="row">
-      
-      </div>
+        <div class="row">
+            <div class="col-12">
+                <h2 class="titulo-inicio">Metodología</h2>
+            </div>
+        </div>
     </div>
-  
-  </main><!-- End #main -->
+</section>
+
   <!-- INICIO SECCIÓN TÍTULO PRINCIPAL -->
 <!-- INICIO SECCIÓN TÍTULO PRINCIPAL -->
 <section class="p-3">
-  <div class="container" style="margin: 50; padding: 50;">
-    <div class="row" style="margin: -100px; padding: -50px;">
-      <h5 class="text-uppercase text-justify txt-naranjo-2">Producto de nieve de MODIS</h5>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-10">
+        <h5 class="text-uppercase txt-naranjo-2 mb-4">Producto de nieve de MODIS</h5>
+        
       <div class="col-12 text-justify">
         <p style="text-align: justify;">
           El área de estudio considera el total del territorio nacional continental de Chile (~756,000 km²). Los datos satelitales provienen del programa Moderate Resolution Imaging Spectroradiometer (MODIS), producto diario de Snow Cover Daily L3, versión 6.1 de las plataformas satelitales Terra MOD10A1 (Terra) y MYD10A1 (Aqua). Estos productos satelitales poseen una resolución espacial de 500 m, desde los años 2000 (MOD10A1) y 2002 (MYD10A1) hasta nuestros días, con resolución temporal diaria. Además, se adquirió un Modelo Digital de Elevación de 30 metros de resolución espacial para la zona de estudio a partir de la Shuttle Radar Topography Mission (SRTM) para la estimación de la línea de nieve. Todo el análisis se realizó en la plataforma Google Earth Engine que permite el análisis geoespacial en la nube que contiene un catálogo público de imágenes satelitales, topografía y otros conjuntos de datos ambientales y brinda capacidades de computación masivas.
@@ -139,13 +138,13 @@
         </p>
         <!-- Imagen SVG insertada -->
         <div class="text-center">
-          <img src="/assets/img/metodologia/figure_1.svg" style="width:800px; height:400px;" />
+          <img src="../assets/img/metodologia/figure_1.svg"  class="img-metodo" alt="Figura 1" />
         </div>
         <p style="text-align: center;">
           <strong>Figura 1. Matriz de decisión para eliminación de nubes.</strong>
         </p>
         <div class="text-center">
-          <img src="/assets/img/metodologia/figure_2.svg" style="width:800px; height:400px;" />
+          <img src="../assets/img/metodologia/figure_2.svg"  class="img-metodo" alt="Figura 1"/>
         </div>
         <p style="text-align: center;">
           <strong>Figura 2. Ejemplo del primer paso de fusión de Terra y Aqua.</strong>
@@ -154,7 +153,7 @@
           El <strong>segundo paso</strong> permite complementar información perdida por nubes con la información de un máximo de dos días antes y después de la presencia de nubes. Primero se contrastan un día antes (Raster 1) y un día después (Raster 2) usando la matriz de decisión de la Figura 1. Un ejemplo del uso de este algoritmo lo presentamos en la Figura 3. Si no es posible complementar la información, se continúa al <strong>Paso 3</strong>.
         </p>
         <div class="text-center">
-          <img src="/assets/img/metodologia/figura_3.svg" style="width:1200px; height:400px;" />
+          <img src="../assets/img/metodologia/figura_3.svg"  class="img-metodo" alt="Figura 1" />
         </div>
         <p style="text-align: center;">
           <strong>Figura 3. Uso del algoritmo temporal para la eliminación de nubes.</strong>
@@ -163,7 +162,7 @@
           El <strong>Paso 3</strong> es un paso espacial, considerando la información de los cuatro vecinos de alrededor. Si dos o más vecinos tienen información válida (Nieve o tierra), se completa con esa información. Si no se puede tomar una decisión, se continúa con el último paso. Un ejemplo de este paso espacial se presenta en la  <strong>Figura 4</strong>.
         </p>
         <div class="text-center">
-          <img src="/assets/img/metodologia/figura_4.svg" style="width:800px; height:400px;" />
+          <img src="../assets/img/metodologia/figura_4.svg" class="img-metodo" alt="Figura 1" />
         </div>
         <p style="text-align: center;">
           <strong>Figura 4. Ejemplo del paso espacial considerando los 4 vecinos.</strong>
@@ -172,7 +171,7 @@
           Finalmente, el <strong>Paso 4</strong> considera los ocho vecinos (Figura 5) y la altura de cada vecino. Si un píxel con nube es más alto que píxeles sin nieve se considera como nieve.
         </p>
         <div class="text-center">
-          <img src="/assets/img/metodologia/figura_5.svg" style="width:800px; height:400px;" />
+          <img src="../assets/img/metodologia/figura_5.svg" class="img-metodo" alt="Figura 1" />
         </div>
         <p style="text-align: center;">
           <strong>Figura 5. Ejemplo de algoritmo espacial considerando ocho vecinos y la altura de cada vecino.</strong>
@@ -215,7 +214,7 @@
                       <li><i class="bx bx-chevron-right txt-azul-2"></i> <a href="../index.html">Inicio</a></li>
                       <li><i class="bx bx-chevron-right txt-azul-2"></i> <a href="/pages/explorador.html">Explorador</a></li>
                       <li><i class="bx bx-chevron-right txt-azul-2"></i> <a href="../pages/metodologia.html">Metodología</a></li>
-                      <li><i class="bx bx-chevron-right txt-azul-2"></i> <a href="./pages/equipo.html">Equipo</a></li>
+                      <li><i class="bx bx-chevron-right txt-azul-2"></i> <a href="/pages/equipo.html">Equipo</a></li>
                   </ul>
               </div>
 

@@ -3,20 +3,20 @@
 
 export async function c_SCA_m(watershed) {
     // set the dimensions and margins of the graph
-    var margin = {top: 80, right: 10, bottom: 60, left: 100},
-        width = 500 - margin.left - margin.right,
-        height = 400 - margin.top - margin.bottom;
-
-    // append the svg object to the body of the page
-    var svg = d3.select("#p12")
-      .append("svg")
+    const margin = { top: 80, right: 10, bottom: 60, left: 50 };
+    const width = 550 - margin.left - margin.right;
+    const height = 400 - margin.top - margin.bottom;
+    // Si el ancho de la ventana es <= 768px, usará el contenedor móvil, de lo contrario el de escritorio.
+    const containerId = window.innerWidth <= 767 ? "#p12-mob" : "#p12-desk";
+  // Crear un nuevo SVG y agregarlo al cuerpo del documento
+  const svg = d3.select(containerId).append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
       .append("g")
         .attr("transform",
               "translate(" + margin.left + "," + margin.top + ")");
 // Crear el tooltip
-var tooltip = d3.select("#p12")
+var tooltip = d3.select(containerId)
     .append("div")
     .style("opacity", 0)
     .attr("class", "tooltip")
@@ -112,9 +112,9 @@ svg.selectAll("myCircles")
           .attr("text-anchor", "center")
           .attr("font-family", "Arial")
           .attr("font-size", "20px")
-          .attr("x", -10)
-          .attr("y", -30)
-          .text("10. Cobertura de nieve promedio mensual");
+          .attr("x", 0)
+          .attr("y", -40)
+          .text("9. Cobertura de nieve promedio mensual");
         // Etiqueta SUb titulo
 
           svg.append("text")
@@ -122,8 +122,8 @@ svg.selectAll("myCircles")
           .attr("font-family", "Arial")
           .attr("font-size", "16px")
           .style("fill", "grey")
-          .attr("x", + 40)
-          .attr("y", -10)
+          .attr("x", + 22)
+          .attr("y", - 20)
           .text("Cuenca: "+ watershed);
 
         // Etiqueta del eje X
@@ -144,6 +144,17 @@ svg.selectAll("myCircles")
           .attr("y", -30)
           .attr("x", -60)
           .text("Cobertura de nieve (%)");
+
+ svg.append("text")
+  .attr("text-anchor", "end")
+  .attr("font-family", "Arial")
+  .attr("font-size", "13")
+  .attr("x",  280  )
+  .attr("y", 0 )
+  .text("* Percentil  25% y 75% de la cobertura de nieve");
+
+
+
 
 // Crear un botón de exportación dentro del SVG
 var button = svg.append("foreignObject")

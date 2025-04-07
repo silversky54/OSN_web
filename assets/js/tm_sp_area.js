@@ -6,14 +6,17 @@ export async function tm_sp_area() {
     const width = 500 - margin.left - margin.right;
     const height = 450 - margin.top - margin.bottom;
 
-    const svg = d3.select("#p08").append("svg")
+    // Si el ancho de la ventana es <= 768px, usará el contenedor móvil, de lo contrario el de escritorio.
+    const containerId = window.innerWidth <= 767 ? "#p08-mob" : "#p08-desk";
+  // Crear un nuevo SVG y agregarlo al cuerpo del documento
+  const svg = d3.select(containerId).append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .attr("id", "d3-plot")
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
  // Crear el tooltip
- var tooltip = d3.select("#p08")
+    var tooltip = d3.select(containerId)
  .append("div")
  .style("opacity", 0)
  .attr("class", "tooltip")

@@ -4,13 +4,14 @@ import { myColor } from './myColor.js';
 
 export async function c_SCA_y_t_elev(watershed) {
     // set the dimensions and margins of the graph
-    const margin = {top: 80, right: 150, bottom: 60, left: 200};
+    const margin = {top: 70, right: 150, bottom: 80, left: 200};
     const width = 25 ;
     const height = 400 - margin.top - margin.bottom;
 
-    // append the svg object to the body of the page
-    const svg = d3.select("#p09")
-        .append("svg")
+    // Si el ancho de la ventana es <= 768px, usará el contenedor móvil, de lo contrario el de escritorio.
+    const containerId = window.innerWidth <= 767 ? "#p09-mob" : "#p09-desk";
+  // Crear un nuevo SVG y agregarlo al cuerpo del documento
+  const svg = d3.select(containerId).append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
@@ -25,7 +26,11 @@ export async function c_SCA_y_t_elev(watershed) {
     const watershed_selected = text_ini.concat(watershed).concat(text_end);
 
     // Read the data
-    const data = await d3.csv(watershed_selected);
+const data = await d3.csv(watershed_selected, d => ({
+    ...d,
+    Elevation: Math.round(d.Elevation), // redondear a numeros enteros la elevación
+
+  }));
 
     var group = "Trend"
     // Labels
@@ -53,7 +58,7 @@ export async function c_SCA_y_t_elev(watershed) {
         const gX = svg.append("g").call(yAxis);
 
      // create a tooltip
-    const tooltip = d3.select("#p09")
+    const tooltip = d3.select(containerId)
         .append("div")
         .style("opacity", 0)
         .attr("class", "tooltip")
@@ -116,12 +121,12 @@ export async function c_SCA_y_t_elev(watershed) {
 
     // Add title to graph
     svg.append("text")
-        .attr("x", -90)
-        .attr("y", -25)
+        .attr("x", -100)
+        .attr("y", -30)
         .attr("text-anchor", "center")
         .attr("font-family", "Arial")
         .style("font-size", "20px")
-        .text("7. Tendencia por elevación");
+        .text("6. Tendencia por elevación");
 
             // Etiqueta SUb titulo
             svg.append("text")
@@ -129,7 +134,7 @@ export async function c_SCA_y_t_elev(watershed) {
             .attr("font-family", "Arial")
             .attr("font-size", "16px")
             .style("fill", "grey")
-            .attr("x", width / 2  - 60)
+            .attr("x", width / 2  - 90)
             .attr("y", -10)
             .text("Cuenca: "+ watershed);
 
@@ -154,7 +159,7 @@ let legY = 20
 // Agregar un elemento de texto a la leyenda en las coordenadas especificadas
 svg.append("text")
 .attr("x", legX-28)
-.attr("y", legY-15)
+.attr("y", legY-10)
 .text("Tendencia (%/año)") // El texto que se mostrará
 .style("font-size", "11px") // Tamaño de la fuente del texto
 .attr("font-family", "Arial") // Fuente del texto
@@ -178,20 +183,20 @@ svg.append("text")
 .attr("font-family", "Arial") // Fuente del texto
 .attr("alignment-baseline", "middle") // Alineación vertical del texto
 })
-
+/*
 // Agregar un elemento de texto a la leyenda en las coordenadas especificadas
 svg.append("text")
 .attr("x", legX-25)
-.attr("y", legY + colorScale.domain().length * 10 + 30)
+.attr("y", legY + colorScale.domain().length * 10 +10)
 .text("Nubes (%)") // El texto que se mostrará
-.style("font-size", "12px") // Tamaño de la fuente del texto
+.style("font-size", "10px") // Tamaño de la fuente del texto
 .attr("font-family", "Arial") // Fuente del texto
 .attr("alignment-baseline", "middle") // Alineación vertical del texto
 
 // Agregar un rectángulo negro a la leyenda en las coordenadas especificadas
 svg.append("rect")
 .attr("x", legX-20)
-.attr("y", legY + colorScale.domain().length * 10 + 40)
+.attr("y", legY + colorScale.domain().length * 10 + 15)
 .attr('height', 10)
 .attr('width', 10)
 
@@ -199,13 +204,13 @@ svg.append("rect")
 // Agregar un elemento de texto a la leyenda en las coordenadas especificadas
 svg.append("text")
 .attr("x", legX -8)
-.attr("y", legY + colorScale.domain().length * 10 + 45)
+.attr("y", legY + colorScale.domain().length * 10 + 20)
 .text(">50") // El texto que se mostrará
 .style("font-size", "10px") // Tamaño de la fuente del texto
 .attr("font-family", "Arial") // Fuente del texto
 .attr("alignment-baseline", "middle") // Alineación vertical del texto
 
-
+*/
 
 // Crear un botón de exportación dentro del SVG
 var button = svg.append("foreignObject")

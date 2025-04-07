@@ -11,9 +11,11 @@ export async function c_SCA_m_trend(watershed) {
     const width = 25 ;
     const height = 400 - margin.top - margin.bottom;
 
-    // append the svg object to the body of the page
-    const svg = d3.select("#p15")
-        .append("svg")
+    // Si el ancho de la ventana es <= 768px, usará el contenedor móvil, de lo contrario el de escritorio.
+    const containerId = window.innerWidth <= 767 ? "#p15-mob" : "#p15-desk";
+  // Crear un nuevo SVG y agregarlo al cuerpo del documento
+  const svg = d3.select(containerId).append("svg")
+
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
@@ -57,7 +59,7 @@ svg.append("g")
     .select(".domain").remove();
 
     // create a tooltip
-    const tooltip = d3.select("#p15")
+    const tooltip = d3.select(containerId)
         .append("div")
         .style("opacity", 0)
         .attr("class", "tooltip")
@@ -118,16 +120,16 @@ var mouseover = function(d) {
         .attr("font-family", "Arial")
         .attr("font-size", "20px")
         .attr("x", -82)
-        .attr("y", -25)
-        .text("13. Tendencia por mes");
+        .attr("y", -40)
+        .text("12. Tendencia por mes");
        // Etiqueta SUb titulo
     svg.append("text")
         .attr("text-anchor", "center")
         .attr("font-family", "Arial")
         .attr("font-size", "16px")
         .style("fill", "grey")
-        .attr("x", -40)
-        .attr("y", -10)
+        .attr("x", -50)
+        .attr("y", -20)
         .text("Cuenca: "+ watershed);
 
  //Add the legend
@@ -176,31 +178,7 @@ svg.append("text")
 .attr("alignment-baseline", "middle") // Alineación vertical del texto
 })
 
-// Agregar un elemento de texto a la leyenda en las coordenadas especificadas
-svg.append("text")
-.attr("x", legX-25)
-.attr("y", legY + colorScale.domain().length * 10 + 30)
-.text("Nubes (%)") // El texto que se mostrará
-.style("font-size", "12px") // Tamaño de la fuente del texto
-.attr("font-family", "Arial") // Fuente del texto
-.attr("alignment-baseline", "middle") // Alineación vertical del texto
 
-// Agregar un rectángulo negro a la leyenda en las coordenadas especificadas
-svg.append("rect")
- .attr("x", legX-20)
- .attr("y", legY + colorScale.domain().length * 10 + 40)
- .attr('height', 10)
- .attr('width', 10)
- 
-
-// Agregar un elemento de texto a la leyenda en las coordenadas especificadas
-svg.append("text")
-.attr("x", legX -8)
-.attr("y", legY + colorScale.domain().length * 10 + 45)
-.text(">50") // El texto que se mostrará
-.style("font-size", "10px") // Tamaño de la fuente del texto
-.attr("font-family", "Arial") // Fuente del texto
-.attr("alignment-baseline", "middle") // Alineación vertical del texto
 
 
 // Crear un botón de exportación dentro del SVG

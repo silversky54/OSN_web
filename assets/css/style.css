@@ -26,6 +26,7 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "Raleway", sans-serif;
 }
 
+
 /*--------------------------------------------------------------
 # Back to top button
 --------------------------------------------------------------*/
@@ -57,16 +58,24 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #main {
-  margin-top: 90px;
+  margin-top: 50px; /* Valor para móvil */
+}
+
+@media (min-width: 768px) {
+  #main {
+    margin-top: 0; /* Escritorio */
+  }
 }
 
 
     /* Estilos para móviles (menos de 768px) */
     @media (max-width: 767px) {
-      .container {
-          margin: 20px !important;
-          padding: 20px !important;
-      }
+            .container {
+            width: 100% !important;
+            padding: 10px !important; /* Ajusta el padding si es necesario */
+            margin: 10px auto !important;
+        }
+    
       
       .txt-naranjo-2 {
           font-size: 1.2rem !important;
@@ -276,7 +285,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .mobile-nav-toggle i {
-  color: #fff;
+  color: #CF653D;
 }
 
 .mobile-nav {
@@ -1260,7 +1269,7 @@ section {
   background: #67b0d1;
   border: 0;
   padding: 10px 24px;
-  color: #fff;
+  color: #fa0000;
   transition: 0.4s;
 }
 
@@ -1407,7 +1416,7 @@ section {
 }
 
 #footer .footer-top .footer-newsletter form input[type="submit"] {
-  position: absolute;
+  position: relative;
   top: 0;
   right: 0;
   bottom: 0;
@@ -1440,9 +1449,12 @@ section {
 
 @media (max-width: 575px) {
   #footer .footer-top .footer-info {
+    width: 100%; /* Ocupa todo el ancho disponible */
     margin: -20px 0 30px 0;
+    display: block; /* Asegura que no haya restricciones */
   }
 }
+
 
 path.selected {
   stroke: red; /* o cualquier otro estilo que desees para resaltar el path */
@@ -1564,3 +1576,98 @@ path.selected {
 }
 
 
+/* Estilos mejorados para imágenes */
+.img-metodo {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 25px auto;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.figure-metodo {
+  margin: 30px auto;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  max-width: 900px;
+}
+
+.figcaption-metodo {
+  text-align: center;
+  font-size: 0.95rem;
+  color: #444;
+  margin-top: 15px;
+  padding: 0 15px;
+  line-height: 1.4;
+}
+
+/* Ajustes responsivos */
+@media (max-width: 767px) {
+  .img-metodo {
+      margin: 15px auto;
+      padding: 5px;
+      max-width: 95%;
+  }
+  
+  .figure-metodo {
+      margin: 20px 0;
+      padding: 15px;
+      border-radius: 8px;
+  }
+  
+  .figcaption-metodo {
+      font-size: 0.85rem;
+      padding: 0 10px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+  .img-metodo {
+      max-width: 85%;
+  }
+}
+
+/*/*//*/*//*/*//*/*//*/*/
+
+
+.custom_heading-test {
+  font-family: Arial, sans-serif; /* Fuente Arial */
+  text-decoration: underline;
+  text-align: center;
+  display: block;
+  width: 100%;
+  font-weight: bold;
+  color: #000000;
+  padding: 10px;
+}
+
+
+#tabla-mapas-destock-exp { 
+  display: table; }
+#tabla-mapas-movil-exp { display: none; }
+
+@media (max-width: 767px) {
+    #tabla-mapas-destock-exp { display: none; }
+    #tabla-mapas-movil-exp { display: table; }
+}
+
+
+#tabla-mapas-destock { 
+  display: table; }
+#tabla-mapas-movil { display: none; }
+
+@media (max-width: 767px) {
+    #tabla-mapas-destock { display: none; }
+    #tabla-mapas-movil { display: table; }
+}
+
+/* Estilos para la tabla de mapas en pantallas grandes */
+td {
+  height: auto;  /* Evita espacios extra */
+  vertical-align: top;
+}

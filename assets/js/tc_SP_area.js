@@ -7,9 +7,10 @@ export async function tc_SP_area() {
     const margin = { top: 10, right: 0, bottom: 40, left: 10 };
     const width = 150 - margin.left - margin.right;
     const height = 600 - margin.top - margin.bottom;
-
-    // Crear un nuevo SVG y agregarlo al cuerpo del documento
-    const svg = d3.select("#p03").append("svg")
+    // Si el ancho de la ventana es <= 768px, usará el contenedor móvil, de lo contrario el de escritorio.
+    const containerId = window.innerWidth <= 767 ? "#p03-mob" : "#p03-desk";
+  // Crear un nuevo SVG y agregarlo al cuerpo del documento
+  const svg = d3.select(containerId).append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .attr("id", "d3-plot")
@@ -17,7 +18,7 @@ export async function tc_SP_area() {
         .attr("transform", "translate(0," + margin.top + ")");
 
     // Creación del tooltip
-    var tooltip = d3.select("#p02")
+    var tooltip = d3.select(containerId)
     .append("div")
     .style("opacity", 0)
     .attr("class", "tooltip")
@@ -140,6 +141,31 @@ export async function tc_SP_area() {
         .attr("fill-opacity", "0.5")
         .style("fill", "#F5F5F5")
         .attr("class", function(d,index) { return index % 2 == 0 ? "even" : "uneven"; });
+
+// Linea que diferencia entre cuencas 
+// Añade este array de configuración al inicio de tu función (después de definir margin):
+const specialQuestions = [
+    { id: "010", color: "#FFD37F", position: "top" },    // 
+    { id: "047", color: "#FFFF73", position: "bottom" }, // 
+    { id: "073", color: "#BAE1A6", position: "bottom" }, // 
+    { id: "104", color: "#73DFFF", position: "bottom" }, // 
+    { id: "129", color: "#73DFFF", position: "bottom" }  //  
+];
+
+// Reemplaza el bloque de líneas rojas con este código:
+specialQuestions.forEach(config => {
+    vakken.filter(d => d.Question === config.id)
+        .append("rect")
+        .attr("x", 0)
+        .attr("y", config.position === "top" ? 1 : y.bandwidth() - 2)
+        .attr("width", width)
+        .attr("height", 2)
+        .style("fill", config.color)
+        .style("shape-rendering", "crispEdges");
+});
+
+
+
 
     svg.append("g")
         .attr("class", "y axis")

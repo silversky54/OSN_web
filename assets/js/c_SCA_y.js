@@ -3,6 +3,19 @@ import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
 // Función asincrónica para cargar y dibujar el gráfico
 export async function c_SCA_y(watershed) {
+    // Definir las dimensiones y márgenes del gráfico
+    const margin = { top: 80, right: 0, bottom: 60, left: 50 };
+    const width = 550 - margin.left - margin.right;
+    const height = 400 - margin.top - margin.bottom;
+    // Si el ancho de la ventana es <= 768px, usará el contenedor móvil, de lo contrario el de escritorio.
+    const containerId = window.innerWidth <= 767 ? "#p04-mob" : "#p04-desk";
+
+    // Crear un nuevo SVG y agregarlo al cuerpo del documento
+  const svg = d3.select(containerId).append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", `translate(${margin.left}, ${margin.top})`);
     // Select watershed
 
     // Ruta para el archivo CSV
@@ -12,23 +25,8 @@ export async function c_SCA_y(watershed) {
     var watershed_selected = text_ini.concat(watershed).concat(text_end)
     // Obtener los datos CSV
     const data = await d3.csv(watershed_selected);
-
-    // Definir las dimensiones y márgenes del gráfico
-    const margin = { top: 80, right: 0, bottom: 60, left: 100 };
-    const width = 500 - margin.left - margin.right;
-    const height = 400 - margin.top - margin.bottom;
-
-// Crear el elemento SVG
-var svg = d3.select("#p04")
-    .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .attr("id", "d3-plot")
-    .append("g")
-    .attr("transform", `translate(${margin.left}, ${margin.top})`);
-
 // Crear el tooltip
-var tooltip = d3.select("#p04")
+var tooltip = d3.select(containerId)
     .append("div")
     .style("opacity", 0)
     .attr("class", "tooltip")
@@ -149,15 +147,15 @@ svg.append("line")
         .attr("font-size", "20px")
         .attr("x", x_title)
         .attr("y", -25)
-        .text("4. Cobertura promedio de nieve anual");
+        .text("3. Cobertura promedio de nieve anual");
        // Etiqueta SUb titulo
     svg.append("text")
         .attr("text-anchor", "center")
         .attr("font-family", "Arial")
         .attr("font-size", "16px")
         .style("fill", "grey")
-        .attr("x", x_title + 23)
-        .attr("y", -10)
+        .attr("x", x_title + 22)
+        .attr("y", -3)
         .text("Cuenca: "+ watershed);
     // Etiqueta del eje X
     svg.append("text")
@@ -165,7 +163,7 @@ svg.append("line")
         .attr("font-family", "Arial")
         .attr("font-size", "13")
         .attr("x", width / 2 + 15)
-        .attr("y", height + 40)
+        .attr("y", height + 45)
         .text("Años");
     // Etiqueta del eje Y
     svg.append("text")
@@ -204,13 +202,13 @@ const filaEncontrada = sen_slope_s.find(d => d.COD_CUEN === `BNA_${watershed}`);
     // Crear un elemento de texto en el SVG para mostrar el valor
  var text =  svg.append("text")
        .attr("x", + 220) 
-       .attr("y", - 10) 
+       .attr("y", - 3) 
         .attr("font-family", "Arial")
        .attr("font-size", "13")
        .attr("fill", "black")
     // Agregar el texto 
 text.append("tspan")
-.text("Pendiente Sen: ");
+.text("Pendiente Theil-Sen: ");
 
       // Crear un tspan 
 text.append("tspan")

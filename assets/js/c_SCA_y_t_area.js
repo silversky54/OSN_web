@@ -3,6 +3,20 @@ import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
 // Función asincrónica para cargar y dibujar el gráfico
 export async function c_SCA_y_t_area(watershed) {
+   // Definir las dimensiones y márgenes del gráfico
+   const margin = { top: 80, right: 0, bottom: 60, left: 60 };
+    const width = 550 - margin.left - margin.right;
+    const height = 400 - margin.top - margin.bottom;
+
+    // Si el ancho de la ventana es <= 768px, usará el contenedor móvil, de lo contrario el de escritorio.
+    const containerId = window.innerWidth <= 767 ? "#p05-mob" : "#p05-desk";
+  // Crear un nuevo SVG y agregarlo al cuerpo del documento
+  const svg = d3.select(containerId).append("svg")
+        .attr("width", width + margin.left + margin.right + 100) // Ajustar si es necesario
+        .attr("height", height + margin.top + margin.bottom + 50)
+        .attr("id", "d3-plot")
+        .append("g")
+        .attr("transform", `translate(${margin.left}, ${margin.top})`);
     // Ruta para el archivo CSV
     var text_ini = "../assets/csv/year/SCA_y_t_area_BNA_";
     var text_end =  ".csv";
@@ -30,22 +44,9 @@ export async function c_SCA_y_t_area(watershed) {
         d.Area = +d.Area;
     });
 
-    // Definir las dimensiones y márgenes del gráfico
-    const margin = { top: 80, right: 0, bottom: 80, left: 100 };
-    const width = 500 - margin.left - margin.right;
-    const height = 400 - margin.top - margin.bottom;
-
-    // Crear el elemento SVG
-    var svg = d3.select("#p05")
-        .append("svg")
-        .attr("width", width + margin.left + margin.right + 100) // Ajustar si es necesario
-        .attr("height", height + margin.top + margin.bottom + 50)
-        .attr("id", "d3-plot")
-        .append("g")
-        .attr("transform", `translate(${margin.left}, ${margin.top})`);
-
+ 
     // Crear el tooltip
-    var tooltip = d3.select("#p05")
+    var tooltip = d3.select(containerId)
         .append("div")
         .style("opacity", 0)
         .attr("class", "tooltip")
@@ -199,7 +200,7 @@ export async function c_SCA_y_t_area(watershed) {
         .attr("font-size", "20px")
         .attr("x", x_title)
         .attr("y", -25)
-        .text("5. Superficie por tendencia anual");
+        .text("4. Superficie por tendencia anual");
 
     // Etiqueta Subtítulo
     svg.append("text")
@@ -207,7 +208,7 @@ export async function c_SCA_y_t_area(watershed) {
         .attr("font-family", "Arial")
         .attr("font-size", "16px")
         .style("fill", "grey")
-        .attr("x", x_title)
+        .attr("x", x_title + 22)
         .attr("y", -5)
         .text("Cuenca: "+ watershed);
 
@@ -217,7 +218,7 @@ export async function c_SCA_y_t_area(watershed) {
         .attr("font-family", "Arial")
         .attr("font-size", "13")
         .attr("x", width / 2)
-        .attr("y", height + 70) // Ajustar para que no se superponga
+        .attr("y", height + 45) // Ajustar para que no se superponga
         .text("Tendencia (%/año)");
 
     // Etiqueta del eje Y
@@ -227,29 +228,9 @@ export async function c_SCA_y_t_area(watershed) {
         .attr("font-family", "Arial")
         .attr("font-size", "13")
         .attr("transform", "rotate(-90)")
-        .attr("y", -70)
-        .attr("x", -height / 2 + 20)
-        .text("Superficie (km");
-
-    // Texto "2)" en superíndice
-    svg.append("text")
-        .attr("text-anchor", "start")
-        .attr("font-family", "Arial")
-        .attr("font-size", "10")  // Tamaño más pequeño para el superíndice
-        .attr("transform", "rotate(-90)")
-        .attr("y", -70 - 3)  // Posición ajustada para el superíndice
-        .attr("x", -height / 2 + 20 + 60)  // Posición ajustada para el superíndice
-        .text("2");
-
-    // Texto ")" en tamaño normal
-    svg.append("text")
-        .attr("text-anchor", "start")
-        .attr("font-family", "Arial")
-        .attr("font-size", "13")
-        .attr("transform", "rotate(-90)")
-        .attr("y", -70)
-        .attr("x", -height / 2 + 20 + 65)  // Posición ajustada para seguir al superíndice
-        .text(")");
+        .attr("y", -35)
+        .attr("x", -height / 2 + 40)
+        .text("Superficie (km²)");
 
     // Animación
     svg.selectAll("rect")

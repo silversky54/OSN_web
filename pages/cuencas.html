@@ -6,11 +6,9 @@
     #map { height: 250px; 
            width: 250px;}
           
+           /*  table, th, td {border:1px solid black;}*/
 
-  .default {
-    margin-left: auto;
-    margin-right: auto;
-  }
+
 
 
   </style>
@@ -100,17 +98,17 @@
             <a href="../index.html" class="txt-naranjo-2"><i class="icofont-home"></i> Inicio</a>
           </li>
           <li >
-            <a href="visualizador.html".html class="txt-naranjo-2">Explorador</a>
+            <a href="/pages/explorador.html".html class="txt-naranjo-2">Explorador</a>
             
           </li>
 
           <li >
-            <a href="metodologia.html" class="txt-naranjo-2">Metodología</a>
+            <a href="/pages/metodologia.html" class="txt-naranjo-2">Metodología</a>
             
           </li>
 
           <li >
-            <a href="equipo.html" class="txt-naranjo-2">Equipo</a>
+            <a href="/pages/equipo.html" class="txt-naranjo-2">Equipo</a>
             
           </li>
 
@@ -120,28 +118,17 @@
     </div>
   </header><!-- End Header -->
 
-  <section id="hero-obs" class="" ></section>
+  <main id="main" class="p-3"></main>
 
-  <section id="page-title">
-    <h2>Análisis por cuenca</h2>
-  </section>
-  
-  <main id="main" class="p-3">
-  
+  <section id="page-title" class="container-fluid p-3">
     <div class="container">
-      <div class="row">
-      
-      </div>
+        <div class="row">
+            <div class="col-12">
+                <h2 class="titulo-inicio">Análisis Cuencas</h2>
+            </div>
+        </div>
     </div>
-
-  </main><!-- End #main -->
-<!-- INICIO SECCIÓN TÍTULO PRINCIPAL -->
-<section>
-  
-  <div class="container" style="margin: 50; padding: 50;">
-    <div class="custom_heading-container" style="margin: -140px; padding: -50px;">
-      </div>
-    
+</section>
 <!-- DESARROLLO TÍTULO PRINCIPAL -->
   <!-- Asigna un id a la sección que deseas ocultar -->
 
@@ -249,7 +236,7 @@
 
 
 
-<!-- INICIO SECCIÓN GRAFICOS  -->
+<!-- INICIO SECCIÓN GRAFICOS   UN PLOT NO ES EL TITULO-->
 <script type="module">
   import {c_map_location } from '../assets/js/c_map_location.js';         // p01
   import {c_map_location_leaf } from '../assets/js/c_leaflet_map.js';     //p02
@@ -270,131 +257,278 @@
   import {c_SCA_ym_elev } from '../assets/js/c_SCA_ym_elev.js';           // p18
   import { c_snowline_ym } from '../assets/js/c_snowline_ym.js';          // p19
   import { leyenda_PN } from '../assets/js/leyenda_PN.js';                // leyenda
-  
-  //Se obtiene el valor ingresado en el input
-  const input = document.querySelector("#BNA_cod"); 
-
-  // Cada vez que el valor del input cambie, se actualizará el gráfico con los datos correspondientes
+  const input = document.querySelector("#BNA_cod");
   let watershed = '';
+  let currentMode = null;
 
-  input.addEventListener('change', function (event) {
-    watershed = event.target.value;
+  // Función para limpiar contenedores
+  function clearContainers(suffix) {
+    const elementIds = [
+      "p01", "p02", "p03", "p04", "p05", "p06", "p07", "p08", "p09",
+      "p11", "p12", "p13", "p14", "p15", "p17", "p18", "p19", "leyenda_PN"
+    ].map(id => `${id}-${suffix}`);
 
-    // Define an array of element IDs
-    const elementIds = ["p01", "p02", "p03", "p04", "p05", "p06", "p07", "p08", "p09", "p11", "p12", "p13", "p14", "p15", "p17", "p18", "p19", "leyenda_PN"];
-
-    // Loop through the array and clear the innerHTML of each element if it exists
     elementIds.forEach(id => {
       const element = document.getElementById(id);
-      if (element) {
-        element.innerHTML = "";
-      }
+      element?.replaceChildren();
     });
+  }
 
-    // run de JS
-    c_map_location(watershed);    // p01
-    c_map_location_leaf(watershed); //p02
-   // c_SCA_trend_map(watershed);   // p02 
-   // c_SCA_map(watershed);         // p03
-    c_SCA_y(watershed);           // p04
-    c_SCA_y_t_area(watershed);    // p05
-    c_SCA_y_elev(watershed);      // p06
-    c_SCA_elev(watershed);        // p07
-    c_SCA_y_t_elev(watershed);    // p08
-    c_elev(watershed);            // p09
-    c_snowline_y(watershed);      // p11
-    c_SCA_m(watershed);           // p12
-    c_SCA_m_elev(watershed);      // p13
-    c_SCA_y_m(watershed);         // p14
-    c_SCA_m_trend(watershed);     // p15
-    c_SCA_ym(watershed);          // p17
-    c_SCA_ym_elev(watershed);     // p18
-    c_snowline_ym(watershed);     // p19
-    leyenda_PN(watershed);        // leyenda_2
-  });
+  // Función para gráficos de escritorio
+  function renderDesktopCharts() {
+    c_map_location(watershed, 'desk');
+    c_map_location_leaf(watershed, 'desk');
+    c_SCA_y(watershed, 'desk');
+    c_SCA_y_t_area(watershed, 'desk');
+    c_SCA_y_elev(watershed, 'desk');
+    c_SCA_elev(watershed, 'desk');
+    c_SCA_y_t_elev(watershed, 'desk');
+    c_elev(watershed, 'desk');
+    c_snowline_y(watershed, 'desk');
+    c_SCA_m(watershed, 'desk');
+    c_SCA_m_elev(watershed, 'desk');
+    c_SCA_y_m(watershed, 'desk');
+    c_SCA_m_trend(watershed, 'desk');
+    c_SCA_ym(watershed, 'desk');
+    c_SCA_ym_elev(watershed, 'desk');
+    c_snowline_ym(watershed, 'desk');
+    leyenda_PN('desk');
+  }
+
+  // Función para gráficos móviles
+  function renderMobileCharts() {
+    c_map_location(watershed, 'mob');
+    c_map_location_leaf(watershed, 'mob');
+    c_SCA_y(watershed, 'mob');
+    c_SCA_y_t_area(watershed, 'mob');
+    c_SCA_y_elev(watershed, 'mob');
+    c_SCA_elev(watershed, 'mob');
+    c_SCA_y_t_elev(watershed, 'mob');
+    c_elev(watershed, 'mob');
+    c_snowline_y(watershed, 'mob');
+    c_SCA_m(watershed, 'mob');
+    c_SCA_m_elev(watershed, 'mob');
+    c_SCA_y_m(watershed, 'mob');
+    c_SCA_m_trend(watershed, 'mob');
+    c_SCA_ym(watershed, 'mob');
+    c_SCA_ym_elev(watershed, 'mob');
+    c_snowline_ym(watershed, 'mob');
+    leyenda_PN('mob');
+  }
+
+  // Controlador de eventos principal
+  function handleInputChange(event) {
+    watershed = event.target.value;
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
+    const suffix = isMobile ? 'mob' : 'desk';
+
+    clearContainers(suffix);
+    
+    if (isMobile) {
+      renderMobileCharts();
+    } else {
+      renderDesktopCharts();
+    }
+  }
+
+  // Controlador de redimensionamiento
+  function handleResize() {
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
+    if (currentMode !== (isMobile ? 'mobile' : 'desktop')) {
+      currentMode = isMobile ? 'mobile' : 'desktop';
+      if (watershed) input.dispatchEvent(new Event('change'));
+    }
+  }
+
+  // Event Listeners
+  input.addEventListener('change', handleInputChange);
+  window.addEventListener('resize', handleResize);
+  window.addEventListener('load', handleResize);
+
+  // Inicialización inicial
+  handleResize();
 </script>
 
-<section>
-  <table class="default" style="margin-left: auto; margin-right: auto;">
+<!-- FIN SECCIÓN GRAFICOS  -->
+
+
+ <!-- INICIO SECCIÓN MAPAS escritorio -->
+ <section>
+  <table id="tabla-mapas-destock"class="default" style="margin-left: auto; margin-right: auto;">
     <tr>
       <td rowspan="15" VALIGN="Top" Align="Left">
-        <div id="p01"></div>
+        <div id="p01-desk"></div>
       </td>
       <td colspan="20" VALIGN="Top" Align="middle">
-        <div id="p02" style="height: 600px; width: 800px; border: 2px solid black;"></div>
+        <div id="p02-desk" style="border: 2px solid black;"></div>
     </td>
     
     </tr>
     <tr>
       <td colspan="10"VALIGN="Top" Align="middle">
-        <div id="p04"></div>
+        <div id="p04-desk"></div>
       </td>
       <td colspan="10">
-        <div id="p05"></div>
+        <div id="p05-desk"></div>
       </td>
     </tr>
       <tr>
       <td colspan="14">
-        <div id="p06"></div>
+        <div id="p06-desk"></div>
       </td>
       <td>
-        <div id="p07"></div>
+        <div id="p07-desk"></div>
       </td>
       <td colspan="2" Align ="left" >
-        <div id="p09"></div>
+        <div id="p09-desk"></div>
       </td>
       
     </tr>
     <tr>
       <td colspan="10">
-        <div id="p11"></div>
+        <div id="p11-desk"></div>
       </td>
       <td colspan="10" Align="middle" >
-        <div id="p08" ></div>
+        <div id="p08-desk" ></div>
       </td>
     </tr>
    
     <tr>
       <td colspan="10">
-        <div id="p12"></div>
+        <div id="p12-desk"></div>
       </td>
       <td colspan="10">
-        <div id="p13"></div>
+        <div id="p13-desk"></div>
       </td>
     </tr>
  
     <tr>
       <td colspan="14">
-        <div id="p14"></div>
+        <div id="p14-desk"></div>
       </td>
       <td>
-        <div id="leyenda_PN"></div>
+        <div id="leyenda_PN-desk"></div>
       </td>
       <td>
-        <div id="p15"></div>
+        <div id="p15-desk"></div>
       </td>
              
     </tr>
   
     <tr>
       <td colspan="20">
-        <div id="p17"></div>
+        <div id="p17-desk"></div>
       </td>
     </tr>
     <tr>
       <td colspan="20">
-        <div id="p18"></div>
+        <div id="p18-desk"></div>
       </td>
     </tr>
     <tr>
       <td colspan="20">
-        <div id="p19"></div>
+        <div id="p19-desk"></div>
       </td>
     </tr>
   </table>
 </section>
 
 
+<!-- INICIO SECCIÓN MAPAS movil  -->
+<section>
+  <table id="tabla-mapas-movil" class="default vertical-table">
+    <tr>
+      <td colspan="6">
+        <div id="p01-mob" ></div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="6">
+        <div id="p04-mob"></div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="6">
+        <div id="p05-mob"></div>
+      </td>
+    </tr>
+    <!-- En tu fila móvil -->
+<tr>
+  <td colspan="3" style="width: 45%; padding-right: 0;">
+    <div id="p06-mob"></div>
+  </td>
+  <td colspan="3" style="width: 55%; padding-left: 0;">
+    <div id="p07-mob"></div>
+  </td>
+</tr>
+    <tr>
+      <td colspan="6">
+        <div id="p09-mob"></div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="6">
+        <div id="p11-mob"></div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="6" style="display: flex; justify-content: center; align-items: center;">
+        <div id="p08-mob"></div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="6">
+        <div id="p12-mob"></div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="6">
+        <div id="p13-mob"></div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3" style="width: 45%; padding-right: 0;">
+        <div id="p14-mob"></div>
+      </td>
+      <td colspan="3" style="width: 55%; padding-left: 0; ">
+        <div id="leyenda_PN-mob"></div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="6" style="display: flex; justify-content: center; align-items: center;">
+        <div id="p15-mob"></div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="6">
+        <div id="p17-mob"></div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="6">
+        <div id="p18-mob"></div>
+
+      </td>
+    </tr>
+    <tr>
+      <td colspan="6">
+        <div id="p19-mob"></div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="6">
+        <div id="p02-mob"></div>
+      </td>
+    </tr>
+  </table>
+</section>
+
+
+
+
+
+ <!-- INICIO SECCIÓN MAPAS movil  -->
+<!-- Añadir contenedor responsive y clases para móvil -->
 
 
 <!-- INICIO SECCIÓN GRAFICOS  -->

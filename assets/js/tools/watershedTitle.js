@@ -75,5 +75,5 @@ export function addCenteredTitle(map, watershed) {
     const watershedName = watershedNames[watershed] || "Nombre desconocido";
 
     // Actualizar el contenido del título
-    titleDiv.innerHTML = `Cuenca hidrográfica: ${watershed} - ${watershedName}`;
+    titleDiv.innerHTML = `2. Mapa de persistencia de nieve y tendencia (2000-2024) Cuenca: ${watershed} - ${watershedName}`;
 }

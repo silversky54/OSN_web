@@ -6,6 +6,7 @@
     #map { height: 250px; 
            width: 250px;}
 
+           /*  table, th, td {border:1px solid black;}*/
   </style>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC2JPM4B1L"></script>
@@ -112,7 +113,7 @@
             <a href="../index.html" class="txt-naranjo-2"><i class="icofont-home"></i> Inicio</a>
           </li>
           <li >
-            <a href="#" class="txt-azul-1">Explorador</a>
+            <a href="explorador.html" class="txt-azul-1">Explorador</a>
             
           </li>
 
@@ -133,84 +134,184 @@
     </div>
   </header><!-- End Header -->
 
-  <section id="hero-obs" class=""></section>
+  <main id="main" class="p-3"></main>
 
-  <section id="page-title">
-    <h2>Análisis nacional</h2>
-  </section>
-  
-  <main id="main" class="p-3">
-  
+  <section id="page-title" class="container-fluid p-3">
     <div class="container">
-      <div class="row">
-      
-      </div>
+        <div class="row">
+            <div class="col-12">
+                <h2 class="titulo-inicio">Analisis Nacional</h2>
+            </div>
+        </div>
     </div>
-  
-    <section class="p-3">
-      <div class="container" style="margin: 50; padding: 50;">
-        <div class="row " style="margin: -100px; padding: -50px;">
-          <h5 class="text-uppercase text-justify txt-naranjo-2">Análisis de variabilidad espacio-temporal de la cobertura de nieve a nivel regional</h5>
+</section>
+
+<section class="container-fluid p-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+              <h5 class="text-uppercase text-justify txt-naranjo-2">Análisis de variabilidad espacio-temporal de la cobertura de nieve a nivel regional</h5>
           <div class="col-12 text-justify">
             <p>
             </p>
             <p style="text-align: justify;">
               Los siguientes gráficos resumen el estado de la cobertura de nieve usando MODIS como base para su análisis desde el año 2000, se analizaron las 101 cuencas definidas en el Banco Nacional de Agua, de las cuales 46 presentaron presencia relevante de nieve (sobre un 5% de cobertura promedio de nieve). Con el mapa de la izquierda se puede acceder a un análisis por cuenca. Cada gráfico ofrece la posibilidad de exportar los datos para su análisis.
             </p>
-            
-          </div>
+
+            </div>
         </div>
-      </div>
-    </section>
-  
-  </main><!-- End #main -->
+    </div>
+
+
+
+
    <!-- FIN SECCIÓN TÍTULO PRINCIPAL -->
 
  <!-- INICIO SECCIÓN MAPAS  -->
- <section>
-  <table class="default" style="margin-left: auto;margin-right: auto; width: 800px;">
+ <script >
+  // --- Detección de dispositivo y clones de IDs ---
+const device = window.innerWidth >= 767 ? 'desk' : 'mob';
+
+document.querySelectorAll('.plot-container').forEach(container => {
+    const originalId = container.id.replace(/-desk|-mob/, '');
+    
+    // Solo conservar el ID correspondiente al dispositivo
+    if(container.id.endsWith(`-${device}`)) {
+        container.id = originalId; // Restaurar ID original (p01, p02...)
+    } else {
+        container.removeAttribute('id'); // Eliminar IDs no usados
+    }
+});
+
+// --- Re-ejecutar scripts originales (simulación) ---
+setTimeout(() => {
+    if(typeof inicializacionTusGraficos === 'function') {
+        inicializacionTusGraficos(); // Llama a tu función original
+    }
+}, 100);
+</script>
+
+
+
+
+ <!-- INICIO SECCIÓN MAPAS  -->
+<section>
+  <table id="tabla-mapas-destock-exp" class="default">
     <tr>
-      <td rowspan="3" style="vertical-align: center;">
-          
-            <div id="p01"></div>
-          
+      <td rowspan="3">  
+        <div id="p01-desk"></div>
       </td>
-      <th colspan="2" style="text-align: center;">
-          <div class="custom_heading-test">
-              Persistencia de nieve 2000-2024
-          </div>
+      <th colspan="2">
+        <div class="custom_heading-test">
+          Persistencia de nieve 2000-2024
+        </div>
       </th>
-      <th colspan="3" style="text-align: center;">
-          <div class="custom_heading-test">
-              Cambios acumulados 2000-2024
-          </div>
+      <th colspan="3">
+        <div class="custom_heading-test">
+          Cambios acumulados 2000-2024
+        </div>
       </th>
-      <th style="text-align: center;">
-          <div class="custom_heading-test">
-              Anomalías Cobertura Maxima 2024
-          </div>
+      <th>
+        <div class="custom_heading-test">
+          Anomalías Cobertura Máxima 2024
+        </div>
       </th>
-  </tr>
-  
-    <tr>
-      <td><div id="p02"></td>
-      <td><div id="p03"></td>
-      <td><div id="p04"></td>
-      <td><div id="p05"></td>
-      <td><div id="p06"></td>
-      <td><div id="p07"></td>
-   
     </tr>
     <tr>
-      <td colspan="3"><div id="p08"></td>
-      <td colspan="3"><div id="p09"></td>
+      <td><div id="p02-desk"></div></td>
+      <td><div id="p03-desk"></div></td>
+      <td><div id="p04-desk"></div></td>
+      <td><div id="p05-desk"></div></td>
+      <td><div id="p06-desk"></div></td>
+      <td><div id="p07-desk"></div></td>
     </tr>
-
-
-</table>
+    <tr>
+      <td colspan="3"><div id="p08-desk"></div></td>
+      <td colspan="3"><div id="p09-desk"></div></td>
+    </tr>
+  </table>
 </section>
 
 
+<!-- INICIO SECCIÓN MAPAS MÓVIL -->
+
+<section>
+  <table id="tabla-mapas-movil-exp" class="default">
+    <!-- Fila 1: Gráfico Principal -->
+    <tr>
+      <td colspan="6">
+        <div id="p01-mob"></div>
+      </td>
+    </tr>
+    
+    <!-- Fila 2: Título Persistencia -->
+    <tr>
+      <th colspan="6">
+        <div class="custom_heading-test">
+          Persistencia de nieve 2000-2024
+        </div>
+      </th>
+    </tr>
+    
+    <!-- Fila 3: Gráficos 2 y 3 -->
+    <tr>
+      <td colspan="3">
+        <div id="p02-mob"></div>
+      </td>
+      <td colspan="3">
+        <div id="p03-mob"></div>
+      </td>
+    </tr>
+    
+    <!-- Fila 4: Título Cambios -->
+    <tr>
+      <th colspan="6">
+        <div class="custom_heading-test">
+          Cambios acumulados 2000-2024
+        </div>
+      </th>
+    </tr>
+    
+    <!-- Fila 5: Gráficos 4, 5 y 6 -->
+    <tr>
+      <td colspan="2">
+        <div id="p04-mob"></div>
+      </td>
+      <td colspan="2">
+        <div id="p05-mob"></div>
+      </td>
+      <td colspan="2">
+        <div id="p06-mob"></div>
+      </td>
+    </tr>
+    
+    <!-- Fila 6: Título Anomalías -->
+    <tr>
+      <th colspan="6">
+        <div class="custom_heading-test">
+          Anomalías Cobertura Máxima 2024
+        </div>
+      </th>
+    </tr>
+    
+    <!-- Filas 7, 8 y 9: Gráficos individuales -->
+    <tr>
+      <td colspan="6">
+        <div id="p07-mob"></div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="6">
+        <div id="p08-mob"></div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="6">
+        <div id="p09-mob"></div>
+      </td>
+    </tr>
+  </table>
+</section>
 
 
   <section id="page-bottom"></section>
@@ -239,7 +340,7 @@
                   <h4 class="text-uppercase txt-azul-2">Navegación</h4>
                   <ul>
                       <li><i class="bx bx-chevron-right txt-azul-2"></i> <a href="../index.html">Inicio</a></li>
-                      <li><i class="bx bx-chevron-right txt-azul-2"></i> <a href="/pages/explorador.html">Explorador</a></li>
+                      <li><i class="bx bx-chevron-right txt-azul-2"></i> <a href="../pages/explorador.html">Explorador</a></li>
 
                       <li><i class="bx bx-chevron-right txt-azul-2"></i> <a href="../pages/metodologia.html">Metodología</a></li>
                       <li><i class="bx bx-chevron-right txt-azul-2"></i> <a href="../pages/equipo.html">Equipo</a></li>

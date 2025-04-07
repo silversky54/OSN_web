@@ -5,7 +5,7 @@ async function loadData(watershed_selected) {
   const csvData = await d3.csv(watershed_selected);
   const data = csvData.map(d => ({
     group: "Tred",
-    Elevation: d.Elevation,
+    Elevation: Math.round(d.Elevation),
     SCA: +d.SCA,
     CCA: +d.CCA
   }));
@@ -15,13 +15,14 @@ async function loadData(watershed_selected) {
 export async function c_SCA_elev(watershed) {
 
   // set the dimensions and margins of the graph
-  const margin = {top: 68, right: 100, bottom: 80, left: 0};
+  const margin = {top: 68, right: 100, bottom: 70, left:40};
   const width = 120 - margin.left - margin.right ;
   const height = 400 - margin.top - margin.bottom;
 
-  // append the svg object to the body of the page
-  const svg = d3.select("#p07")
-    .append("svg")
+    // Si el ancho de la ventana es <= 768px, usará el contenedor móvil, de lo contrario el de escritorio.
+    const containerId = window.innerWidth <= 767 ? "#p07-mob" : "#p07-desk";
+  // Crear un nuevo SVG y agregarlo al cuerpo del documento
+  const svg = d3.select(containerId).append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom);
 
@@ -70,7 +71,7 @@ export async function c_SCA_elev(watershed) {
     .range(["#FFFFE6", "#FFFFB4", "#FFEBBE", "#FFD37F", "#FFAA00", "#E69800", "#70A800", "#00A884", "#0084A8", "#004C99"])
 
   // create a tooltip
-  const tooltip = d3.select("#p07")
+  const tooltip = d3.select(containerId)
       .append("div")
       .style("opacity", 0)
       .attr("class", "tooltip")
@@ -145,6 +146,15 @@ export async function c_SCA_elev(watershed) {
     });
 
 
+    svg.append("text")
+    .attr("font-family", "Arial")
+    .style("fill", "black")
+    .attr("font-size", "10px")
+    .attr("text-anchor", "end")
+    .attr("x", width/2 + 70)
+    .attr("y", height + margin.top + 15)  
+    .attr("transform", `rotate(0)`) // Rotar el texto
+    .text("(2000-2024)");
 
   // Crea un grupo SVG para la leyenda
   const legendGroup = svg.append("g");
@@ -153,7 +163,7 @@ export async function c_SCA_elev(watershed) {
 
   // Legend
   
-  let legX = 40
+  let legX = 50
   let legY = 130
 
   legendGroup.append("text")
@@ -234,10 +244,33 @@ export async function c_SCA_elev(watershed) {
   .attr('width', 15)
   .style("fill", "#FFFFE6")
 
+/*
+  
+  svg.append("rect")
+  .attr("x", legX)
+  .attr("y", legY+135+28)
+  .attr('height', 15)
+  .attr('width', 15)
+  .style("fill", "black")
 
 
+  svg.append("text")
+  .attr("x", legX+10)
+  .attr("y", legY+7+15+15+15+15+15+15+15+15+30)
+  .text("Nube (%)")
+  .style("font-size", "10px")
+  .attr("font-family", "Arial")
+  .attr("alignment-baseline", "middle")
 
 
+  svg.append("text")
+  .attr("x", legX+20)
+  .attr("y", legY+7+15+15+15+15+15+15+15+15+15+30)
+  .text(">50")
+  .style("font-size", "10px")
+  .attr("font-family", "Arial")
+  .attr("alignment-baseline", "middle")
+*/
 
   legendGroup.append("text")
   .attr("x", legX+20)

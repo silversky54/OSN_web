@@ -1,18 +1,19 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
 export async function c_map_location(watershed) {
-  const margin = { top: 0, right: 0, bottom: 0, left: 0 };
-  const width = 330; // Convertido de 247pt a px
-  const height = 1180; // Convertido de 1024pt a px
-
+  const margin = { top: 40, right: 0, bottom: 0, left: 0 };
+  const width = 350; // Convertido de pt a px
+  const height = 1200; // Convertido de pt a px
+ // Define el contenedor según el dispositivo:
+    // Si el ancho de la ventana es <= 768px, usará el contenedor móvil, de lo contrario el de escritorio.
+    const containerId = window.innerWidth <= 767 ? "#p01-mob" : "#p01-desk";
   // Crear un nuevo SVG y agregarlo al cuerpo del documento
-  const svg = d3.select("#p01").append("svg")
-    .attr("width", "100%")
-    .attr("height", "100%")
-    .attr("viewBox", `0 0 ${width} ${height}`)
-    .attr("preserveAspectRatio", "xMinYMin meet")
+  const svg = d3.select(containerId).append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
     .attr("id", "d3-plot")
-    .append("g");
+    .append("g")
+    .attr("transform", `translate(${margin.left},${margin.top})`);
 
   // Llamado de SVG
   const data = await d3.xml("../assets/img/bna_cuencas_selecionadas.svg");
@@ -88,4 +89,47 @@ export async function c_map_location(watershed) {
     // Redirigir al usuario a la página de cuencas con el título del polígono como parámetro
     window.location.href = "cuencas.html?cuenca=" + title;
   });
+
+
+
+
+
+ const selectedCuenca = paths.filter(function() {
+    return d3.select(this).attr('title') === watershed;
+  });
+
+  const cuencaName = selectedCuenca.empty() 
+    ? "Seleccione una cuenca" 
+    : selectedCuenca.attr("subtitle");
+  
+  const cuencaCode = selectedCuenca.empty() 
+    ? "Código no disponible" 
+    : selectedCuenca.attr("title");
+
+  // Texto principal
+  const title = svg.append("text")
+    .attr("x", 20)
+    .attr("y", -30) // Posición relativa al margen
+    .style("font-family", "Arial")
+    .style("font-size", "14px")
+    .style("fill", "black");
+
+  // Línea 1 - Título
+  title.append("tspan")
+    .style("font-weight", "bold")
+    .text("1. Nombre de la Cuenca:");
+
+  // Línea 2 - Nombre
+  title.append("tspan")
+    .attr("x", 20)
+    .attr("dy", "1.5em")
+    .text(`• ${cuencaName}`);
+
+  // Línea 3 - Código
+  title.append("tspan")
+    .attr("x", 20)
+    .attr("dy", "1.5em")
+    .text(`• Código BNA: ${cuencaCode}`);
+ 
+
 }

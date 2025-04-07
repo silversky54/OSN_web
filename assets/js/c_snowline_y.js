@@ -4,29 +4,29 @@ import * as d3 from "https://cdn.skypack.dev/d3@7";
 // Definir la función asíncrona para cargar y dibujar el gráfico
 export async function c_snowline_y(watershed) {
     // set the dimensions and margins of the graph
-    const margin = {top: 80, right: 0, bottom: 60, left: 100};
-    const width = 500 - margin.left - margin.right;
+    const margin = { top: 80, right: 10, bottom: 70, left: 50 };
+    const width = 550 - margin.left - margin.right;
     const height = 400 - margin.top - margin.bottom;
-
-    // append the svg object to the body of the page
-    const svg = d3.select("#p11")
-        .append("svg")
+    // Si el ancho de la ventana es <= 768px, usará el contenedor móvil, de lo contrario el de escritorio.
+    const containerId = window.innerWidth <= 767 ? "#p11-mob" : "#p11-desk";
+  // Crear un nuevo SVG y agregarlo al cuerpo del documento
+  const svg = d3.select(containerId).append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
-        .append("g")
+            .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    // Crear el tooltip
-var tooltip = d3.select("#p11")
-.append("div")
-.style("opacity", 0)
-.attr("class", "tooltip")
-.style("background-color", "white")
-.style("border", "solid")
-.style("border-width", "2px")
-.style("border-radius", "5px")
-.style("padding", "5px")
-.style("position", "absolute");
+        // Crear el tooltip
+    var tooltip = d3.select(containerId)
+    .append("div")
+    .style("opacity", 0)
+    .attr("class", "tooltip")
+    .style("background-color", "white")
+    .style("border", "solid")
+    .style("border-width", "2px")
+    .style("border-radius", "5px")
+    .style("padding", "5px")
+    .style("position", "absolute");
 
     // Text to create .csv file
     const text_ini = "../assets/csv/year/snowline_y_BNA_";
@@ -167,17 +167,17 @@ svg.append("line")
     svg.append("text")
         .attr("text-anchor", "center")
         .attr("font-family", "Arial")
-        .attr("font-size", "20px")
+        .attr("font-size", "18px")
         .attr("x", 0)
-        .attr("y", -25)
-        .text("8. Elevación línea de nieve anual");
+        .attr("y", -30)
+        .text("7. Elevación línea de nieve anual (SP=5%)");
           // Etiqueta SUb titulo
     svg.append("text")
         .attr("text-anchor", "center")
         .attr("font-family", "Arial")
         .attr("font-size", "16px")
         .style("fill", "grey")
-        .attr("x", 23)
+        .attr("x", 18)
         .attr("y", -10)
         .text("Cuenca: "+ watershed);
         // Etiqueta del eje X
@@ -195,7 +195,7 @@ svg.append("line")
         .attr("font-family", "Arial")
         .attr("font-size", "13")
         .attr("transform", "rotate(-90)")
-        .attr("y", -margin.left + 55)
+        .attr("y", -margin.left + 10)
         .attr("x", -margin.top + 50)
         .text("Elevación de línea de nieve (msnm)");
 
@@ -225,7 +225,7 @@ var text =  svg.append("text")
        
 // Agregar el texto 
 text.append("tspan")
-    .text("Pendiente Sen:");
+    .text("Pendiente Theil-Sen: ");
 
 // Crear un tspan 
 text.append("tspan")

@@ -3,34 +3,19 @@ import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 // Función para dibujar el gráfico
 export async function c_SCA_m_elev(watershed) {
     // Set the dimensions and margins of the graph
-    const margin = { top: 80, right: 80, bottom: 60, left: 100 };
-    const width = 500 - margin.left - margin.right;
+    const margin = { top: 80, right: 90, bottom: 60, left: 60 };
+    const width = 550 - margin.left - margin.right;
     const height = 400 - margin.top - margin.bottom;
 
-    // Append the svg object to the body of the page
-    const svg = d3.select("#p13")
-        .append("svg")
+    // Si el ancho de la ventana es <= 768px, usará el contenedor móvil, de lo contrario el de escritorio.
+    const containerId = window.innerWidth <= 767 ? "#p13-mob" : "#p13-desk";
+  // Crear un nuevo SVG y agregarlo al cuerpo del documento
+  const svg = d3.select(containerId).append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("transform", `translate(${margin.left},${margin.top})`);
 
-    // Append the slider
-    const sliderContainer = d3.select("#p13")
-        .append("div")
-        .attr("class", "slider-container");
-        var valueini = 30
-    sliderContainer.append("input")
-        .attr("type", "range")
-        .attr("min", 0)
-        .attr("max", 100)
-        .attr("value", valueini)
-        .attr("class", "slider")
-        .attr("id", "ccaSlider");
-
-    sliderContainer.append("span")
-        .attr("id", "sliderValue")
-        .text("Nubosidad : 0%");
 
     // Text to create .csv file
     const text_ini = "../assets/csv/month/SCA_m_elev_BNA_";
@@ -38,12 +23,19 @@ export async function c_SCA_m_elev(watershed) {
     // .csv file
     const watershed_selected = text_ini.concat(watershed).concat(text_end);
 
-    // Read the data
-    const data = await d3.csv(watershed_selected);
+const data = await d3.csv(watershed_selected, d => ({
+    ...d,
+    Elevation: Math.round(d.Elevation), // redondear a numeros enteros la elevación
+    SCA: +d.SCA,
+    CCA: +d.CCA,
+
+  }));
 
     // Labels
     const myGroups = Array.from(new Set(data.map(d => d.Month)));
-    const myVars = Array.from(new Set(data.map(d => d.Elevation)));
+    const myVars = Array.from(new Set(data.map(d => d.Elevation)))
+    .sort((a, b) => a - b)
+    .map(n => Math.round(n)); // Redondear por si hubiera decimales residuales
 
     // Build X scales and axis:
     const x = d3.scaleBand()
@@ -73,7 +65,7 @@ export async function c_SCA_m_elev(watershed) {
         .range(["#FFFFE6", "#FFFFB4", "#FFEBBE", "#FFD37F", "#FFAA00", "#E69800", "#70A800", "#00A884", "#0084A8", "#004C99"]);
 
     // Create a tooltip
-    const tooltip = d3.select("#p13")
+    const tooltip = d3.select(containerId)
         .append("div")
         .style("opacity", 0)
         .attr("class", "tooltip")
@@ -135,8 +127,8 @@ export async function c_SCA_m_elev(watershed) {
         .attr("font-family", "Arial")
         .attr("font-size", "20px")
         .attr("x", 0)
-        .attr("y", -25)
-        .text("11. Cobertura de nieve por elevación");
+        .attr("y", -35)
+        .text("10. Cobertura de nieve por elevación");
 
     // Etiqueta SUb titulo
     svg.append("text")
@@ -144,8 +136,8 @@ export async function c_SCA_m_elev(watershed) {
         .attr("font-family", "Arial")
         .attr("font-size", "16px")
         .style("fill", "grey")
-        .attr("x", + 35)
-        .attr("y", -10)
+        .attr("x", + 33)
+        .attr("y", -15)
         .text("Cuenca: " + watershed);
 
     // Etiqueta del eje X
@@ -168,47 +160,83 @@ export async function c_SCA_m_elev(watershed) {
         .text("Elevación (msnm)");
 
     // Legend
-    // Crea un grupo SVG para la leyenda
-    const legendGroup = svg.append("g");
-    let legX = 340
-    let legY = 30
 
-    const legendColors = ["#004C99", "#0084A8", "#00A884", "#70A800", "#E69800", "#FFAA00", "#FFD37F", "#FFEBBE", "#FFFFB4", "#FFFFE6"];
-    const legendLabels = ["90 - 100", "80 - 90", "70 - 80", "60 - 70", "50 - 60", "40 - 50", "30 - 40", "20 - 30", "10 - 20", "0 - 10"];
+const legendColors = ["#004C99", "#0084A8", "#00A884", "#70A800", "#E69800", "#FFAA00", "#FFD37F", "#FFEBBE", "#FFFFB4", "#FFFFE6"];
+const legendLabels = ["90 - 100", "80 - 90", "70 - 80", "60 - 70", "50 - 60", "40 - 50", "30 - 40", "20 - 30", "10 - 20", "0 - 10"];
 
-    legendColors.forEach((color, i) => {
-        legendGroup.append("rect")
-            .attr("x", legX)
-            .attr("y", legY + i * 15)
-            .attr('height', 15)
-            .attr('width', 15)
-            .style("fill", color);
+// Leyenda (dentro del grupo principal del SVG)
+const legendGroup = svg.append("g")
+    .attr("transform", `translate(${width - margin.right + 40}, 30)`); 
 
-        legendGroup.append("text")
-            .attr("x", legX + 20)
-            .attr("y", legY + 7.5 + i * 15)
-            .text(legendLabels[i])
-            .style("font-size", "10px")
-            .attr("font-family", "Arial")
-            .attr("alignment-baseline", "middle");
-    });
+// Título de la leyenda
+legendGroup.append("text")
+    .attr("x", 80)
+    .attr("y", 10)
+    .text("Nieve (%)")
+    .style("font-family", "Arial")
+    .style("font-size", "12px")
+    .style("font-weight", "bold");
 
+// Posiciones iniciales
+let legX = 80;
+let legY = 20; // Debajo del título
 
+// Rectángulos y etiquetas
+legendColors.forEach((color, i) => {
+    legendGroup.append("rect")
+        .attr("x", legX)
+        .attr("y", legY + i * 15)
+        .attr("width", 15)
+        .attr("height", 15)
+        .style("fill", color);
+
+    legendGroup.append("text")
+        .attr("x", legX + 20)
+        .attr("y", legY + 7.5 + i * 15)
+        .text(legendLabels[i])
+        .style("font-size", "10px")
+        .attr("font-family", "Arial");
+});
+
+    /// SLAIDER
     // control deslizante (slider)
-    function updateGraph() {
-      const sliderValue = +d3.select("#ccaSlider").property("value");
-      d3.select("#sliderValue").text(`Nubosidad > : ${sliderValue}%`);
-  
-      svg.selectAll(".graph-rect")
-          .style("fill", function (d) {
-              const SCA = Number(d.SCA);
-              const CCA = Number(d.CCA);
-              return (CCA > sliderValue) ? "black" : colorScaleThreshold(SCA);
-          });
-  }
-  updateGraph();
-    // Agregar evento de actualización al control deslizante
-    d3.select("#ccaSlider").on("input", updateGraph);
+    
+// Coordenadas donde quieres el slider (ajústalas)
+const sliderX = 130; // Ejemplo: centro horizontal
+const sliderY = 300; // Ejemplo: debajo del gráfico
+
+// Contenedor del slider
+const sliderGroup = svg.append("foreignObject")
+    .attr("x", sliderX)
+    .attr("y", sliderY)
+    .attr("width", 320)
+    .attr("height", 50);
+
+sliderGroup.append("xhtml:div")
+    .style("display", "flex")
+    .style("align-items", "center")
+    .style("gap", "10px")
+    .html(`
+        <input type="range" id="ccaSlider1" min="0" max="100" value="30" style="width: 150px">
+        <span id="sliderLabel1" style="font-family: Arial; font-size: 14px;">Nubosidad > : 30%</span>
+        <div style="width: 15px; height: 15px; background: black; border: 1px solid #999"></div>
+    `);
+
+// Función de actualización
+function updateGraph() {
+    const sliderValue = +d3.select("#ccaSlider1").property("value");
+    d3.select("#sliderLabel1").text(`Nubosidad > : ${sliderValue}%`);  
+    
+    svg.selectAll(".graph-rect") // Usar clase específica
+        .style("fill", d => (d.CCA > sliderValue) ? "black" : colorScaleThreshold(d.SCA));
+}
+
+// Ejecutar al inicio
+updateGraph(); // <--- ¡Clave para inicializar!
+
+// Evento del slider
+d3.select("#ccaSlider1").on("input", updateGraph);
+
 
 
 // Crear un botón de exportación dentro del SVG

@@ -7,15 +7,16 @@ export async function c_elev(watershed) {
 const margin = { top: 80, right: 0, bottom: 60, left: 80 };
     const width = 250 - margin.left - margin.right;
     const height = 400 - margin.top - margin.bottom;
-    // append the svg object to the body of the page
-    const svg = d3.select("#p08")
-        .append("svg")
+    // Si el ancho de la ventana es <= 768px, usará el contenedor móvil, de lo contrario el de escritorio.
+    const containerId = window.innerWidth <= 767 ? "#p08-mob" : "#p08-desk";
+  // Crear un nuevo SVG y agregarlo al cuerpo del documento
+  const svg = d3.select(containerId).append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("transform", `translate(${margin.left},${margin.top})`);
     // Crear el tooltip
-    var tooltip = d3.select("#p08")
+    var tooltip = d3.select(containerId)
         .append("div")
         .style("opacity", 0)
         .attr("class", "tooltip")
@@ -99,10 +100,10 @@ svg.selectAll("myRect")
      svg.append("text")
      .attr("text-anchor", "center")
      .attr("font-family", "Arial")
-     .attr("font-size", "20px")
+     .attr("font-size", "18px")
      .attr("x", -70)
      .attr("y", -25)
-     .text("9. Área por elevación");
+     .text("8. Área por elevación");
   
 // Etiqueta SUb titulo
     svg.append("text")
@@ -110,7 +111,7 @@ svg.selectAll("myRect")
         .attr("font-family", "Arial")
         .attr("font-size", "16px")
         .style("fill", "grey")
-        .attr("x", -36 )
+        .attr("x", -52 )
         .attr("y", -10)
         .text("Cuenca: "+ watershed);
 
@@ -118,10 +119,10 @@ svg.selectAll("myRect")
 // Etiqueta del eje X
 
    var text = svg.append("text")
-   .attr("x", width / 18)
-   .attr("y", height + 40)
+   .attr("x", width / 3.5)
+   .attr("y", height + 50)
    .attr("text-anchor", "center")
-   .style("font-size", "14px")
+   .style("font-size", "12px")
    .attr("font-family","Arial");
 
    text.append("tspan")
@@ -129,12 +130,12 @@ svg.selectAll("myRect")
 
    text.append("tspan")
    .attr("baseline-shift", "super")
-   .attr("font-size", "10px")
+   .attr("font-size", "12px")
    .text("2");
 
    text.append("tspan")
    .attr("baseline-shift", "baseline")
-   .attr("font-size", "14px")
+   .attr("font-size", "12px")
    .text(")");
 
 

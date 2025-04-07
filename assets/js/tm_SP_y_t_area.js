@@ -6,14 +6,17 @@ export async function tm_SP_y_t_area() {
     const width = 500 - margin.left - margin.right;
     const height = 450 - margin.top - margin.bottom;
 
-    const svg = d3.select("#p09").append("svg")
+    // Si el ancho de la ventana es <= 768px, usará el contenedor móvil, de lo contrario el de escritorio.
+    const containerId = window.innerWidth <= 767 ? "#p09-mob" : "#p09-desk";
+  // Crear un nuevo SVG y agregarlo al cuerpo del documento
+  const svg = d3.select(containerId).append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .attr("id", "d3-plot")
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     // Creación del tooltip
-    var tooltip = d3.select("#p09")
+    var tooltip = d3.select(containerId)
         .append("div")
         .style("opacity", 0)
         .attr("class", "tooltip")
@@ -28,7 +31,7 @@ export async function tm_SP_y_t_area() {
 
 
   var series = d3.stack()
-      .keys(['n00','n01','n02','n03','n04','n05','n06','n07','n08','n09','n10','p00','p01','p02','p03','p04','p05','p06','p07','p08','p09','p010'])
+      .keys(['n00','n01','n02','n03','n04','n05','n06','n07','n08','n09','n10','p00','p01','p02','p03','p04','p05','p06','p07','p08','containerId','p010'])
       .offset(d3.stackOffsetDiverging)
       (data);
   

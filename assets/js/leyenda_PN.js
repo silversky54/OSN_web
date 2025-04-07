@@ -1,48 +1,38 @@
 
 
-// 
-
 
 // Importar la biblioteca D3.js desde un CDN
 import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm'; 
 
-/*// Definir la escala de colores
-const colorScale = d3.scaleThreshold()
-    .domain([
-        -10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 
-         0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10
-    ])
-    .range([
-        "#FF0000", "#FF0303", "#FF1E1F", "#FE393A", "#FE5456", "#FD6F72", "#FD8B8D", 
-        "#FCA6A9", "#FCC1C5", "#FBDCE0", "#FBF7FC", "#FBF7FC", "#DFDEFC", "#C4C4FD", 
-        "#A8ABFD", "#8D92FD", "#7178FE", "#565FFE", "#3A46FE", "#1F2CFF", 
-        "#0313FF", "#0000FF"
-    ]);
-*/
-// Definir una función llamada 'leyenda_PN' que toma dos argumentos: 'svg' y 'colorScale'
-export async function leyenda_PN(){
- // set the dimensions and margins of the graph
- 
- const margin = {top: 80, right: 100, bottom: 60, left: 0};
- const width = 25 ;
- const height = 400 - margin.top - margin.bottom;
 
- // append the svg object to the body of the page
- const svg = d3.select("#leyenda_PN")
-     .append("svg")
-     .attr("width", width + margin.left + margin.right)
-     .attr("height", height + margin.top + margin.bottom)
-     .append("g")
-     .attr("transform", `translate(${margin.left},${margin.top})`);
 
-  let legX = 20
-  let legY = 30
+export function leyenda_PN(suffix = 'desk') { // ✅ Añadir parámetro "suffix"
+  const containerId = `leyenda_PN-${suffix}`; // ✅ ID dinámico
+  const container = document.getElementById(containerId);
+  
+  // Limpiar contenedor antes de renderizar
+  container.innerHTML = ''; // ✅ Evita duplicación
+  
+  // Ajustar dimensiones para móvil
+  const isMobile = suffix === 'mob';
+// En leyenda_PN.js
+const width = isMobile ? 80 : 180; // ✅ Ancho mayor para desk
+const height = isMobile ? 300 : 350; // ✅ Altura ajustada
+  
+  // Crear SVG responsivo
+  const svg = d3.select(`#${containerId}`)
+      .append("svg")
+      .attr("width", isMobile ? "20%" : width) // ✅ 100% en móvil
+      .attr("viewBox", `0 0 ${width} ${height}`) // ✅ Escala automática
+
+      let legX = isMobile ? 30 : 50; // ✅ Posición X ajustada
+      let legY = isMobile ? 100  : 120; // ✅ Posición Y ajustada
 
   svg.append("text")
   .attr("x", legX)
   .attr("y", legY-15)
   .text("Nieve (%)")
-  .style("font-size", "12px")
+.style("font-size", isMobile ? "10px" : "12px")
   .attr("font-family", "Arial")
   .attr("alignment-baseline", "middle")
 
@@ -115,15 +105,6 @@ export async function leyenda_PN(){
   .attr('height', 15)
   .attr('width', 15)
   .style("fill", "#FFFFE6")
-
-  svg.append("rect")
-  .attr("x", legX)
-  .attr("y", legY+135+45)
-  .attr('height', 15)
-  .attr('width', 15)
-  .style("fill", "black")
-
-
 
 
   svg.append("text")
@@ -206,20 +187,6 @@ export async function leyenda_PN(){
   .attr("font-family", "Arial")
   .attr("alignment-baseline", "baseline")
 
-  svg.append("text")
-  .attr("x", legX)
-  .attr("y", legY+7+15+15+15+15+15+15+15+15+15+30)
-  .text("Nube (%)")
-  .style("font-size", "10px")
-  .attr("font-family", "Arial")
-  .attr("alignment-baseline", "middle")
-
-  svg.append("text")
-  .attr("x", legX+20)
-  .attr("y", legY+7+15+15+15+15+15+15+15+15+15+30+15)
-  .text(">50")
-  .style("font-size", "10px")
-  .attr("font-family", "Arial")
-  .attr("alignment-baseline", "middle")
+ 
 
     }

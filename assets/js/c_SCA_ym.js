@@ -6,34 +6,27 @@ export async function c_SCA_ym(watershed) {
     const width = 1000 - margin.left - margin.right;
     const height = 400 - margin.top - margin.bottom;
 
-    // append the svg object to the body of the page
-    const svg = d3.select("#p17")
-      .append("svg")
+    // Si el ancho de la ventana es <= 768px, usará el contenedor móvil, de lo contrario el de escritorio.
+    const containerId = window.innerWidth <= 767 ? "#p17-mob" : "#p17-desk";
+
+
+    const containerElement = document.querySelector(containerId);
+    console.log("Contenedor seleccionado:", containerElement);
+  // Crear un nuevo SVG y agregarlo al cuerpo del documento
+  const svg = d3.select(containerId).append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
       .append("g")
         .attr("transform", `translate(${margin.left}, ${margin.top})`);
-       // Tooltip
-        var tooltip = d3.select("#p17")
-        .append("div")
-        .style("opacity", 0)
-        .attr("class", "tooltip")
-        .style("background-color", "white")
-        .style("border", "solid")
-        .style("border-width", "2px")
-        .style("border-radius", "5px")
-        .style("padding", "5px")
-        .style("position", "absolute");
-    // Text to create .csv file
+
     const text_ini = "../assets/csv/yearMonth/SCA_ym_BNA_";
     const text_end = ".csv";
-
-    // .csv file
     const watershed_selected = text_ini.concat(watershed).concat(text_end);
 
     //Read the data 
     const csvData = await d3.csv(watershed_selected);
-    const data = csvData.map(d => ({
+    const data = await d3.csv(watershed_selected, d => ({
+        ...d,
       Year: d3.timeParse("%Y-%m-%d")(d.Year),
       SCA: +d.SCA
     }));
@@ -69,6 +62,18 @@ svg.append("g")
       }
   });
 
+       // Tooltip
+       var tooltip = d3.select(containerId)
+       .append("div")
+       .style("opacity", 0)
+       .attr("class", "tooltip")
+       .style("background-color", "white")
+       .style("border", "solid")
+       .style("border-width", "2px")
+       .style("border-radius", "5px")
+       .style("padding", "5px")
+       .style("position", "absolute");
+   // Text to create .csv file
 
 // valor dominio del eje Y
 const Ymax = [0, 1.05*d3.max(data, d => d.SCA)];
@@ -235,8 +240,8 @@ svg.append("line")
     .attr("font-family", "Arial")
     .attr("font-size", "20px")
     .attr("x", width / 2  - 180)
-    .attr("y", -25)
-    .text("14. Cobertura de nieves promedio por año y mes");
+    .attr("y", -30)
+    .text("13. Cobertura de nieves promedio por año y mes");
  
     // Etiqueta SUb titulo
 svg.append("text")
@@ -289,7 +294,7 @@ svg.append("text")
     
     // Agregar el texto "Sen Slope Maximo: "
     text.append("tspan")
-        .text("Pendiente Sen cobertura máxima: ");
+        .text("Pendiente Theil-Sen cobertura máxima: ");
     
     // Crear un tspan para el valor de ValorSen_Max
     text.append("tspan")
@@ -306,7 +311,7 @@ svg.append("text")
     
     // Crear un elemento de texto en el SVG para mostrar el texto "Sen Slope Minimo:"
     var textMin = svg.append("text")
-        .attr("x", 560) 
+        .attr("x", 480) 
         .attr("y", -10) 
         .attr("font-family", "Arial")
         .attr("font-size", 13)
@@ -314,7 +319,7 @@ svg.append("text")
     
     // Agregar el texto "Sen Slope Minimo: "
     textMin.append("tspan")
-        .text("Pendiente Sen cobertura mínima: ");
+        .text("Pendiente Theil-Sen cobertura mínima: ");
     
     // Crear un tspan para el valor de ValorSen_Min
     textMin.append("tspan")
@@ -323,7 +328,7 @@ svg.append("text")
         .attr("fill", "blue");
 
         text.append("tspan")
-        .attr("x",795) 
+        .attr("x",740) 
         .attr("y", -10) 
         .text(" (%/año)");
 // Crear un botón de exportación dentro del SVG

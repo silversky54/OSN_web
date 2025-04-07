@@ -1,44 +1,53 @@
 import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
 
-
-export async function c_snowline_ym(watershed) {
-    // set the dimensions and margins of the graph
-    const margin = {top: 50, right: 80, bottom: 50, left: 80};
-    const width = 1000 - margin.left - margin.right;
+  export async function c_snowline_ym(watershed, suffix = 'desk') {
+    const margin = { top: 50, right: 80, bottom: 70, left: 80 };
+    const isMobile = suffix === 'mob';
+    const width = isMobile ? window.innerWidth - 30 : 1000 - margin.left - margin.right;
     const height = 400 - margin.top - margin.bottom;
+    const containerId = `p19-${suffix}`;
+    const container = document.getElementById(containerId);
 
-    // append the svg object to the body of the page
-    const svg = d3.select("#p19")
-      .append("svg")
-        .attr("width", width + margin.left + margin.right)
+    // Limpiar contenedor
+    container.innerHTML = '';
+
+    // Crear SVG
+    const svg = d3.select(`#${containerId}`)
+        .append("svg")
+        .attr("width", isMobile ? "100%" : width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
-      .append("g")
+        .attr("viewBox", isMobile ? `0 0 ${width + margin.left + margin.right} ${height + margin.top + margin.bottom}` : "")
+        .append("g")
         .attr("transform", `translate(${margin.left}, ${margin.top})`);
-// Crear el tooltip
-var tooltip = d3.select("#p19")
-    .append("div")
-    .style("opacity", 0)
-    .attr("class", "tooltip")
-    .style("background-color", "white")
-    .style("border", "solid")
-    .style("border-width", "2px")
-    .style("border-radius", "5px")
-    .style("padding", "5px")
-    .style("position", "absolute");
+        // create a tooltip
+        const tooltip = d3.select("#" + containerId)
+        .append("div")
+        .style("opacity", 0)
+        .attr("class", "tooltip")
+        .style("position", "absolute")  // Asegura que el tooltip flote sobre el gráfico
+        .style("background-color", "white")
+        .style("border", "solid")
+        .style("border-width", "2px")
+        .style("border-radius", "5px")
+        .style("padding", "5px")
+        .style("pointer-events", "none"); // Evita que interfiera con el mouseover
+    
 
-    // Text to create .csv file
-    const text_ini = "../assets/csv/yearMonth/snowline_ym_BNA_";
-    const text_end = ".csv";
 
-    // .csv file
-    const watershed_selected = text_ini.concat(watershed).concat(text_end);
+     // Text to create .csv file
+     const text_ini = "../assets/csv/yearMonth/snowline_ym_BNA_";
+     const text_end = ".csv";
+ 
+     // .csv file
+     const watershed_selected = text_ini.concat(watershed).concat(text_end);
+ //Read the data 
+ const csvData = await d3.csv(watershed_selected);
+ const data = csvData.map(d => ({
+   Date: d3.timeParse("%Y-%m-%d")(d.Date),
+   Snowline_elev: +d.Snowline_elev
+ }));
+ 
 
-//Read the data 
-const csvData = await d3.csv(watershed_selected);
-const data = csvData.map(d => ({
-  Date: d3.timeParse("%Y-%m-%d")(d.Date),
-  Snowline_elev: +d.Snowline_elev
-}));
     // Add X axis --> it is a date format
     const x = d3.scaleBand()
     .domain(data.map(d => d.Date)) // Use the dates in your data for the domain
@@ -70,6 +79,13 @@ svg.append("g")
         }
     });
 
+
+ 
+ 
+
+
+
+
 // Prueba QUIERO QUE PARTA DESDE EL MENOR VALOR Y 
 
 let menor = data[0].Snowline_elev;
@@ -94,7 +110,7 @@ const Ymax = [menor, mayor];
     // Add Y axis
     const y = d3.scaleLinear()
       .domain(Ymax)
-      .range([height, 0]);
+      .range([height, 0])
     svg.append("g")
       .call(d3.axisLeft(y));
 
@@ -225,7 +241,7 @@ const minValues2000To2024 = minValues.filter(d => d.year >= 2000 && d.year <= 20
     .attr("font-size", "20px")
     .attr("x", width / 2  - 120)
     .attr("y", -25)
-    .text("16. Líneas de nieve por año y mes");
+    .text("15. Líneas de nieve por año y mes");
  
     // Etiqueta SUb titulo
     svg.append("text")
@@ -253,95 +269,9 @@ const minValues2000To2024 = minValues.filter(d => d.year >= 2000 && d.year <= 20
         .attr("font-size", "13")
         .attr("transform", "rotate(-90)")
         .attr("y", -40)
-        .attr("x", -80)
-        .text("Altura de la línea de nieve (m)");
+        .attr("x", -40)
+        .text("Altura de la línea de nieve (msnm)");
 
-
-
-// Ruta para el archivo CSV
-var sen_slope_csv = "../assets/csv/sen_slope/sen_slope_sca_ym_bna.csv";
-
-// Obtener los datos CSV
-const sen_slope_s = await d3.csv(sen_slope_csv);
-
-// Buscar el valor de SCA_Sen para el COD_CUEN correspondiente
-const filaEncontrada = sen_slope_s.find(d => d.COD_CUEN === `BNA_${watershed}`);
-
-// Obtener el valor de ValorSen_Max
-const valorSen_Max = filaEncontrada.snowline_max_sen; // columna del csv
-
-// Crear un elemento de texto en el SVG para mostrar el texto "Sen Slope Maximo:"
-var text = svg.append("text")
-    .attr("x", 100) 
-    .attr("y", -10) 
-    .attr("font-family", "Arial")
-    .attr("font-size", 13)
-    .attr("fill", "black");
-
-// Agregar el texto 
-text.append("tspan")
-    .text("Pendiente Sen máxima: ");
-
-// Crear un tspan 
-text.append("tspan")
-    .text(valorSen_Max)
-    .attr("fill", "red");
-
-    text.append("tspan")
-    .text(" (m/año)");
-    
-   // VALORES MINIMO
- const valorSen_min = filaEncontrada.snowline_min_sen; // columna del csv
-
-
-// Crear un elemento de texto en el SVG para mostrar el texto "Sen Slope Minimo:"
-var textMin = svg.append("text")
-    .attr("x", 630) 
-    .attr("y", -10) 
-    .attr("font-family", "Arial")
-    .attr("font-size", 13)
-    .attr("fill", "black");
-
-// Agregar el texto "Sen Slope Minimo: "
-textMin.append("tspan")
-    .text("Pendiente Sen mínima: ");
-
-// Crear un tspan para el valor de ValorSen_Min
-textMin.append("tspan")
-    .text(valorSen_min)
-    .attr("fill", "blue");
-  
-    text.append("tspan")
-    .attr("x", 790) 
-    .attr("y", -10) 
-    .text(" (m/año)");
-            
-// Crear un botón de exportación dentro del SVG
-var button = svg.append("foreignObject")
-.attr("width", 30) // ancho del botón
-.attr("height", 40) // alto del botón
-.attr("x", width - 25) // posiciona el botón en el eje x
-.attr("y",-48) // posiciona el botón en el eje Y
-.append("xhtml:body")
-.html('<button type="button" style="width:100%; height:100%; border: 0px; border-radius:5px; background-color: transparent;"><img src="../assets/img/descarga.png" alt="descarga" width="20" height="20"></button>')
-.on("click", function() {
-    var columnNames = Object.keys(data[0]); 
-
-    // Crea una nueva fila con los nombres de las columnas y agrega tus datos
-    var csvData = [columnNames].concat(data.map(row => Object.values(row))).join("\n");
-    
-    var blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
-    var url = URL.createObjectURL(blob);
-    var fileName = "Linea_De_Nieve_Por_Año_Y_Mes_" + watershed + ".csv";
-    
-    var link = document.createElement("a");
-    link.setAttribute("href", url);
-    link.setAttribute("download", fileName);
-    link.style.visibility = 'hidden';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-});
 // Crear puntos en la línea para el tooltip
 svg.selectAll("myCircles")
     .data(data)
@@ -378,6 +308,95 @@ svg.selectAll("myCircles")
             .style("opacity", 0); // Hacer el punto invisible de nuevo cuando el mouse sale de él
     });
  
+
+
+// Ruta para el archivo CSV
+var sen_slope_csv = "../assets/csv/sen_slope/sen_slope_sca_ym_bna.csv";
+
+// Obtener los datos CSV
+const sen_slope_s = await d3.csv(sen_slope_csv);
+
+// Buscar el valor de SCA_Sen para el COD_CUEN correspondiente
+const filaEncontrada = sen_slope_s.find(d => d.COD_CUEN === `BNA_${watershed}`);
+
+// Obtener el valor de ValorSen_Max
+const valorSen_Max = filaEncontrada.snowline_max_sen; // columna del csv
+
+// Crear un elemento de texto en el SVG para mostrar el texto "Sen Slope Maximo:"
+var text = svg.append("text")
+    .attr("x", 100) 
+    .attr("y", -10) 
+    .attr("font-family", "Arial")
+    .attr("font-size", 13)
+    .attr("fill", "black");
+
+// Agregar el texto 
+text.append("tspan")
+    .text("Pendiente Theil-Sen máxima: ");
+
+// Crear un tspan 
+text.append("tspan")
+    .text(valorSen_Max)
+    .attr("fill", "red");
+
+    text.append("tspan")
+    .text(" (m/año)");
+    
+   // VALORES MINIMO
+ const valorSen_min = filaEncontrada.snowline_min_sen; // columna del csv
+
+
+// Crear un elemento de texto en el SVG para mostrar el texto "Sen Slope Minimo:"
+var textMin = svg.append("text")
+    .attr("x", 600) 
+    .attr("y", -10) 
+    .attr("font-family", "Arial")
+    .attr("font-size", 13)
+    .attr("fill", "black");
+
+// Agregar el texto "Sen Slope Minimo: "
+textMin.append("tspan")
+    .text("Pendiente Theil-Sen mínima: ");
+
+// Crear un tspan para el valor de ValorSen_Min
+textMin.append("tspan")
+    .text(valorSen_min)
+    .attr("fill", "blue");
+  
+    text.append("tspan")
+    .attr("x", 790) 
+    .attr("y", -10) 
+    .text(" (m/año)");
+
+
+
+    
+// Crear un botón de exportación dentro del SVG
+var button = svg.append("foreignObject")
+.attr("width", 30) // ancho del botón
+.attr("height", 40) // alto del botón
+.attr("x", width - 25) // posiciona el botón en el eje x
+.attr("y",-48) // posiciona el botón en el eje Y
+.append("xhtml:body")
+.html('<button type="button" style="width:100%; height:100%; border: 0px; border-radius:5px; background-color: transparent;"><img src="../assets/img/descarga.png" alt="descarga" width="20" height="20"></button>')
+.on("click", function() {
+    var columnNames = Object.keys(data[0]); 
+
+    // Crea una nueva fila con los nombres de las columnas y agrega tus datos
+    var csvData = [columnNames].concat(data.map(row => Object.values(row))).join("\n");
+    
+    var blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+    var url = URL.createObjectURL(blob);
+    var fileName = "Linea_De_Nieve_Por_Año_Y_Mes_" + watershed + ".csv";
+    
+    var link = document.createElement("a");
+    link.setAttribute("href", url);
+    link.setAttribute("download", fileName);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+});
 
     
 
