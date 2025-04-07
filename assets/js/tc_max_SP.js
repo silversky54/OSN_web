@@ -28,7 +28,7 @@ export async function tc_max_SP() {
         .style("padding", "5px")
         .style("position", "absolute");
 
-    const data = await d3.csv("../assets/csv/total/tc_max_SP.csv");
+    const data = await d3.csv("/assets/csv/total/tc_SP_anomalia.csv");
 
     const y = d3.scaleBand()
         .rangeRound([0, height], .3)
@@ -72,7 +72,7 @@ export async function tc_max_SP() {
 
     x.domain([min_val, max_val]).nice();
   
-    y.domain(data.map(function(d) { return d.Question; }));
+    y.domain(data.map(function(d) { return d.COD_CUEN; }));
 
     svg.append("g")
         .attr("class", "x axis")
@@ -87,7 +87,7 @@ export async function tc_max_SP() {
         .data(data)
         .enter().append("g")
         .attr("class", "bar")
-        .attr("transform", function(d) { return "translate(0," + y(d.Question) + ")"; });
+        .attr("transform", function(d) { return "translate(0," + y(d.COD_CUEN) + ")"; });
 
     const bars = vakken.selectAll("rect")
         .data(function(d) { return d.boxes; })
@@ -110,7 +110,7 @@ export async function tc_max_SP() {
             // Redondea hacia abajo para obtener un número entero
             cobertura = Math.floor(cobertura);
             tooltip
-                .html("Cuenca: " + d.data.Question + "<br>" + 
+                .html("Cuenca: " + d.data.COD_CUEN + "<br>" + 
                       "Anomalia cobertura: " +  cobertura + " %"
                       )
                 .style("left", (event.pageX + 30) + "px")
@@ -135,18 +135,18 @@ export async function tc_max_SP() {
 
 
 // Linea que diferencia entre cuencas 
-// Añade este array de configuración al inicio de tu función (después de definir margin):
+// array de configuración al inicio de tu función : id cuenca color y posicion
 const specialQuestions = [
-    { id: "10", color: "#FFD37F", position: "top" },    // 
-    { id: "47", color: "#FFFF73", position: "bottom" }, // 
-    { id: "73", color: "#BAE1A6", position: "bottom" }, // 
+    { id: "010", color: "#FFD37F", position: "top" },    // 
+    { id: "047", color: "#FFFF73", position: "bottom" }, // 
+    { id: "073", color: "#BAE1A6", position: "bottom" }, // 
     { id: "104", color: "#73DFFF", position: "bottom" }, // 
     { id: "129", color: "#73DFFF", position: "bottom" }  //  
 ];
 
 // Reemplaza el bloque de líneas rojas con este código:
 specialQuestions.forEach(config => {
-    vakken.filter(d => d.Question === config.id)
+    vakken.filter(d => d.COD_CUEN === config.id)
         .append("rect")
         .attr("x", 0)
         .attr("y", config.position === "top" ? 1 : y.bandwidth() - 2)
