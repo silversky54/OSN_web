@@ -132,88 +132,75 @@
 <!-- DESARROLLO TÍTULO PRINCIPAL -->
   <!-- Asigna un id a la sección que deseas ocultar -->
 
-<div id="listSection"></div>
-  
-<p> <b>Seleccione una cuenca:</b>
-  <select id="BNA_cod" onchange="hideListSection()">
-            <option value="010">010-Altiplánica</option>
-            <option value="023">023-Fronterizas salares Atacama-Socompa</option>
-            <option value="024">024-Endorreica entre fronterizas y Salar Atacama</option>
-            <option value="030">030-Endorreica entre frontera y vertiente del Pacifico</option>
-            <option value="038">038-Río Huasco</option>
-            <option value="043">043-Río Elqui</option>
-            <option value="045">045-Río Limari</option>
-            <option value="047">047-Río Choapa</option>
-            <option value="051">051-Río Petorca</option>
-            <option value="052">052-Río Ligua</option>
-            <option value="054">054-Río Aconcagua</option>
-            <option value="057">057-Río Maipo</option>
-            <option value="060">060-Río Rapel</option>
-            <option value="071">071-Río Mataquito</option>
-            <option value="073">073-Río Maule</option>
-            <option value="081">081-Río Itata</option>
-            <option value="083">083-Río Bio-Bio</option>
-            <option value="091">091-Río Imperial</option>
-            <option value="094">094-Río Tolten</option>
-            <option value="101">101-Río Valdivia</option>
-            <option value="103">103-Río Bueno</option>
-            <option value="104">104-Cuencas e islas entre ríos Buenos y río Puelo</option>
-            <option value="105">105-Río Puelo</option>
-            <option value="106">106-Costeras entre Río Puelo y Río Yelcho</option>
-            <option value="107">107-Río Yelcho</option>
-            <option value="108">108-Costeras entre Río Yelcho y límite regional</option>
-            <option value="110">110-Río Palena y costeras límite decima region</option>
-            <option value="111">111-Costeras e islas entre Río Palena y Río Aysen</option>
-            <option value="112">112-Archipielago de las Guaitecas y de los Chonos</option>
-            <option value="113">113-Río Aysen</option>
-            <option value="114">114-Costeras e islas entre Río Aysen y Canal General Martínez</option>
-            <option value="115">115-Río Baker</option>
-            <option value="116">116-Costeras e islas entre Río Baker y Río Pascua</option>
-            <option value="117">117-Río Pascua</option>
-            <option value="118">118-Costeras entre Río Pascua y límite regional</option>
-            <option value="119">119-Cuenca del Pacífico</option>
-            <option value="120">120-Costaras entre límite regional y Seno Andrew</option>
-            <option value="121">121-Islas entre límite regional y canal Ancho</option>
-            <option value="122">122-Costeras entre Seno Andrew y Río Hollemberg</option>
-            <option value="123">123-Islas entre Canales Concepción y Estrecho de Magallanes</option>
-            <option value="124">124-Costeras e islas Río Hollemberg</option>
-            <option value="125">125-Costeras entre Laguna Blanca y Estrecho de Magallanes</option>
-            <option value="126">126-Vertiente del Atlántico</option>
-            <option value="127">127-Islas del Sur Estrecho de Magallanes</option>
-            <option value="128">128-Tierra del Fuego</option>
-            <option value="129">129-Islas del sur Canal Beagle y Territorio Antartico</option>
-          </select>
-        </p>
-        <p id="info"></p>
-        <script type="text/javascript">
-          function hideListSection() {
-            // Cuando el usuario haga una selección, cambia el estilo de display a 'none' para ocultar la sección
-            document.getElementById('listSection').style.display = 'none';
-          }
-      
-          window.onload = function() {
-  // Obtener el parámetro de consulta 'cuenca'
-  let params = new URLSearchParams(window.location.search);
-  let cuenca = params.get('cuenca');
+    <div class="selector-container">
+      <label class="selector-label">Seleccione una cuenca:</label>
+      <select id="BNA_cod" class="custom-select">
+          <option value="010">010-Altiplánica</option>
+          <option value="023">023-Fronterizas salares Atacama-Socompa</option>
+          <option value="024">024-Endorreica entre fronterizas y Salar Atacama</option>
+          <option value="030">030-Endorreica entre frontera y vertiente del Pacifico</option>
+          <option value="038">038-Río Huasco</option>
+          <option value="043">043-Río Elqui</option>
+          <option value="045">045-Río Limari</option>
+          <option value="047">047-Río Choapa</option>
+          <option value="051">051-Río Petorca</option>
+          <option value="052">052-Río Ligua</option>
+          <option value="054">054-Río Aconcagua</option>
+          <option value="057">057-Río Maipo</option>
+          <option value="060">060-Río Rapel</option>
+          <option value="071">071-Río Mataquito</option>
+          <option value="073">073-Río Maule</option>
+          <option value="081">081-Río Itata</option>
+          <option value="083">083-Río Bio-Bio</option>
+          <option value="091">091-Río Imperial</option>
+          <option value="094">094-Río Tolten</option>
+          <option value="101">101-Río Valdivia</option>
+          <option value="103">103-Río Bueno</option>
+          <option value="104">104-Cuencas e islas entre ríos Buenos y río Puelo</option>
+          <option value="105">105-Río Puelo</option>
+          <option value="106">106-Costeras entre Río Puelo y Río Yelcho</option>
+          <option value="107">107-Río Yelcho</option>
+          <option value="108">108-Costeras entre Río Yelcho y límite regional</option>
+          <option value="110">110-Río Palena y costeras límite decima region</option>
+          <option value="111">111-Costeras e islas entre Río Palena y Río Aysen</option>
+          <option value="112">112-Archipielago de las Guaitecas y de los Chonos</option>
+          <option value="113">113-Río Aysen</option>
+          <option value="114">114-Costeras e islas entre Río Aysen y Canal General Martínez</option>
+          <option value="115">115-Río Baker</option>
+          <option value="116">116-Costeras e islas entre Río Baker y Río Pascua</option>
+          <option value="117">117-Río Pascua</option>
+          <option value="118">118-Costeras entre Río Pascua y límite regional</option>
+          <option value="119">119-Cuenca del Pacífico</option>
+          <option value="120">120-Costaras entre límite regional y Seno Andrew</option>
+          <option value="121">121-Islas entre límite regional y canal Ancho</option>
+          <option value="122">122-Costeras entre Seno Andrew y Río Hollemberg</option>
+          <option value="123">123-Islas entre Canales Concepción y Estrecho de Magallanes</option>
+          <option value="124">124-Costeras e islas Río Hollemberg</option>
+          <option value="125">125-Costeras entre Laguna Blanca y Estrecho de Magallanes</option>
+          <option value="126">126-Vertiente del Atlántico</option>
+          <option value="127">127-Islas del Sur Estrecho de Magallanes</option>
+          <option value="128">128-Tierra del Fuego</option>
+          <option value="129">129-Islas del sur Canal Beagle y Territorio Antartico</option>
+      </select>
+  </div>
 
-  // Seleccionar la cuenca correspondiente en el selector de cuencas
-  let select = document.getElementById('BNA_cod');
-  for(let i = 0; i < select.options.length; i++) {
-    if(select.options[i].value == cuenca) {
-      select.selectedIndex = i;
+  <script>
+    // Configuración básica del selector
+    document.getElementById('BNA_cod').addEventListener('change', function() {
+        window.history.replaceState({}, '', `?cuenca=${this.value}`);
+    });
 
-      // Disparar un evento de clic en el selector
-      select.dispatchEvent(new Event('change'));
-      
-      break;
-    }
-  }
-};
+    // Carga inicial desde URL
+    window.onload = function() {
+        const params = new URLSearchParams(window.location.search);
+        const select = document.getElementById('BNA_cod');
+        
+        if (params.has('cuenca')) {
+            select.value = params.get('cuenca');
+        }
+    };
+</script>
 
-
-        </script>
-      </div>
-  </section>
 
 <!-- FIN SECCIÓN TÍTULO PRINCIPAL -->
 <!-- Leaflet JS -->
