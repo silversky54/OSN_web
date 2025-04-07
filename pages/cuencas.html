@@ -184,21 +184,31 @@
       </select>
   </div>
 
-  <script>
-    // Configuración básica del selector
-    document.getElementById('BNA_cod').addEventListener('change', function() {
-        window.history.replaceState({}, '', `?cuenca=${this.value}`);
-    });
+ 
+        <script type="text/javascript">
+          function hideListSection() {
+            // Cuando el usuario haga una selección, cambia el estilo de display a 'none' para ocultar la sección
+            document.getElementById('listSection').style.display = 'none';
+          }
+      
+          window.onload = function() {
+  // Obtener el parámetro de consulta 'cuenca'
+  let params = new URLSearchParams(window.location.search);
+  let cuenca = params.get('cuenca');
 
-    // Carga inicial desde URL
-    window.onload = function() {
-        const params = new URLSearchParams(window.location.search);
-        const select = document.getElementById('BNA_cod');
-        
-        if (params.has('cuenca')) {
-            select.value = params.get('cuenca');
-        }
-    };
+  // Seleccionar la cuenca correspondiente en el selector de cuencas
+  let select = document.getElementById('BNA_cod');
+  for(let i = 0; i < select.options.length; i++) {
+    if(select.options[i].value == cuenca) {
+      select.selectedIndex = i;
+
+      // Disparar un evento de clic en el selector
+      select.dispatchEvent(new Event('change'));
+      
+      break;
+    }
+  }
+};
 </script>
 
 
