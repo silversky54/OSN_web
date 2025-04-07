@@ -80,12 +80,12 @@ export async function c_map_location_leaf(watershed) {
   
   // Rutas para los archivos TIFF
 // Rutas actualizadas
-//const isGitHub = window.location.host.includes('github.io');
-//const basePath = window.location.origin + (isGitHub ? '/OSN' : '');
+const isGitHub = window.location.host.includes('github.io');
+const basePath = window.location.origin + (isGitHub ? '/OSN' : '');
 
-const text_ini_sp = "/assets/vec/sp/Andes_MCD10A1_SP_";
+const text_ini_sp = `${basePath}/assets/vec/sp/Andes_MCD10A1_SP_`;
 const text_end_sp = ".tif";
-const text_ini_st = "/assets/vec/st/Andes_MCD10A1_ST_";
+const text_ini_st = `${basePath}/assets/vec/st/Andes_MCD10A1_ST_`;
 const text_end_st = ".tif";
   
   const watershed_selected_sp = text_ini_sp.concat(watershed).concat(text_end_sp);
@@ -94,7 +94,7 @@ const text_end_st = ".tif";
   // Función para cargar el GeoJSON filtrado y ajustar el mapa
   async function loadGeoJson(currentMap, watershed) {
     try {
-      const response = await fetch("/assets/vec/Cuencas_BNA_Oficial.geojson");
+      const response = await fetch(`${basePath}/assets/vec/Cuencas_BNA_Oficial.geojson`);
       const data = await response.json();
       
       const filteredFeatures = data.features.filter(
