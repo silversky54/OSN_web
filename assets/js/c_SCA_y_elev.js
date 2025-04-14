@@ -21,8 +21,8 @@ export async function c_SCA_y_elev(watershed) {
 const data = await d3.csv(watershed_selected, d => ({
     ...d,
     Elevation: Math.round(d.Elevation), // redondear a numeros enteros la elevación
-    SCA: +d.SCA,
-    CCA: +d.CCA,
+    SCA: +d.SP,
+    CCA: +d.CP,
     Year: +d.Year
   }));
 
@@ -75,9 +75,9 @@ const yAxis = d3.axisLeft(y)
     };
 
     const mousemove = function(event, d) {
-        var SCA = Number(d.SCA); 
+        var SCA = Number(d.SP); 
         var Year = Math.round(d.Year); 
-        var CCA = Number(d.CCA); 
+        var CCA = Number(d.CP); 
         tooltip
             .html( "Elevación: " + d.Elevation +  " (msnm)" +"<br>" 
                  + "Cobertura: " + SCA.toFixed(1) + " %" + "<br>"  
@@ -103,7 +103,7 @@ const yAxis = d3.axisLeft(y)
         .attr("y", function (d) { return y(d.Elevation); })
         .attr("width", x.bandwidth())
         .attr("height", y.bandwidth())
-        .style("fill", function (d) { return colorScaleThreshold(d.SCA); })
+        .style("fill", function (d) { return colorScaleThreshold(d.SP); })
         .style("stroke-width", 1)
         .style("stroke", "none")
         .style("opacity", 0.8)
@@ -139,7 +139,7 @@ function updateGraph() {
     d3.select("#sliderLabel3").text(`Nubosidad > : ${sliderValue}%`);  
     
     svg.selectAll(".graph-rect") // Usar clase específica
-        .style("fill", d => (d.CCA > sliderValue) ? "black" : colorScaleThreshold(d.SCA));
+        .style("fill", d => (d.CP > sliderValue) ? "black" : colorScaleThreshold(d.SP));
 }
 
 // Ejecutar al inicio

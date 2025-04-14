@@ -51,7 +51,7 @@ var tooltip = d3.select(containerId)
         .style("text-anchor", "end");
 
 
-        const Ymax =[0, 1.05*d3.max(data, function(d) { return +d.SCA;} )];
+        const Ymax =[0, 1.05*d3.max(data, function(d) { return +d.SP;} )];
     // Escala Y
     var y = d3.scaleLinear()
         .domain(Ymax)
@@ -74,7 +74,7 @@ svg.selectAll("mybar")
         tooltip
             .style("opacity", 1)
             .html("Año: " + d.Year + "<br>"
-             + "Cobertura Promedio: " + d.SCA  + " %"
+             + "Cobertura Promedio: " + d.SP  + " %"
             )
             .style("left", (event.pageX + 30) + "px")
             .style("top", (event.pageY + 30) + "px");
@@ -96,14 +96,14 @@ svg.selectAll("mybar")
     })
     .transition()
     .duration(800)
-    .attr("y", d => y(d.SCA))
-    .attr("height", d => height - y(d.SCA))
+    .attr("y", d => y(d.SP))
+    .attr("height", d => height - y(d.SP))
     .delay((d, i) => i * 100);
 
 
 // Agrupar los datos por año y calcular el valor máximo para cada año
 const groupedData = d3.group(data, d => d.Year);
-const maxValues = Array.from(groupedData, ([year, values]) => ({year: year, value: d3.max(values, d => +d.SCA)}));
+const maxValues = Array.from(groupedData, ([year, values]) => ({year: year, value: d3.max(values, d => +d.SP)}));
 
 // Filtrar los valores máximos para los años 2000 a 2023
 const maxValues2000To2023 = maxValues.filter(d => d.year >= 2000 && d.year <= 2023);
@@ -123,8 +123,8 @@ var intercept_max = (sumY - slope_max * sumX) / maxValues2000To2023.length;
 var Y_ini_max = 2000*(slope_max) + ( intercept_max);
 var Y_fin_max = 2023*(slope_max) + ( intercept_max);
 
-const Y_sti_ini_max = (([1.05*d3.max(data, d => +d.SCA)]-Y_ini_max)/(1.05*d3.max(data, d => +d.SCA)))*height;
-const Y_sti_fin_max = (([1.05*d3.max(data, d => +d.SCA)]-Y_fin_max)/(1.05*d3.max(data, d => +d.SCA)))*height;
+const Y_sti_ini_max = (([1.05*d3.max(data, d => +d.SP)]-Y_ini_max)/(1.05*d3.max(data, d => +d.SP)))*height;
+const Y_sti_fin_max = (([1.05*d3.max(data, d => +d.SP)]-Y_fin_max)/(1.05*d3.max(data, d => +d.SP)))*height;
 
 // nuevo csv de sen_slope
 
@@ -178,8 +178,8 @@ svg.append("line")
     svg.selectAll("rect")
         .transition()
         .duration(800)
-        .attr("y", d => y(d.SCA))
-        .attr("height", d => height - y(d.SCA))
+        .attr("y", d => y(d.SP))
+        .attr("height", d => height - y(d.SP))
         .delay((d, i) => i * 100);
 
 // Ruta para el archivo CSV
