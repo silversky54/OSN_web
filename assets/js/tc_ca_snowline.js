@@ -45,7 +45,7 @@ export async function tc_ca_snowline() {
 
     const xAxis = d3.axisBottom(x)
     .ticks(5)
-    .tickFormat(function(d) { return d*(-1); });
+    .tickFormat(function(d) { return d*(1); });
 
     const yAxis = d3.axisLeft(y).tickFormat(function (d) { return ''; });
 
@@ -151,14 +151,6 @@ specialQuestions.forEach(config => {
         .style("fill", config.color)
         .style("shape-rendering", "crispEdges");
 });
-
-
-
-
-
-
-
-
     svg.append("g")
         .attr("class", "y axis")
         .append("line")
