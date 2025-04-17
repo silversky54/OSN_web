@@ -3,264 +3,165 @@ import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
 // Función asincrónica para cargar y dibujar el gráfico
 export async function c_SCA_y_t_area(watershed) {
-   // Definir las dimensiones y márgenes del gráfico
-   const margin = { top: 80, right: 0, bottom: 60, left: 60 };
-    const width = 550 - margin.left - margin.right;
-    const height = 400 - margin.top - margin.bottom;
+  // 1) Dimensiones y contenedor
+  const margin = { top: 80, right: 0, bottom: 60, left: 50 };
+  const width = 550 - margin.left - margin.right;
+  const height = 400 - margin.top - margin.bottom;
+  const containerId = window.innerWidth <= 767 ? "#p05-mob" : "#p05-desk";
 
-    // Si el ancho de la ventana es <= 768px, usará el contenedor móvil, de lo contrario el de escritorio.
-    const containerId = window.innerWidth <= 767 ? "#p05-mob" : "#p05-desk";
-  // Crear un nuevo SVG y agregarlo al cuerpo del documento
-  const svg = d3.select(containerId).append("svg")
-        .attr("width", width + margin.left + margin.right + 100) // Ajustar si es necesario
-        .attr("height", height + margin.top + margin.bottom + 50)
-        .attr("id", "d3-plot")
-        .append("g")
-        .attr("transform", `translate(${margin.left}, ${margin.top})`);
-    // Ruta para el archivo CSV
-    var text_ini = "../assets/csv/year/SCA_y_t_area_BNA_";
-    var text_end =  ".csv";
-    var watershed_selected = text_ini.concat(watershed).concat(text_end);
+  const svg = d3.select(containerId)
+    .append("svg")
+      .attr("width",  width  + margin.left + margin.right + 100)
+      .attr("height", height + margin.top  + margin.bottom + 50)
+      .attr("id", "d3-plot")
+    .append("g")
+      .attr("transform", `translate(${margin.left},${margin.top})`);
 
-    // Obtener los datos CSV
-    let data = await d3.csv(watershed_selected);
+  // 2) Cargar CSV
+  const path = `../assets/csv/year/SCA_y_t_area_BNA_${watershed}.csv`;
+  let data = await d3.csv(path, d => ({
+    raw:       d.Sen_slope,                // "n10","n09",…
+    Area:     +d.Area,                     // número
+    Sen_slope_num:
+      d.Sen_slope === "0" ? 0 :
+      d.Sen_slope.startsWith("n") ? -parseInt(d.Sen_slope.slice(1)) :
+      parseInt(d.Sen_slope.slice(1))
+  }));
 
-    // **Nuevo código para interpretar los valores de Sen_slope**
-    data.forEach(d => {
-        // Extraer el prefijo y el número
-        let prefix = d.Sen_slope.charAt(0);
-        let value = parseInt(d.Sen_slope.slice(1));
+  // 3) Mapa directo de etiquetas para el eje X
+  const labelMap = {
+    n10: "-10]", n09: "(-10, -9]",  n08: "(-9, 8]",  n07: "(-8, -7]",  n06: "(-7,-6]",
+    n05: "(-6, -5]",   n04: "(-5,-4]",  n03: "(-4, -3]",  n02: "(-3,-2]",  n01: "(-2, 1]",
+    0: "(-1, 1)", 
+    p01: "[1, 2)",   p02: "[2, 3)",  p03: "[3, 4)",  p04: "[4, 5",  p05: "[5, 6)",
+    p06: "[6, 7)",   p07: "[7, 8)",  p08: "[8, 9)",  p09: "[9, 10)",  p10: "[10",
+  };
 
-        // Convertir a número real
-        if (prefix === 'n') {
-            d.Sen_slope_num = -value;
-        } else if (prefix === 'p') {
-            d.Sen_slope_num = value;
-        } else {
-            d.Sen_slope_num = 0; // Asumimos que '00' representa cero
-        }
+  // Asignar etiqueta y ordenar
+  data.forEach(d => d.label = labelMap[d.raw]);
+  data.sort((a, b) => a.Sen_slope_num - b.Sen_slope_num);
 
-        // Convertir Area a número
-        d.Area = +d.Area;
-    });
+  // 4) Escalas
+  const x = d3.scaleBand()
+    .domain(data.map(d => d.label))
+    .range([0, width])
+    .padding(0.2);
 
- 
-    // Crear el tooltip
-    var tooltip = d3.select(containerId)
-        .append("div")
-        .style("opacity", 0)
-        .attr("class", "tooltip")
-        .style("background-color", "white")
-        .style("border", "solid")
-        .style("border-width", "2px")
-        .style("border-radius", "5px")
-        .style("padding", "5px")
-        .style("position", "absolute");
+  const y = d3.scaleLinear()
+    .domain([0, d3.max(data, d => d.Area) * 1.05])
+    .range([height, 0]);
 
-    // Define las nuevas etiquetas
-    var labels = ["<-10", "-9 - -8", "-8 - -7", "-7 - -6", "-6 - -5", "-5 - -4", "-4 - -3", "-3 - -2", "-2 - -1", "-1 - 0", "0 - 1", "1 - 2", "2 - 3", "3 - 4", "4 - 5", "5 - 6", "6 - 7", "7 - 8", "8 - 9", "9 - 10", ">10"];
+  // 5) Ejes
+  svg.append("g")
+    .attr("transform", `translate(0, ${height})`)
+    .call(d3.axisBottom(x))
+    .selectAll("text")
+      .attr("transform", "translate(-10,0)rotate(-45)")
+      .style("text-anchor", "end");
 
-    // Crear un array de categorías para el eje X
-    var categories = [
-        { label: "<-10", range: [-10, -9] },
-        { label: "-9 - -8", range: [-9, -8] },
-        { label: "-8 - -7", range: [-8, -7] },
-        { label: "-7 - -6", range: [-7, -6] },
-        { label: "-6 - -5", range: [-6, -5] },
-        { label: "-5 - -4", range: [-5, -4] },
-        { label: "-4 - -3", range: [-4, -3] },
-        { label: "-3 - -2", range: [-3, -2] },
-        { label: "-2 - -1", range: [-2, -1] },
-        { label: "-1 - 0", range: [-1, 0] },
-        { label: "0 - 1", range: [0, 1] },
-        { label: "1 - 2", range: [1, 2] },
-        { label: "2 - 3", range: [2, 3] },
-        { label: "3 - 4", range: [3, 4] },
-        { label: "4 - 5", range: [4, 5] },
-        { label: "5 - 6", range: [5, 6] },
-        { label: "6 - 7", range: [6, 7] },
-        { label: "7 - 8", range: [7, 8] },
-        { label: "8 - 9", range: [8, 9] },
-        { label: "9 - 10", range: [9, 10] },
-        { label: ">10", range: [10, Infinity] }
-    ];
+  svg.append("g")
+    .call(d3.axisLeft(y));
 
-    // Asignar cada dato a una categoría
-    data.forEach(d => {
-        let category = categories.find(cat => d.Sen_slope_num >= cat.range[0] && d.Sen_slope_num < cat.range[1]);
-        d.category = category ? category.label : "Otros";
-    });
+  // 6) Tooltip
+  const tooltip = d3.select(containerId)
+    .append("div")
+      .attr("class", "tooltip")
+      .style("position", "absolute")
+      .style("opacity", 0)
+      .style("background", "white")
+      .style("border", "2px solid #666")
+      .style("border-radius", "4px")
+      .style("padding", "6px");
 
-    // Agrupar los datos por categoría y sumar las áreas usando d3.rollups
-    var dataGroupedArray = d3.rollups(
-        data,
-        v => d3.sum(v, d => d.Area),
-        d => d.category
-    );
+  // 7) Colores por valor de pendiente
+  const myColor = d3.scaleThreshold()
+    .domain(d3.range(-10, 11, 1))
+    .range([
+      "#FF0000", "#FF0303", "#FF1E1F", "#FE393A", "#FE5456",
+      "#FD6F72", "#FD8B8D", "#FCA6A9", "#FCC1C5", "#FBDCE0",
+      "#FBF7FC", "#DFDEFC", "#C4C4FD", "#A8ABFD", "#8D92FD",
+      "#7178FE", "#565FFE", "#3A46FE", "#1F2CFF", "#0313FF",
+      "#0000FF"
+    ]);
 
-    // Convertir a un array de objetos con 'key' y 'value'
-    var dataGrouped = dataGroupedArray.map(([key, value]) => ({ key, value }));
+  // 8) Dibujar barras
+  svg.selectAll(".bar")
+    .data(data)
+    .join("rect")
+      .attr("class", "bar")
+      .attr("x",     d => x(d.label))
+      .attr("width", x.bandwidth())
+      .attr("y",     d => y(0))
+      .attr("height", 0)
+      .attr("fill",  d => myColor(d.Sen_slope_num))
+      .attr("stroke", "black")
+      .attr("stroke-width", 0.5)
+    .on("mouseover", (event, d) => {
+      tooltip
+        .style("opacity", 1)
+        .html(`Tendencia: ${d.label}<br>Superficie: ${Math.round(d.Area)} km²`)
+        .style("left", (event.pageX + 10) + "px")
+        .style("top",  (event.pageY + 10) + "px");
+    })
+    .on("mousemove", (event) => {
+      tooltip
+        .style("left", (event.pageX + 10) + "px")
+        .style("top",  (event.pageY + 10) + "px");
+    })
+    .on("mouseout", () => {
+      tooltip.style("opacity", 0);
+    })
+    .transition()
+      .duration(800)
+      .attr("y",      d => y(d.Area))
+      .attr("height", d => height - y(d.Area))
+      .delay((d,i) => i * 50);
 
-    // Ordenar los datos según el orden de las etiquetas
-    dataGrouped.sort((a, b) => labels.indexOf(a.key) - labels.indexOf(b.key));
+  // 9) Etiquetas de texto
+  svg.append("text")
+    .attr("x", 0).attr("y", -25)
+    .attr("font-size", "20px")
+    .text("4. Superficie por tendencia anual");
 
-    // Escala X
-    var x = d3.scaleBand()
-        .range([0, width])
-        .domain(labels)
-        .padding(0.2);
+  svg.append("text")
+    .attr("x", 22).attr("y", -5)
+    .attr("fill", "grey")
+    .attr("font-size", "16px")
+    .text(`Cuenca: ${watershed}`);
 
-    // Añadir eje X con etiquetas personalizadas
-    svg.append("g")
-        .attr("transform", `translate(0, ${height})`)
-        .call(d3.axisBottom(x))
-        .selectAll("text")
-        .attr("transform", "translate(-10,0)rotate(-45)")
-        .style("text-anchor", "end");
+  svg.append("text")
+    .attr("x", width/2).attr("y", height + 60)
+    .attr("text-anchor", "middle")
+    .attr("font-size", "13px")
+    .text("Tendencia (%/año)");
 
-    // Escala Y
-    var y = d3.scaleLinear()
-        .domain([0, 1.05 * d3.max(dataGrouped, function(d) { return d.value; })])
-        .range([height, 0]);
+  svg.append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("x", -height/2 + 40).attr("y", -35)
+    .attr("text-anchor", "end")
+    .attr("font-size", "13px")
+    .text("Superficie (km²)");
 
-    svg.append("g")
-        .call(d3.axisLeft(y));
-
-    // Escala de colores
-    const myColor = d3.scaleThreshold()
-        .domain([-10, -9, -8, -7, -6, -5, -4, -3, -2, -1,
-                  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10])
-        .range([
-            "#FF0000", "#FF0303", "#FF1E1F", "#FE393A", "#FE5456", "#FD6F72", "#FD8B8D",
-            "#FCA6A9", "#FCC1C5", "#FBDCE0", "#FBF7FC", "#DFDEFC", "#C4C4FD", "#A8ABFD",
-            "#8D92FD", "#7178FE", "#565FFE", "#3A46FE", "#1F2CFF", "#0313FF",
-            "#0000FF"
-        ]);
-
-    // Barras con tooltip
-    svg.selectAll("mybar")
-        .data(dataGrouped)
-        .enter()
-        .append("rect")
-        .attr("x", d => x(d.key))
-        .attr("width", x.bandwidth())
-        .attr("fill", d => {
-            // Obtener el valor medio del rango de cada categoría
-            let category = categories.find(cat => cat.label === d.key);
-            let midValue = (category.range[0] + category.range[1]) / 2;
-            // Ajustar para infinitos
-            if (!isFinite(midValue)) {
-                midValue = category.range[0] === -Infinity ? -11 : 11;
-            }
-            return myColor(midValue);
-        })
-        .attr("height", d => height - y(0))
-        .attr("y", d => y(0))
-        .attr("stroke", "black")
-        .attr("stroke-width", 0.5)
-        .on("mouseover", function(event, d) {
-            // Convertir el valor del área a un número entero
-            var area = Math.round(d.value);
-
-            tooltip
-                .style("opacity", 1)
-                .html("Tendencia: " + d.key + "<br>" + "Superficie: " + area  + " km²" )
-                .style("left", (event.pageX + 30) + "px")
-                .style("top", (event.pageY + 30) + "px");
-
-            d3.select(this)
-                .style("stroke", "black")
-                .style("opacity", 1);
-        })
-        .on("mousemove", function(event, d) {
-            tooltip
-                .style("left", (event.pageX + 30) + "px")
-                .style("top", (event.pageY + 30) + "px");
-        })
-        .on("mouseout", function(d) {
-            tooltip
-                .style("opacity", 0);
-
-            d3.select(this)
-                .style("stroke", "none")
-                .style("opacity", 0.8);
-        })
-        .transition()
-        .duration(800)
-        .attr("y", d => y(d.value))
-        .attr("height", d => height - y(d.value))
-        .delay((d, i) => i * 100);
-
-    // Etiqueta title
-    var x_title = 0;
-
-    svg.append("text")
-        .attr("text-anchor", "start")
-        .attr("font-family", "Arial")
-        .attr("font-size", "20px")
-        .attr("x", x_title)
-        .attr("y", -25)
-        .text("4. Superficie por tendencia anual");
-
-    // Etiqueta Subtítulo
-    svg.append("text")
-        .attr("text-anchor", "start")
-        .attr("font-family", "Arial")
-        .attr("font-size", "16px")
-        .style("fill", "grey")
-        .attr("x", x_title + 22)
-        .attr("y", -5)
-        .text("Cuenca: "+ watershed);
-
-    // Etiqueta del eje X
-    svg.append("text")
-        .attr("text-anchor", "middle")
-        .attr("font-family", "Arial")
-        .attr("font-size", "13")
-        .attr("x", width / 2)
-        .attr("y", height + 45) // Ajustar para que no se superponga
-        .text("Tendencia (%/año)");
-
-    // Etiqueta del eje Y
-    // Texto "Superficie (km"
-    svg.append("text")
-        .attr("text-anchor", "end")
-        .attr("font-family", "Arial")
-        .attr("font-size", "13")
-        .attr("transform", "rotate(-90)")
-        .attr("y", -35)
-        .attr("x", -height / 2 + 40)
-        .text("Superficie (km²)");
-
-    // Animación
-    svg.selectAll("rect")
-        .transition()
-        .duration(800)
-        .attr("y", d => y(d.value))
-        .attr("height", d => height - y(d.value))
-        .delay((d, i) => i * 100);
-
-    // Crear un botón de exportación dentro del SVG
-    var button = svg.append("foreignObject")
-        .attr("width", 30) // ancho del botón
-        .attr("height", 40) // alto del botón
-        .attr("x", width - 25) // posiciona el botón en el eje x
-        .attr("y", -48) // posiciona el botón en el eje Y
-        .append("xhtml:body")
-        .html('<button type="button" style="width:100%; height:100%; border: 0px; border-radius:5px; background-color: transparent;"><img src="../assets/img/descarga.png" alt="descarga" width="20" height="20"></button>')
-        .on("click", function() {
-            var csvData = "Category,Area\n" + dataGrouped.map(d => d.key + "," + d.value).join("\n");
-
-            var blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
-            var url = URL.createObjectURL(blob);
-            var fileName = "Superficie_Por_Tendencia_Anual_" + watershed + ".csv";
-
-            var link = document.createElement("a");
-            link.setAttribute("href", url);
-            link.setAttribute("download", fileName);
-            link.style.visibility = 'hidden';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        });
+  // 10) Botón de exportación (igual que antes)
+  const button = svg.append("foreignObject")
+      .attr("width", 30).attr("height", 40)
+      .attr("x", width - 25).attr("y", -48)
+    .append("xhtml:body")
+      .html(`
+        <button style="width:100%;height:100%;background:transparent;border:none;">
+          <img src="../assets/img/descarga.png" width="20" height="20" alt="descarga">
+        </button>
+      `)
+      .on("click", () => {
+        const csv = "Tendencia,Area\n" +
+          data.map(d => `${d.label},${d.Area}`).join("\n");
+        const blob = new Blob([csv], { type: "text/csv" });
+        const url  = URL.createObjectURL(blob);
+        const a    = document.createElement("a");
+        a.href = url;
+        a.download = `Superficie_Por_Tendencia_Anual_${watershed}.csv`;
+        document.body.append(a);
+        a.click();
+        a.remove();
+      });
 }
