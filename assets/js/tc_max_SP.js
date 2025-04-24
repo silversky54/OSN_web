@@ -70,7 +70,8 @@ export async function tc_max_SP() {
         return d.boxes["4"].x1;
     });
 
-    x.domain([min_val, max_val]).nice();
+    const buffer = Math.abs(max_val - min_val) * 0.05; // 10% del rango
+    x.domain([min_val - buffer, max_val + buffer]).nice(); // Espacio en ambos extremos
   
     y.domain(data.map(function(d) { return d.COD_CUEN; }));
 
@@ -136,27 +137,41 @@ export async function tc_max_SP() {
 
 // Linea que diferencia entre cuencas 
 // array de configuración al inicio de tu función : id cuenca color y posicion
-const specialQuestions = [
-    { id: "010", color: "#FFD37F", position: "top" },    // 
-    { id: "047", color: "#FFFF73", position: "bottom" }, // 
-    { id: "073", color: "#BAE1A6", position: "bottom" }, // 
-    { id: "104", color: "#73DFFF", position: "bottom" }, // 
-    { id: "129", color: "#73DFFF", position: "bottom" }  //  
-];
+function generateIDRange(startNum, endNum, color, position) {
+    const ids = [];
+    for (let i = startNum; i <= endNum; i++) {
+        ids.push({
+            id: i.toString().padStart(3, '0'), // Formatea a 3 dígitos
+            color: color,
+            position: position
+        });
+    }
+    return ids;
+}
 
-// Reemplaza el bloque de líneas rojas con este código:
+// Configuración de todos los rangos
+const specialQuestions = [
+    // Rango 010-047 (Amarillo mostaza - derecha)
+    ...generateIDRange(10, 47, "#FFD37F", "right"),
+    
+    // Rango 051-073 (Amarillo brillante - derecha)
+    ...generateIDRange(51, 73, "#FFFF73", "right"),
+    
+    // Rango 081-104 (Verde menta - derecha)
+    ...generateIDRange(81, 104, "#BAE1A6", "right"),
+    
+    // Rango 105-129 (Azul claro - derecha)
+    ...generateIDRange(105, 129, "#73DFFF", "right"),
+];
 specialQuestions.forEach(config => {
     vakken.filter(d => d.COD_CUEN === config.id)
         .append("rect")
-        .attr("x", 0)
-        .attr("y", config.position === "top" ? 1 : y.bandwidth() - 2)
-        .attr("width", width)
-        .attr("height", 2)
-        .style("fill", config.color)
+        .attr("x", x(0) - 93) //  Centrado en el eje Y (mitad del ancho de 6px)
+        .attr("width", 6)
+        .attr("height", y.bandwidth())
+        .attr("fill", config.color)
         .style("shape-rendering", "crispEdges");
 });
-
-
 
     svg.append("g")
         .attr("class", "y axis")

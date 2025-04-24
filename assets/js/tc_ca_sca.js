@@ -130,29 +130,42 @@ export async function tc_ca_sca() {
 
 
 // Linea que diferencia entre cuencas 
-// Añade este array de configuración al inicio de tu función (después de definir margin):
-const specialQuestions = [
-    { id: "010", color: "#FFD37F", position: "top" },    // 
-    { id: "047", color: "#FFFF73", position: "bottom" }, // 
-    { id: "073", color: "#BAE1A6", position: "bottom" }, // 
-    { id: "104", color: "#73DFFF", position: "bottom" }, // 
-    { id: "129", color: "#73DFFF", position: "bottom" }  //  
-];
+// Función para generar IDs en un rango (formato 3 dígitos)
+function generateIDRange(startNum, endNum, color, position) {
+    const ids = [];
+    for (let i = startNum; i <= endNum; i++) {
+        ids.push({
+            id: i.toString().padStart(3, '0'), // Formatea a 3 dígitos
+            color: color,
+            position: position
+        });
+    }
+    return ids;
+}
 
-// Reemplaza el bloque de líneas rojas con este código:
+// Configuración de todos los rangos
+const specialQuestions = [
+    // Rango 010-047 (Amarillo mostaza - derecha)
+    ...generateIDRange(10, 47, "#FFD37F", "right"),
+    
+    // Rango 051-073 (Amarillo brillante - derecha)
+    ...generateIDRange(51, 73, "#FFFF73", "right"),
+    
+    // Rango 081-104 (Verde menta - derecha)
+    ...generateIDRange(81, 104, "#BAE1A6", "right"),
+    
+    // Rango 105-129 (Azul claro - derecha)
+    ...generateIDRange(105, 129, "#73DFFF", "right"),
+];
 specialQuestions.forEach(config => {
     vakken.filter(d => d.Question === config.id)
         .append("rect")
-        .attr("x", 0)
-        .attr("y", config.position === "top" ? 1 : y.bandwidth() - 2)
-        .attr("width", width)
-        .attr("height", 2)
-        .style("fill", config.color)
+        .attr("x", x(0) - 122) //  Centrado en el eje Y (mitad del ancho de 6px)
+        .attr("width", 6)
+        .attr("height", y.bandwidth())
+        .attr("fill", config.color)
         .style("shape-rendering", "crispEdges");
 });
-
-
-
 
 
 

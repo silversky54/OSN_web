@@ -360,13 +360,13 @@ textMin.append("tspan")
 
 // Crear un tspan para el valor de ValorSen_Min
 textMin.append("tspan")
-    .text(valorSen_min)
+    .text(valorSen_min )
     .attr("fill", "blue");
   
     text.append("tspan")
     .attr("x", 790) 
     .attr("y", -10) 
-    .text(" (m/año)");
+    .text("  (m/año)");
 
 
 
