@@ -161,7 +161,7 @@ d3.select("#ccaSlider3").on("input", updateGraph);
         .attr("y", -30)
         .attr("text-anchor", "center")
         .attr("font-family", "Arial")
-        .style("font-size", "18px")
+        .style("font-size", "19px")
         .text("5. Cobertura de nieve promedio por elevación (2000-2024)");
 
     svg.append("text")
@@ -197,7 +197,7 @@ d3.select("#ccaSlider3").on("input", updateGraph);
         .attr("width", 30) 
         .attr("height", 40) 
         .attr("x", width - 25)
-        .attr("y",-40)
+        .attr("y",-26)
         .append("xhtml:body")
         .html('<button type="button" style="width:100%; height:100%; border: 0px; border-radius:5px; background-color: transparent;"><img src="../assets/img/descarga.png" alt="descarga" width="20" height="20"></button>')
         .on("click", function() {

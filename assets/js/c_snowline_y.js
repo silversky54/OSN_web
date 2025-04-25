@@ -167,7 +167,7 @@ svg.append("line")
     svg.append("text")
         .attr("text-anchor", "center")
         .attr("font-family", "Arial")
-        .attr("font-size", "18px")
+        .attr("font-size", "20px")
         .attr("x", 0)
         .attr("y", -30)
         .text("7. Elevación línea de nieve anual (SP=5%)");

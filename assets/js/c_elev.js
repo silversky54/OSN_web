@@ -100,7 +100,7 @@ svg.selectAll("myRect")
      svg.append("text")
      .attr("text-anchor", "center")
      .attr("font-family", "Arial")
-     .attr("font-size", "18px")
+     .attr("font-size", "20px")
      .attr("x", -70)
      .attr("y", -25)
      .text("8. Área por elevación");
