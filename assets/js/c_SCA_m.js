@@ -86,7 +86,7 @@ svg.selectAll("myCircles")
     .on("mouseover", function(event, d) {
         tooltip
             .style("opacity", 1)
-            .html("Mes: " + Math.round(d.Month) + "<br>" + "Cobertura de nieve promedio: " + Math.floor(d.Mean)+   " (msnm)")
+            .html("Mes: " + Math.round(d.Month) + "<br>" + "Cobertura de nieve promedio: " + Math.floor(d.Mean)+   " (%)")
             .style("left", (event.pageX + 30) + "px")
             .style("top", (event.pageY + 30) + "px");
         d3.select(this)
