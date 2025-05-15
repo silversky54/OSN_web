@@ -380,14 +380,18 @@ var button = svg.append("foreignObject")
 .append("xhtml:body")
 .html('<button type="button" style="width:100%; height:100%; border: 0px; border-radius:5px; background-color: transparent;"><img src="../assets/img/descarga.png" alt="descarga" width="20" height="20"></button>')
 .on("click", function() {
-    var columnNames = Object.keys(data[0]); 
-
-    // Crea una nueva fila con los nombres de las columnas y agrega tus datos
-    var csvData = [columnNames].concat(data.map(row => Object.values(row))).join("\n");
+    // Formateador de fechas igual al formato original del CSV
+    const dateFormatter = d3.timeFormat("%Y-%m-%d");
     
-    var blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+    // Crear el contenido CSV
+    const csvData = [
+        ["Date,Snowline_elev"], // Encabezado
+        ...data.map(d => `${dateFormatter(d.Date)},${d.Snowline_elev}`)
+    ].join("\n");
+    
+    var blob = new Blob(["\uFEFF" + csvData], { type: 'text/csv;charset=utf-8;' });
     var url = URL.createObjectURL(blob);
-    var fileName = "Linea_De_Nieve_Por_Año_Y_Mes_" + watershed + ".csv";
+    var fileName = `Linea_De_Nieve_Por_ANO_Y_Mes_${watershed}.csv`;
     
     var link = document.createElement("a");
     link.setAttribute("href", url);
