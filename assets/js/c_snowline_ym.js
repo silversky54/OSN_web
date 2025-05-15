@@ -391,7 +391,7 @@ var button = svg.append("foreignObject")
     
     var blob = new Blob(["\uFEFF" + csvData], { type: 'text/csv;charset=utf-8;' });
     var url = URL.createObjectURL(blob);
-    var fileName = `Linea_De_Nieve_Por_ANO_Y_Mes_${watershed}.csv`;
+    var fileName = `Linea_De_Nieve_Por_Ano_Y_Mes_${watershed}.csv`;
     
     var link = document.createElement("a");
     link.setAttribute("href", url);
