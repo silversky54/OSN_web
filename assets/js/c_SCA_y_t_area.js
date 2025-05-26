@@ -18,7 +18,7 @@ export async function c_SCA_y_t_area(watershed) {
       .attr("transform", `translate(${margin.left},${margin.top})`);
 
   // 2) Cargar CSV
-  const path = `../assets/csv/year/SCA_y_t_area_BNA_${watershed}.csv`;
+  const path = `../assets/csv/year/MCD_SCA_y_t_area_BNA_${watershed}.csv`;
   let data = await d3.csv(path, d => ({
     raw:       d.Sen_slope,                // "n10","n09",…
     Area:     +d.Area,                     // número
@@ -159,7 +159,7 @@ export async function c_SCA_y_t_area(watershed) {
         const url  = URL.createObjectURL(blob);
         const a    = document.createElement("a");
         a.href = url;
-        a.download = `Superficie_Por_Tendencia_Anual_${watershed}.csv`;
+        a.download = `MCD_SCA_y_t_area_BNA_${watershed}.csv`;
         document.body.append(a);
         a.click();
         a.remove();

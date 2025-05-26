@@ -27,7 +27,7 @@ export async function tm_SP_y_t_area() {
         .style("padding", "5px")
         .style("position", "absolute");
 
-  const data = await d3.csv("../assets/csv/total/tm_SP_y_t_area.csv");
+  const data = await d3.csv("../assets/csv/total/MCD_tm_SP_y_t_area.csv");
 
 
   var series = d3.stack()

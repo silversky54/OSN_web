@@ -21,7 +21,7 @@ export async function c_SCA_y_m(watershed) {
 
 
     // Text to create .csv file
-    const text_ini = "../assets/csv/yearMonth/SCA_y_m_BNA_";
+    const text_ini = "../assets/csv/yearMonth/MCD_SCA_y_m_BNA_";
     const text_end =  ".csv";
     // .csv file
     const watershed_selected = text_ini.concat(watershed).concat(text_end);
@@ -216,7 +216,7 @@ d3.select("#ccaSlider2").on("input", updateGraph);
             
             var blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
             var url = URL.createObjectURL(blob);
-            var fileName = "Cobertura_De_Nieve_Por_Año_y_Mes_" + watershed + ".csv";
+            var fileName = "MCD_SCA_y_m_BNA_" + watershed + ".csv";
             
             var link = document.createElement("a");
             link.setAttribute("href", url);

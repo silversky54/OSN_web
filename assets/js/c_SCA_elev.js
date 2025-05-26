@@ -31,7 +31,7 @@ export async function c_SCA_elev(watershed) {
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
   // Text to create .csv file
-  const text_ini = "../assets/csv/elev/SCA_elev_BNA_";
+  const text_ini = "../assets/csv/elev/MCD_SCA_elev_BNA_";
   const text_end = ".csv";
 
   // .csv file

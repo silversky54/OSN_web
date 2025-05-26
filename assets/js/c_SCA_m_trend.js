@@ -22,7 +22,7 @@ export async function c_SCA_m_trend(watershed) {
         .attr("transform", `translate(${margin.left},${margin.top})`);
 
     // Text to create .csv file
-    const text_ini = "../assets/csv/month/SCA_m_trend_BNA_";
+    const text_ini = "../assets/csv/month/MCD_SCA_m_trend_BNA_";
     const text_end =  ".csv";
 
     // .csv file
@@ -197,7 +197,7 @@ var button = svg.append("foreignObject")
         
         var blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
         var url = URL.createObjectURL(blob);
-        var fileName = "Tendencia_Por_Mes_" + watershed + ".csv";
+        var fileName = "MCD_SCA_m_trend_BNA_" + watershed + ".csv";
         
         var link = document.createElement("a");
         link.setAttribute("href", url);

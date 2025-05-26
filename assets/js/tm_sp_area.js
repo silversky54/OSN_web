@@ -28,7 +28,7 @@ export async function tm_sp_area() {
  .style("position", "absolute");
 
  
-    const data = await d3.csv("../assets/csv/total/tm_SP_area.csv");
+    const data = await d3.csv("../assets/csv/total/MCD_tm_SP_area.csv");
 
   var series = d3.stack()
   .keys(["Intermitente","Estacional","Permanente"])

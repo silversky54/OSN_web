@@ -35,7 +35,7 @@ import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
 
 
      // Text to create .csv file
-     const text_ini = "../assets/csv/yearMonth/snowline_ym_BNA_";
+     const text_ini = "../assets/csv/yearMonth/MCD_snowline_ym_BNA_";
      const text_end = ".csv";
  
      // .csv file
@@ -391,7 +391,7 @@ var button = svg.append("foreignObject")
     
     var blob = new Blob(["\uFEFF" + csvData], { type: 'text/csv;charset=utf-8;' });
     var url = URL.createObjectURL(blob);
-    var fileName = `Linea_De_Nieve_Por_Ano_Y_Mes_${watershed}.csv`;
+    var fileName = `MCD_snowline_ym_BNA_${watershed}.csv`;
     
     var link = document.createElement("a");
     link.setAttribute("href", url);

@@ -28,7 +28,7 @@ export async function tc_max_SP() {
         .style("padding", "5px")
         .style("position", "absolute");
 
-    const data = await d3.csv("/assets/csv/total/tc_SP_anomalia.csv");
+    const data = await d3.csv("/assets/csv/total/MCD_tc_SP_anomalia.csv");
 
     const y = d3.scaleBand()
         .rangeRound([0, height], .3)

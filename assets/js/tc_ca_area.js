@@ -28,7 +28,7 @@ export async function tc_ca_area() {
         .style("padding", "5px")
         .style("position", "absolute");
 
-    const data = await d3.csv("../assets/csv/total/tc_ca_area.csv");
+    const data = await d3.csv("../assets/csv/total/MCD_tc_ca_area.csv");
 
     const y = d3.scaleBand()
         .rangeRound([0, height], .3)
@@ -167,7 +167,7 @@ const specialQuestions = [
 specialQuestions.forEach(config => {
     vakken.filter(d => d.Question === config.id)
         .append("rect")
-        .attr("x", x(0) - 135) //  Centrado en el eje Y (mitad del ancho de 6px)
+        .attr("x", x(0) - 125) //  Centrado en el eje Y (mitad del ancho de 6px)
         .attr("width", 6)
         .attr("height", y.bandwidth())
         .attr("fill", config.color)

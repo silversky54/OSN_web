@@ -83,9 +83,9 @@ export async function c_map_location_leaf(watershed) {
 const isGitHub = window.location.host.includes('github.io');
 const basePath = window.location.origin + (isGitHub ? '/OSN' : '');
 
-const text_ini_sp = `${basePath}/assets/vec/sp/Andes_MCD10A1_SP_`;
+const text_ini_sp = `${basePath}/assets/vec/sp/MCD_Andes_MCD10A1_SP_`;
 const text_end_sp = ".tif";
-const text_ini_st = `${basePath}/assets/vec/st/Andes_MCD10A1_ST_`;
+const text_ini_st = `${basePath}/assets/vec/st/MCD_Andes_MCD10A1_ST_`;
 const text_end_st = ".tif";
   
   const watershed_selected_sp = text_ini_sp.concat(watershed).concat(text_end_sp);

@@ -18,7 +18,7 @@ export async function c_SCA_y_t_elev(watershed) {
         .attr("transform", `translate(${margin.left},${margin.top})`);
 
     // Text to create .csv file
-    const text_ini = "../assets/csv/year/SCA_y_t_elev_BNA_";
+    const text_ini = "../assets/csv/year/MCD_SCA_y_t_elev_BNA_";
 
     const text_end = ".csv";
 
@@ -228,7 +228,7 @@ var button = svg.append("foreignObject")
         
         var blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
         var url = URL.createObjectURL(blob);
-        var fileName = "Tendencia_Por_Elevación_" + watershed + ".csv";
+        var fileName = "MCD_SCA_y_t_elev_BNA_" + watershed + ".csv";
         
         var link = document.createElement("a");
         link.setAttribute("href", url);

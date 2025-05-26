@@ -27,7 +27,7 @@ var tooltip = d3.select(containerId)
     .style("padding", "5px")
     .style("position", "absolute");
               // Text to create .csv file
-    var text_ini = "../assets/csv/month/SCA_m_BNA_"
+    var text_ini = "../assets/csv/month/MCD_SCA_m_BNA_"
     var text_end =  ".csv"
 
     // .csv file
@@ -172,7 +172,7 @@ var button = svg.append("foreignObject")
         
         var blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
         var url = URL.createObjectURL(blob);
-        var fileName = "Cobertura_De_Nieve_Mensual_" + watershed + ".csv";
+        var fileName = "MCD_SCA_m_BNA_" + watershed + ".csv";
         
         var link = document.createElement("a");
         link.setAttribute("href", url);

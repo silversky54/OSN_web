@@ -14,15 +14,15 @@ export async function c_SCA_y_elev(watershed) {
       .append("g")
         .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-    const text_ini = "../assets/csv/year/SCA_y_elev_BNA_";
+    const text_ini = "../assets/csv/year/MCD_SCA_y_elev_BNA_";
     const text_end = ".csv";
     const watershed_selected = text_ini.concat(watershed).concat(text_end);
 // Modifica la carga del CSV para redondear la elevación
 const data = await d3.csv(watershed_selected, d => ({
     ...d,
     Elevation: Math.round(d.Elevation), // redondear a numeros enteros la elevación
-    SCA: +d.SP,
-    CCA: +d.CP,
+    SCA: +d.SCA,
+    CCA: +d.CCA,
     Year: +d.Year
   }));
 
@@ -75,9 +75,9 @@ const yAxis = d3.axisLeft(y)
     };
 
     const mousemove = function(event, d) {
-        var SCA = Number(d.SP); 
+        var SCA = Number(d.SCA); 
         var Year = Math.round(d.Year); 
-        var CCA = Number(d.CP); 
+        var CCA = Number(d.CCA); 
         tooltip
             .html( "Elevación: " + d.Elevation +  " (msnm)" +"<br>" 
                  + "Cobertura: " + SCA.toFixed(1) + " %" + "<br>"  
@@ -103,7 +103,7 @@ const yAxis = d3.axisLeft(y)
         .attr("y", function (d) { return y(d.Elevation); })
         .attr("width", x.bandwidth())
         .attr("height", y.bandwidth())
-        .style("fill", function (d) { return colorScaleThreshold(d.SP); })
+        .style("fill", function (d) { return colorScaleThreshold(d.SCA); })
         .style("stroke-width", 1)
         .style("stroke", "none")
         .style("opacity", 0.8)
@@ -139,7 +139,7 @@ function updateGraph() {
     d3.select("#sliderLabel3").text(`Nubosidad > : ${sliderValue}%`);  
     
     svg.selectAll(".graph-rect") // Usar clase específica
-        .style("fill", d => (d.CP > sliderValue) ? "black" : colorScaleThreshold(d.SP));
+        .style("fill", d => (d.CCA > sliderValue) ? "black" : colorScaleThreshold(d.SCA));
 }
 
 // Ejecutar al inicio
@@ -206,7 +206,7 @@ d3.select("#ccaSlider3").on("input", updateGraph);
             
             var blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
             var url = URL.createObjectURL(blob);
-            var fileName = "Cobertura_De_Nieve_Promedio_Por_Elevacíon_" + watershed + ".csv";
+            var fileName = "MCD_SCA_y_elev_BNA_" + watershed + ".csv";
             
             var link = document.createElement("a");
             link.setAttribute("href", url);

@@ -29,7 +29,7 @@ export async function c_snowline_y(watershed) {
     .style("position", "absolute");
 
     // Text to create .csv file
-    const text_ini = "../assets/csv/year/snowline_y_BNA_";
+    const text_ini = "../assets/csv/year/MCD_snowline_y_BNA_";
     const text_end = ".csv";
     // .csv file
     const watershed_selected = text_ini.concat(watershed).concat(text_end);
@@ -254,7 +254,7 @@ var button = svg.append("foreignObject")
         
         var blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
         var url = URL.createObjectURL(blob);
-        var fileName = "Elevación_Línea_De_Nieve_Anual_" + watershed + ".csv";
+        var fileName = "MCD_snowline_y_BNA_" + watershed + ".csv";
         
         var link = document.createElement("a");
         link.setAttribute("href", url);

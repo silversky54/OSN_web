@@ -27,7 +27,7 @@ export async function tc_ca_sca() {
         .style("padding", "5px")
         .style("position", "absolute");
 
-    const data = await d3.csv("../assets/csv/total/tc_ca_SCA.csv");
+    const data = await d3.csv("../assets/csv/total/MCD_tc_ca_SCA.csv");
 
     const y = d3.scaleBand()
         .rangeRound([0, height], .3)
@@ -35,7 +35,7 @@ export async function tc_ca_sca() {
         .paddingOuter(0.2);
 
     const x = d3.scaleLinear()
-        .rangeRound([0, width]);
+        .rangeRound([11, width]);
 
     const color = d3.scaleOrdinal()
         .range(["#c7001e", "#f6a580", "#cccccc", "#92c6db", "#086fad"]);
@@ -67,7 +67,8 @@ export async function tc_ca_sca() {
         return d.boxes["4"].x1;
     });
 
-    x.domain([min_val, max_val]).nice();
+    // Agrega un 5% de distancia al máximo valor
+    x.domain([min_val, max_val * 3.05]).nice();
 
     y.domain(data.map(function(d) { return d.Question; }));
 
@@ -160,7 +161,7 @@ const specialQuestions = [
 specialQuestions.forEach(config => {
     vakken.filter(d => d.Question === config.id)
         .append("rect")
-        .attr("x", x(0) - 122) //  Centrado en el eje Y (mitad del ancho de 6px)
+        .attr("x", x(0) - 87) //  Centrado en el eje Y (mitad del ancho de 6px)
         .attr("width", 6)
         .attr("height", y.bandwidth())
         .attr("fill", config.color)

@@ -28,7 +28,7 @@ export async function tc_ca_snowline() {
         .style("padding", "5px")
         .style("position", "absolute");
 
-    const data = await d3.csv("../assets/csv/total/tc_ca_snowline.csv");
+    const data = await d3.csv("../assets/csv/total/MCD_tc_ca_snowline.csv");
 
     const y = d3.scaleBand()
         .rangeRound([0, height], .3)

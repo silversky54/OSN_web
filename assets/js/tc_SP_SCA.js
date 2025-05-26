@@ -31,8 +31,8 @@ export async function tc_SP_SCA(index) {
         .style("padding", "5px")
         .style("position", "absolute");
 
-    // Carga de datos
-    const data = await d3.dsv(",", "../assets/csv/total/tc_SP_SCA.csv", function(d) {
+    // Carga de datos ../assets/csv/total/tc_SP_SCA.csv
+    const data = await d3.dsv(",", "../assets/csv/total/MCD_tc_SP_SCA.csv", function(d) {
         return {
             Question: d.Question,
             "1": +d["1"],

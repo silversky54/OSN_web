@@ -30,7 +30,7 @@ export async function tc_SP_area() {
     .style("position", "absolute");
  
     // Carga de datos
-    const data = await d3.dsv(",", "../assets/csv/total/tc_SP_area.csv", function(d) {
+    const data = await d3.dsv(",", "../assets/csv/total/MCD_tc_SP_area.csv", function(d) {
         return {
             Question: d.Question,
             "1": +d["1"],

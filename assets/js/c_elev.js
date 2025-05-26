@@ -28,7 +28,7 @@ const margin = { top: 80, right: 0, bottom: 60, left: 80 };
         .style("position", "absolute");
 
     // Text to create .csv file
-    const text_ini = "../assets/csv/elev/elev_BNA_";
+    const text_ini = "../assets/csv/elev/MCD_elev_BNA_";
     const text_end = ".csv";
    
     // .csv file
@@ -166,7 +166,7 @@ var button = svg.append("foreignObject")
         
         var blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
         var url = URL.createObjectURL(blob);
-        var fileName = "Área_Por_Elevación_" + watershed + ".csv";
+        var fileName = "MCD_elev_BNA_" + watershed + ".csv";
         
         var link = document.createElement("a");
         link.setAttribute("href", url);
