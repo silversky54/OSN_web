@@ -29,7 +29,6 @@ export async function c_SCA_y_m(watershed) {
 
 const data = await d3.csv(watershed_selected, d => ({
     ...d,
-    Elevation: Math.round(d.Elevation), // redondear a numeros enteros la elevación
     SCA: +d.SCA,
     CCA: +d.CCA,
 
