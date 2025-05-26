@@ -198,7 +198,7 @@ const T_csv = await d3.csv(info);
 
 
 // Crear un botón de exportación dentro del SVG
-
+/*
 // Crear un botón de exportación dentro del SVG
 var button = svg.append("foreignObject")
     .attr("width", 30) // ancho del botón
@@ -225,5 +225,5 @@ var button = svg.append("foreignObject")
         link.click();
         document.body.removeChild(link);
     });
-
+*/
 }
